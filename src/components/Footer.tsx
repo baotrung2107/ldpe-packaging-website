@@ -1,155 +1,104 @@
 "use client";
 
+import { ShieldCheck, Phone, Mail, MapPin, Award } from "lucide-react";
 import { useCMS } from "@/context/CMSContext";
-import { Phone, Mail, MapPin, ShieldCheck, ArrowUpRight } from "lucide-react";
 
 export default function Footer() {
   const { getOverride } = useCMS();
 
-  const logoText = getOverride("footer_logo_text", "DP");
-  const brandTitle = getOverride("footer_brand_title", "DUC PHUC PE FOAM");
-  const address = getOverride(
-    "footer_address",
-    "Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An, Việt Nam."
-  );
-  const phone = getOverride("footer_phone", "083 572 6666");
-  const email = getOverride("footer_email", "phuocpefoam@gmail.com");
-  const copyright = getOverride(
-    "footer_copyright",
-    "© 2026 CÔNG TY TNHH SẢN XUẤT PE FOAM ĐỨC PHÚC. All rights reserved."
-  );
+  const phone = getOverride("nav_phone", "083 572 6666");
+  const email = getOverride("nav_email", "lienhe@ldpe-packaging.vn");
+  const copyright = getOverride("footer_copyright", "© 2026 CÔNG TY TNHH SẢN XUẤT PE FOAM ĐỨC PHÚC. Tất cả quyền được bảo lưu.");
+  const logoUrl = getOverride("nav_logo_url", "");
 
   return (
-    <footer className="bg-[#041E38] text-white border-t border-[#0B3B6F] pt-16 pb-8 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
-          {/* Col 1: Brand Info */}
-          <div className="space-y-4">
+    <footer id="lien-he" className="bg-[#062B4F] text-[#D9E4EF] pt-16 pb-12 border-t border-[#103E6B]">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
+          {/* Company Brand Column */}
+          <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0B63CE] to-[#041E38] border border-[#38BDF8]/40 text-white font-extrabold text-lg flex items-center justify-center shadow-lg"
-                data-cms-section="footer"
-                data-cms-id="footer_logo_text"
-                data-cms-type="logo"
-              >
-                {logoText}
-              </div>
-              <span
-                className="font-extrabold text-lg tracking-wider text-white block"
-                data-cms-section="footer"
-                data-cms-id="footer_brand_title"
-                data-cms-type="text"
-              >
-                {brandTitle}
+              {logoUrl ? (
+                <img src={logoUrl} alt="DUC PHUC PE FOAM" className="h-10 object-contain" />
+              ) : (
+                <div className="w-10 h-10 rounded-xl bg-[#0B63CE] text-white font-bold text-xl flex items-center justify-center shadow-md">
+                  DP
+                </div>
+              )}
+              <span className="font-extrabold text-xl text-white tracking-wide">
+                DUC PHUC <span className="text-[#0B63CE]">PE FOAM</span>
               </span>
             </div>
-            <p className="text-xs text-[#D9E4EF] leading-relaxed">
-              Nhà máy sản xuất màng LDPE, túi ni lông công nghiệp, cuộn xốp PE Foam chống sốc và khay mút định hình CNC hàng đầu khu vực miền Nam.
+
+            <p className="text-xs leading-relaxed text-[#D9E4EF]">
+              Công ty TNHH Sản Xuất PE Foam Đức Phúc chuyên sản xuất và gia công trực tiếp các sản phẩm màng LDPE, túi nhựa, tấm cuộn PE foam chống sốc, khay định hình cao cấp theo chuẩn SGS REACH & RoHS.
             </p>
-            <div className="inline-flex items-center gap-1.5 text-[11px] text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Chứng nhận ISO 9001:2015 & SGS REACH/RoHS</span>
+
+            <div className="space-y-1.5 pt-1 text-xs text-[#EAF3FC]">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#0B63CE] shrink-0" />
+                <span>ISO 9001:2015 • Kiếm định SGS REACH No. VNHL2401000844EE</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Award className="w-4 h-4 text-[#38BDF8] shrink-0" />
+                <span>Kiểm định SGS RoHS 2.0 No. VNHL2204007729EE</span>
+              </div>
             </div>
           </div>
 
-          {/* Col 2: Quick Links */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-sm text-white uppercase tracking-wider">Danh mục sản phẩm</h4>
+          {/* Nav Links Column */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="font-bold text-white text-sm uppercase tracking-wider">SẢN PHẨM & DỊCH VỤ</h4>
             <ul className="space-y-2 text-xs text-[#D9E4EF]">
-              <li>
-                <a href="#san-pham" className="hover:text-[#38BDF8] transition-colors flex items-center gap-1">
-                  <ArrowUpRight className="w-3 h-3 text-[#38BDF8]" />
-                  <span>Màng & Túi LDPE Công Nghiệp</span>
-                </a>
-              </li>
-              <li>
-                <a href="#san-pham" className="hover:text-[#38BDF8] transition-colors flex items-center gap-1">
-                  <ArrowUpRight className="w-3 h-3 text-[#38BDF8]" />
-                  <span>Cuộn & Tấm PE Foam Chống Sốc</span>
-                </a>
-              </li>
-              <li>
-                <a href="#san-pham" className="hover:text-[#38BDF8] transition-colors flex items-center gap-1">
-                  <ArrowUpRight className="w-3 h-3 text-[#38BDF8]" />
-                  <span>Mút Định Hình EPE CNC</span>
-                </a>
-              </li>
-              <li>
-                <a href="#san-pham" className="hover:text-[#38BDF8] transition-colors flex items-center gap-1">
-                  <ArrowUpRight className="w-3 h-3 text-[#38BDF8]" />
-                  <span>Ống Mút & Nẹp Góc PE Foam</span>
-                </a>
-              </li>
-              <li>
-                <a href="#san-pham" className="hover:text-[#38BDF8] transition-colors flex items-center gap-1">
-                  <ArrowUpRight className="w-3 h-3 text-[#38BDF8]" />
-                  <span>Nệm PE Foam G3 Chính Hãng</span>
-                </a>
-              </li>
+              <li><a href="#san-pham" className="hover:text-white transition-colors">Màng LDPE dạng cuộn</a></li>
+              <li><a href="#san-pham" className="hover:text-white transition-colors">Túi LDPE đóng gói</a></li>
+              <li><a href="#san-pham" className="hover:text-white transition-colors">Màng co LDPE công nghiệp</a></li>
+              <li><a href="#san-pham" className="hover:text-white transition-colors">Tấm & cuộn PE foam chống sốc</a></li>
+              <li><a href="#san-pham" className="hover:text-white transition-colors">Khay xốp định hình CNC</a></li>
+              <li><a href="#san-pham" className="hover:text-white transition-colors">Thanh nẹp góc PE foam</a></li>
+              <li><a href="#san-pham" className="hover:text-white transition-colors">Gia công LDPE theo bản vẽ</a></li>
             </ul>
           </div>
 
-          {/* Col 3: Contact Info */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-sm text-white uppercase tracking-wider">Thông tin liên hệ</h4>
+          {/* Solutions Column */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="font-bold text-white text-sm uppercase tracking-wider">GIẢI PHÁP NGÀNH</h4>
+            <ul className="space-y-2 text-xs text-[#D9E4EF]">
+              <li><a href="#giai-phap" className="hover:text-white transition-colors">Linh kiện điện tử</a></li>
+              <li><a href="#giai-phap" className="hover:text-white transition-colors">Kính & Gốm sứ</a></li>
+              <li><a href="#giai-phap" className="hover:text-white transition-colors">Nội thất & Gỗ</a></li>
+              <li><a href="#giai-phap" className="hover:text-white transition-colors">Thương mại điện tử</a></li>
+              <li><a href="#giai-phap" className="hover:text-white transition-colors">Hàng tiêu dùng</a></li>
+            </ul>
+          </div>
+
+          {/* Contact Column */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="font-bold text-white text-sm uppercase tracking-wider">LIÊN HỆ NHÀ MÁY ĐỨC PHÚC</h4>
             <div className="space-y-2.5 text-xs text-[#D9E4EF]">
-              <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-[#38BDF8] shrink-0 mt-0.5" />
-                <span data-cms-section="footer" data-cms-id="footer_address" data-cms-type="contact">
-                  {address}
-                </span>
+              <div className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 text-[#0B63CE] shrink-0 mt-0.5" />
+                <span>Nhà máy: Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An, Việt Nam</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#38BDF8] shrink-0" />
-                <a
-                  href={`tel:${phone.replace(/\s/g, "")}`}
-                  className="hover:text-[#38BDF8] transition-colors font-bold"
-                  data-cms-section="footer"
-                  data-cms-id="footer_phone"
-                  data-cms-type="contact"
-                >
-                  {phone}
-                </a>
+              <div className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-[#0B63CE] shrink-0" />
+                <span className="font-bold text-white">{phone} (Hotline/Zalo B2B)</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#38BDF8] shrink-0" />
-                <a
-                  href={`mailto:${email}`}
-                  className="hover:text-[#38BDF8] transition-colors"
-                  data-cms-section="footer"
-                  data-cms-id="footer_email"
-                  data-cms-type="contact"
-                >
-                  {email}
-                </a>
+              <div className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-[#0B63CE] shrink-0" />
+                <span>{email}</span>
               </div>
             </div>
           </div>
-
-          {/* Col 4: Factory Maps & Cert */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-sm text-white uppercase tracking-wider">Nhà máy sản xuất</h4>
-            <p className="text-xs text-[#D9E4EF] leading-relaxed">
-              Diện tích nhà máy hơn 10.000m² tại Huyện Đức Hòa, Tỉnh Long An. Dây chuyền đùn màng & thổi mút xốp tự động hóa 100%.
-            </p>
-            <a
-              href="#bao-gia"
-              className="inline-flex items-center justify-center w-full btn-primary text-xs py-2.5 shadow-md"
-            >
-              <span>Liên hệ tham quan nhà máy</span>
-            </a>
-          </div>
         </div>
 
-        {/* Bottom Copyright */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#9FB3C8]">
-          <span data-cms-section="footer" data-cms-id="footer_copyright" data-cms-type="text">
-            {copyright}
-          </span>
-          <div className="flex items-center gap-4">
-            <a href="/admin" className="hover:text-white transition-colors">
-              Đăng nhập Admin CMS
-            </a>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-[#103E6B] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#6B7C93]">
+          <p>{copyright}</p>
+          <div className="flex items-center gap-6">
+            <a href="#chung-nhan" className="hover:text-[#D9E4EF]">Báo cáo SGS REACH</a>
+            <a href="#chung-nhan" className="hover:text-[#D9E4EF]">Báo cáo SGS RoHS</a>
+            <a href="#chung-nhan" className="hover:text-[#D9E4EF]">Catalogue #27319</a>
           </div>
         </div>
       </div>

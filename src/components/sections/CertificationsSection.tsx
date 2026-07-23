@@ -2,9 +2,17 @@
 
 import { useState } from "react";
 import { ShieldCheck, CheckCircle2, Download, FileText, Award, Building2, Sparkles, Eye, X } from "lucide-react";
+import { useCMS } from "@/context/CMSContext";
 
 export default function CertificationsSection() {
   const [activeModalImage, setActiveModalImage] = useState<{ src: string; title: string } | null>(null);
+  const { getOverride } = useCMS();
+
+  const title = getOverride("cert_title", "Hồ sơ chứng nhận chất lượng Nhà Máy Đức Phúc");
+  const desc = getOverride(
+    "cert_desc",
+    "100% hình ảnh giấy chứng nhận ISO 9001:2015, kết quả thử nghiệm SGS REACH, SGS RoHS và Eurofins MTS chính thức của Công ty TNHH Sản Xuất PE Foam Đức Phúc."
+  );
 
   const certs = [
     {
@@ -66,11 +74,21 @@ export default function CertificationsSection() {
             <Award className="w-4 h-4 text-[#38BDF8]" />
             CHỨNG NHẬN CHẤT LƯỢNG ISO 9001:2015 & SGS / EUROFINS QUỐC TẾ
           </span>
-          <h2 className="text-[30px] md:text-[40px] font-extrabold text-white tracking-tight">
-            Hồ sơ chứng nhận chất lượng Nhà Máy Đức Phúc
+          <h2
+            className="text-[30px] md:text-[40px] font-extrabold text-white tracking-tight"
+            data-cms-section="certifications"
+            data-cms-id="cert_title"
+            data-cms-type="text"
+          >
+            {title}
           </h2>
-          <p className="text-[16px] md:text-[17px] text-[#D9E4EF] font-normal leading-relaxed">
-            100% hình ảnh giấy chứng nhận ISO 9001:2015, kết quả thử nghiệm SGS REACH, SGS RoHS và Eurofins MTS chính thức của Công ty TNHH Sản Xuất PE Foam Đức Phúc.
+          <p
+            className="text-[16px] md:text-[17px] text-[#D9E4EF] font-normal leading-relaxed"
+            data-cms-section="certifications"
+            data-cms-id="cert_desc"
+            data-cms-type="text"
+          >
+            {desc}
           </p>
         </div>
 
@@ -80,6 +98,9 @@ export default function CertificationsSection() {
             <div
               key={i}
               className="bg-[#062B4F]/90 backdrop-blur-md border border-white/15 rounded-2xl overflow-hidden hover:border-[#38BDF8] transition-all duration-300 hover:shadow-2xl flex flex-col justify-between group"
+              data-cms-section="certifications"
+              data-cms-id={`cert_item_${i}`}
+              data-cms-type="repeater"
             >
               {/* Document Image Thumbnail Preview Header */}
               <div className="relative aspect-[3/4] w-full overflow-hidden bg-white border-b border-white/10">
@@ -87,6 +108,9 @@ export default function CertificationsSection() {
                   src={c.image}
                   alt={c.title}
                   className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                  data-cms-section="certifications"
+                  data-cms-id={`cert_image_${i}`}
+                  data-cms-type="image"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#062B4F] via-transparent to-black/10" />
 
@@ -112,13 +136,23 @@ export default function CertificationsSection() {
               {/* Document Text Details */}
               <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
                 <div className="space-y-2">
-                  <h3 className="text-[16px] font-bold text-white group-hover:text-[#38BDF8] transition-colors leading-snug">
+                  <h3
+                    className="text-[16px] font-bold text-white group-hover:text-[#38BDF8] transition-colors leading-snug"
+                    data-cms-section="certifications"
+                    data-cms-id={`cert_title_${i}`}
+                    data-cms-type="text"
+                  >
                     {c.title}
                   </h3>
                   <div className="text-[11px] text-[#9FB3C8] font-mono">
                     Mã số: <span className="text-white font-semibold">{c.number}</span>
                   </div>
-                  <p className="text-xs text-[#D9E4EF] leading-relaxed line-clamp-3">
+                  <p
+                    className="text-xs text-[#D9E4EF] leading-relaxed line-clamp-3"
+                    data-cms-section="certifications"
+                    data-cms-id={`cert_desc_${i}`}
+                    data-cms-type="text"
+                  >
                     {c.desc}
                   </p>
                 </div>

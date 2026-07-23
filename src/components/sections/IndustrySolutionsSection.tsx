@@ -1,18 +1,7 @@
-"use client";
-
-import { useCMS } from "@/context/CMSContext";
 import { Cpu, Wine, Home, ShoppingBag, Factory, Snowflake, Activity } from "lucide-react";
 
 export default function IndustrySolutionsSection() {
-  const { getOverride } = useCMS();
-
-  const title = getOverride("industry_title", "Giải pháp bảo vệ theo từng ngành hàng");
-  const desc = getOverride(
-    "industry_desc",
-    "Mỗi nhóm sản phẩm có đặc tính cơ lý riêng. Chúng tôi thiết kế cấu trúc xốp và màng tương ứng với đặc thù đóng gói của từng ngành."
-  );
-
-  const defaultIndustries = [
+  const industries = [
     {
       title: "Điện tử & Linh kiện tinh vi",
       desc: "Hạn chế trầy xước, rung lắc và chống tĩnh điện ESD cho vi mạch, bo mạch, màn hình & thiết bị điện tử trong lưu kho và vận chuyển.",
@@ -65,52 +54,34 @@ export default function IndustrySolutionsSection() {
     },
   ];
 
-  const industries = getOverride("industry_list", defaultIndustries);
-
   return (
-    <section id="giai-phap-nganh" className="py-16 md:py-24 bg-white border-y border-[#D9E4EF]">
+    <section id="giai-phap" className="py-16 md:py-24 bg-white border-y border-[#D9E4EF]">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="text-xs font-semibold text-[#0B63CE] uppercase tracking-wider bg-[#EAF3FC] px-3 py-1 rounded-full border border-[#D9E4EF]">
             ỨNG DỤNG THỰC TẾ TRONG CÔNG NGHIỆP
           </span>
-          <h2
-            className="text-[30px] md:text-[40px] font-bold text-[#102A43]"
-            data-cms-section="industry"
-            data-cms-id="industry_title"
-            data-cms-type="text"
-          >
-            {title}
+          <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43]">
+            Giải pháp bảo vệ theo từng ngành hàng
           </h2>
-          <p
-            className="text-[16px] md:text-[17px] text-[#40566F]"
-            data-cms-section="industry"
-            data-cms-id="industry_desc"
-            data-cms-type="text"
-          >
-            {desc}
+          <p className="text-[16px] md:text-[17px] text-[#40566F]">
+            Mỗi nhóm sản phẩm có đặc tính cơ lý riêng. Chúng tôi thiết kế cấu trúc xốp và màng tương ứng với đặc thù đóng gói của từng ngành.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {industries.map((ind: any, idx: number) => {
-            const Icon = ind.icon || Factory;
+          {industries.map((ind, idx) => {
+            const Icon = ind.icon;
             return (
               <div
                 key={idx}
                 className="bg-[#F7FAFC] rounded-2xl overflow-hidden border border-[#D9E4EF] hover:border-[#0B63CE] transition-all duration-300 hover:shadow-xl flex flex-col justify-between group"
-                data-cms-section="industry"
-                data-cms-id={`industry_item_${idx}`}
-                data-cms-type="repeater"
               >
                 <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#062B4F]">
                   <img
                     src={ind.image}
                     alt={ind.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    data-cms-section="industry"
-                    data-cms-id={`industry_image_${idx}`}
-                    data-cms-type="image"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#102A43] via-transparent to-transparent opacity-75" />
 
@@ -121,21 +92,11 @@ export default function IndustrySolutionsSection() {
 
                 <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-3">
-                    <h3
-                      className="text-[20px] font-bold text-[#102A43]"
-                      data-cms-section="industry"
-                      data-cms-id={`industry_title_${idx}`}
-                      data-cms-type="text"
-                    >
+                    <h3 className="text-[20px] font-bold text-[#102A43]">
                       {ind.title}
                     </h3>
 
-                    <p
-                      className="text-[14px] text-[#40566F] leading-relaxed"
-                      data-cms-section="industry"
-                      data-cms-id={`industry_desc_${idx}`}
-                      data-cms-type="text"
-                    >
+                    <p className="text-[14px] text-[#40566F] leading-relaxed">
                       {ind.desc}
                     </p>
 
