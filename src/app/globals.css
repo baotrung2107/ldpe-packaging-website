@@ -12,6 +12,9 @@
   h1, h2, h3, h4, h5, h6 {
     color: #102A43;
     font-family: var(--font-be-vietnam), sans-serif;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: normal;
   }
 }
 

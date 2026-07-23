@@ -21,8 +21,8 @@ export default function BenefitsSection() {
           <span className="text-xs font-semibold text-[#0B63CE] uppercase tracking-wider bg-[#EAF3FC] px-3 py-1 rounded-full border border-[#D9E4EF]">
             GIÁ TRỊ DOANH NGHIỆP
           </span>
-          <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43]">
-            Một giải pháp đóng gói tốt phải bảo vệ được cả sản phẩm và chi phí vận hành
+          <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43] [text-wrap:balance]">
+            Một giải pháp đóng gói tốt phải bảo vệ được <span className="inline-block">cả sản phẩm</span> và <span className="inline-block">chi phí vận hành</span>
           </h2>
         </div>
 

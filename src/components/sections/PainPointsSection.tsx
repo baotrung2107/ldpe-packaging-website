@@ -22,8 +22,8 @@ export default function PainPointsSection() {
             <span>RỦI RO THƯỜNG GẶP TRONG ĐÓNG GÓI</span>
           </div>
 
-          <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43] leading-snug">
-            Chi phí lớn nhất không nằm ở miếng xốp, mà ở sản phẩm bị hỏng khi đến tay khách hàng
+          <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43] leading-snug [text-wrap:balance]">
+            Chi phí lớn nhất không nằm ở miếng xốp, mà ở sản phẩm bị hỏng <span className="inline-block">khi đến tay khách&nbsp;hàng</span>
           </h2>
 
           <p className="text-[16px] md:text-[17px] text-[#40566F]">
@@ -48,15 +48,15 @@ export default function PainPointsSection() {
           ))}
         </div>
 
-        {/* Message Banner */}
+        {/* Message Banner with Clean Non-Breaking Lines */}
         <div className="bg-[#062B4F] text-white p-6 md:p-8 rounded-2xl border border-[#103E6B] shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-[#0B63CE] rounded-xl shrink-0">
               <HeartHandshake className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h3 className="text-xl md:text-2xl font-bold text-white">
-                Bảo vệ sản phẩm cũng chính là bảo vệ trải nghiệm khách hàng và giá trị thương hiệu.
+              <h3 className="text-xl md:text-2xl font-bold text-white [text-wrap:balance]">
+                Bảo vệ sản phẩm cũng chính là bảo vệ trải nghiệm khách hàng và <span className="inline-block">giá&nbsp;trị thương&nbsp;hiệu.</span>
               </h3>
               <p className="text-sm text-[#D9E4EF] mt-1">
                 Liên hệ đội ngũ chuyên gia để đo đạc và đưa ra thiết kế bao bì tối ưu cho doanh nghiệp của bạn.

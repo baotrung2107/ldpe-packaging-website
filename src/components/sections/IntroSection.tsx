@@ -12,7 +12,7 @@ export default function IntroSection() {
             </span>
 
             {/* H2 Title - 40px desktop, 30px mobile */}
-            <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43] leading-snug">
+            <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43] leading-snug [text-wrap:balance]">
               LDPE là gì?
             </h2>
 
@@ -33,8 +33,8 @@ export default function IntroSection() {
 
           {/* Right Column: Decision Factors Cards */}
           <div className="lg:col-span-7 bg-white p-6 md:p-8 rounded-2xl border border-[#D9E4EF] shadow-md space-y-6">
-            <h3 className="text-[21px] md:text-[24px] font-semibold text-[#102A43]">
-              Các yếu tố quyết định khi lựa chọn giải pháp đóng gói LDPE
+            <h3 className="text-[21px] md:text-[24px] font-semibold text-[#102A43] [text-wrap:balance]">
+              Các yếu tố quyết định khi lựa chọn <span className="inline-block">giải pháp đóng&nbsp;gói&nbsp;LDPE</span>
             </h3>
 
             <p className="text-[15px] text-[#40566F]">

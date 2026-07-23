@@ -52,17 +52,17 @@ export default function HeroSection() {
               </span>
             </div>
 
-            {/* Main Title with Gradient Highlight */}
+            {/* Main Title with Gradient Highlight and Clean Non-breaking Line Wraps */}
             <h1
-              className="text-[36px] sm:text-[44px] lg:text-[54px] font-extrabold leading-[1.15] text-white tracking-tight drop-shadow-sm"
+              className="text-[36px] sm:text-[44px] lg:text-[54px] font-extrabold leading-[1.15] text-white tracking-tight drop-shadow-sm [text-wrap:balance]"
               data-cms-section="hero"
               data-cms-id="hero_title"
               data-cms-type="text"
             >
-              Ôm trọn sản phẩm. <br />
-              Bảo vệ hàng hóa. <br />
-              <span className="bg-gradient-to-r from-[#38BDF8] via-[#60A5FA] to-[#93C5FD] bg-clip-text text-transparent">
-                Giữ vững uy tín thương hiệu.
+              <span className="block">Ôm trọn sản phẩm.</span>
+              <span className="block">Bảo vệ hàng hóa.</span>
+              <span className="bg-gradient-to-r from-[#38BDF8] via-[#60A5FA] to-[#93C5FD] bg-clip-text text-transparent inline-block">
+                Giữ vững uy&nbsp;tín thương&nbsp;hiệu.
               </span>
             </h1>
 
