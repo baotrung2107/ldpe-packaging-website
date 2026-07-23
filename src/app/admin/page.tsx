@@ -92,11 +92,11 @@ export default function AdminPage() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasUnsavedChanges]);
 
-  // Auto-scroll sync to live preview window whenever selected target changes
+  // Auto-scroll sync strictly inside right preview container ONLY (Left panel stays 100% fixed!)
   const scrollToPreviewTarget = (targetId: string) => {
-    if (!previewContainerRef.current) return;
-
     const container = previewContainerRef.current;
+    if (!container) return;
+
     const mapping: Record<string, string> = {
       nav_phone: "navbar",
       nav_email: "navbar",
@@ -116,17 +116,25 @@ export default function AdminPage() {
 
     // Search for element inside live preview container
     const targetEl =
-      container.querySelector(`[data-cms-id="${targetId}"]`) ||
-      container.querySelector(`#${sectionId}`) ||
-      container.querySelector(`[data-cms-section="${sectionId}"]`);
+      (container.querySelector(`[data-cms-id="${targetId}"]`) as HTMLElement) ||
+      (container.querySelector(`#${sectionId}`) as HTMLElement) ||
+      (container.querySelector(`[data-cms-section="${sectionId}"]`) as HTMLElement);
 
-    if (targetEl) {
-      targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (targetEl && container) {
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = targetEl.getBoundingClientRect();
+      const relativeTop = targetRect.top - containerRect.top + container.scrollTop;
+
+      // Scroll ONLY the right container. Left edit window position stays 100% fixed!
+      container.scrollTo({
+        top: Math.max(0, relativeTop - 80),
+        behavior: "smooth",
+      });
 
       // Add temporary highlight ring
-      targetEl.classList.add("ring-4", "ring-[#0B63CE]", "ring-offset-2");
+      targetEl.classList.add("ring-4", "ring-[#0B63CE]", "ring-offset-2", "transition-all");
       setTimeout(() => {
-        targetEl.classList.remove("ring-4", "ring-[#0B63CE]", "ring-offset-2");
+        targetEl.classList.remove("ring-4", "ring-[#0B63CE]", "ring-offset-2", "transition-all");
       }, 2000);
     }
   };
@@ -382,7 +390,7 @@ export default function AdminPage() {
 
       {/* Main Split-Screen Layout */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left Form Panel (50% width) */}
+        {/* Left Form Panel (50% width) - Keeps scroll position 100% intact */}
         <div className="w-full lg:w-1/2 border-r border-[#D9E4EF] bg-white overflow-y-auto flex flex-col">
           {/* Tabs Navigation */}
           <div className="flex items-center border-b border-[#D9E4EF] bg-[#F7FAFC] px-4 pt-3 gap-2 overflow-x-auto">
@@ -681,7 +689,7 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Right Live Preview Panel (50% width) with Auto-Scroll Target Window */}
+        {/* Right Live Preview Panel (50% width) with Isolated Auto-Scroll Target Window */}
         <div
           ref={previewContainerRef}
           id="admin-live-preview-window"
