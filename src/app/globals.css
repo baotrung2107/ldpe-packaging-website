@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F7FAFC;
+    color: #40566F;
+    font-family: var(--font-be-vietnam), sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #102A43;
+    font-family: var(--font-be-vietnam), sans-serif;
+  }
+}
+
+.btn-primary {
+  background-color: #0B63CE;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 600;
+  min-height: 48px;
+  border-radius: 8px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #084FA6;
+}
+
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #0B63CE;
+  border: 1.5px solid #0B63CE;
+  font-size: 16px;
+  font-weight: 600;
+  min-height: 48px;
+  border-radius: 8px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #EAF3FC;
+}
+
+.admin-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #D9E4EF;
+  font-size: 12px;
+  color: #102A43;
+  background-color: #FFFFFF;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: #0B63CE;
+  box-shadow: 0 0 0 2px rgba(11, 99, 206, 0.15);
+}
