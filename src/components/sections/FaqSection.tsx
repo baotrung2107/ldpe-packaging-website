@@ -43,33 +43,33 @@ export default function FaqSection() {
   ]);
 
   return (
-    <section id="kien-thuc" className="py-16 md:py-24 bg-white border-t border-[#D9E4EF]">
-      <div className="max-w-4xl mx-auto px-4 md:px-6 space-y-12">
-        <div className="text-center space-y-4">
-          <span className="text-xs font-semibold text-[#0B63CE] uppercase tracking-wider bg-[#EAF3FC] px-3 py-1 rounded-full border border-[#D9E4EF]">
+    <section id="kien-thuc" className="py-12 md:py-24 bg-white border-t border-[#D9E4EF]">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 space-y-8 sm:space-y-12">
+        <div className="text-center space-y-3 sm:space-y-4">
+          <span className="text-[11px] sm:text-xs font-semibold text-[#0B63CE] uppercase tracking-wider bg-[#EAF3FC] px-3 py-1 rounded-full border border-[#D9E4EF]">
             GIẢI ĐÁP KỸ THUẬT
           </span>
           <h2
-            className="text-[30px] md:text-[40px] font-bold text-[#102A43] [text-wrap:balance]"
+            className="text-[24px] sm:text-[30px] md:text-[40px] font-bold text-[#102A43] [text-wrap:balance]"
             data-cms-section="faq"
             data-cms-id="faq_title"
             data-cms-type="text"
           >
             {faqTitle.includes("Giải") ? (
               <>
-                <span className="inline-block">Kiến&nbsp;thức vật&nbsp;liệu</span> &amp;{" "}
-                <span className="inline-block">Giải&nbsp;đáp thắc&nbsp;mắc&nbsp;LDPE</span>
+                <span className="sm:inline-block">Kiến&nbsp;thức vật&nbsp;liệu</span> &amp;{" "}
+                <span className="sm:inline-block">Giải&nbsp;đáp thắc&nbsp;mắc&nbsp;LDPE</span>
               </>
             ) : (
               faqTitle
             )}
           </h2>
-          <p className="text-[16px] md:text-[17px] text-[#40566F] [text-wrap:pretty]">
+          <p className="text-[15px] sm:text-[16px] md:text-[17px] text-[#40566F] [text-wrap:pretty]">
             Các câu hỏi thường gặp giúp doanh nghiệp lựa chọn đúng quy cách vật liệu bao bì.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {faqsList.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
@@ -79,21 +79,21 @@ export default function FaqSection() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-[#102A43] text-lg hover:text-[#0B63CE] transition-colors"
+                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 sm:gap-4 font-bold text-[#102A43] text-base sm:text-lg hover:text-[#0B63CE] transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <HelpCircle className="w-5 h-5 text-[#0B63CE] shrink-0" />
+                  <div className="flex items-center gap-2.5 sm:gap-3">
+                    <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5 text-[#0B63CE] shrink-0" />
                     <span className="[text-wrap:balance]">{faq.question}</span>
                   </div>
                   <ChevronDown
-                    className={`w-5 h-5 text-[#6B7C93] shrink-0 transition-transform duration-200 ${
+                    className={`w-4 h-4 sm:w-5 sm:h-5 text-[#6B7C93] shrink-0 transition-transform duration-200 ${
                       isOpen ? "rotate-180 text-[#0B63CE]" : ""
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-[15px] text-[#40566F] leading-relaxed border-t border-[#D9E4EF]/60 bg-white [text-wrap:pretty]">
+                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 pt-1 text-[14px] sm:text-[15px] text-[#40566F] leading-relaxed border-t border-[#D9E4EF]/60 bg-white [text-wrap:pretty]">
                     {faq.answer}
                   </div>
                 )}

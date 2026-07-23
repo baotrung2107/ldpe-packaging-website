@@ -62,35 +62,35 @@ export default function CertificationsSection() {
   ];
 
   return (
-    <section id="chung-nhan" className="py-16 md:py-24 bg-[#041E38] text-white relative overflow-hidden border-t border-[#0B3B6F]">
+    <section id="chung-nhan" className="py-12 md:py-24 bg-[#041E38] text-white relative overflow-hidden border-t border-[#0B3B6F]">
       {/* Background Decorative Glow */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#0B63CE]/20 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#0B63CE]/15 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 space-y-12">
-        {/* Section Header (Fixed "chất lượng" splitting!) */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider bg-[#0B63CE]/20 px-3.5 py-1.5 rounded-full border border-[#38BDF8]/30 backdrop-blur-md">
-            <Award className="w-4 h-4 text-[#38BDF8]" />
-            CHỨNG NHẬN CHẤT LƯỢNG ISO 9001:2015 & SGS / EUROFINS QUỐC TẾ
+      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 space-y-8 sm:space-y-12">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
+          <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-semibold text-[#38BDF8] uppercase tracking-wider bg-[#0B63CE]/20 px-3 py-1.5 rounded-full border border-[#38BDF8]/30 backdrop-blur-md">
+            <Award className="w-3.5 h-3.5 text-[#38BDF8]" />
+            CHỨNG NHẬN ISO 9001:2015 &amp; SGS QUỐC TẾ
           </span>
           <h2
-            className="text-[30px] md:text-[40px] font-extrabold text-white tracking-tight [text-wrap:balance]"
+            className="text-[24px] sm:text-[30px] md:text-[40px] font-extrabold text-white tracking-tight [text-wrap:balance]"
             data-cms-section="certifications"
             data-cms-id="cert_title"
             data-cms-type="text"
           >
             {title.includes("Nhà Máy Đức Phúc") ? (
               <>
-                <span className="inline-block">Hồ sơ chứng&nbsp;nhận chất&nbsp;lượng</span>{" "}
-                <span className="inline-block">Nhà&nbsp;Máy Đức&nbsp;Phúc</span>
+                <span className="sm:inline-block">Hồ sơ chứng&nbsp;nhận chất&nbsp;lượng</span>{" "}
+                <span className="sm:inline-block">Nhà&nbsp;Máy Đức&nbsp;Phúc</span>
               </>
             ) : (
               title
             )}
           </h2>
           <p
-            className="text-[16px] md:text-[17px] text-[#D9E4EF] font-normal leading-relaxed [text-wrap:pretty]"
+            className="text-[14px] sm:text-[16px] md:text-[17px] text-[#D9E4EF] font-normal leading-relaxed [text-wrap:pretty]"
             data-cms-section="certifications"
             data-cms-id="cert_desc"
             data-cms-type="text"
@@ -100,7 +100,7 @@ export default function CertificationsSection() {
         </div>
 
         {/* 4 Official Certification Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {certs.map((c, i) => (
             <div
               key={i}
@@ -122,7 +122,7 @@ export default function CertificationsSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#062B4F] via-transparent to-black/10" />
 
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-[#38BDF8] tracking-wider uppercase bg-[#041E38]/90 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#38BDF8]/30 shadow">
+                  <span className="text-[9px] sm:text-[10px] font-bold text-[#38BDF8] tracking-wider uppercase bg-[#041E38]/90 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#38BDF8]/30 shadow">
                     {c.badge}
                   </span>
                   <span className="text-[9px] bg-emerald-500/90 text-white font-bold px-2 py-0.5 rounded-full shadow">
@@ -141,10 +141,10 @@ export default function CertificationsSection() {
               </div>
 
               {/* Document Text Details */}
-              <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+              <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
                 <div className="space-y-2">
                   <h3
-                    className="text-[16px] font-bold text-white group-hover:text-[#38BDF8] transition-colors leading-snug [text-wrap:balance]"
+                    className="text-[15px] sm:text-[16px] font-bold text-white group-hover:text-[#38BDF8] transition-colors leading-snug [text-wrap:balance]"
                     data-cms-section="certifications"
                     data-cms-id={`cert_title_${i}`}
                     data-cms-type="text"
@@ -180,24 +180,24 @@ export default function CertificationsSection() {
         </div>
 
         {/* Company Registered Legal Information Banner */}
-        <div className="bg-gradient-to-r from-[#0B3B6F] via-[#0B63CE] to-[#041E38] p-6 md:p-8 rounded-2xl border border-white/20 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider bg-white/15 px-3 py-1 rounded-full border border-white/20">
+        <div className="bg-gradient-to-r from-[#0B3B6F] via-[#0B63CE] to-[#041E38] p-5 sm:p-8 rounded-2xl border border-white/20 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 text-center sm:text-left">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider bg-white/15 px-3 py-1 rounded-full border border-white/20">
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
               CÔNG TY TNHH SẢN XUẤT PE FOAM ĐỨC PHÚC
             </div>
-            <h3 className="text-lg md:text-xl font-extrabold text-white [text-wrap:balance]">
+            <h3 className="text-base sm:text-lg md:text-xl font-extrabold text-white [text-wrap:balance]">
               Nhà máy chính thức: Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An
             </h3>
             <p className="text-xs text-[#EAF3FC] max-w-2xl [text-wrap:pretty]">
-              100% tài liệu chứng nhận thật: ISO 9001:2015 9199293409672-QMS, SGS REACH VNHL2401000844EE, SGS RoHS VNHL2204007729EE & Eurofins MTS 76122-070905 sẵn sàng đáp ứng mọi tiêu chuẩn kiểm định B2B.
+              100% tài liệu chứng nhận thật: ISO 9001:2015, SGS REACH, SGS RoHS &amp; Eurofins MTS sẵn sàng đáp ứng mọi tiêu chuẩn kiểm định B2B.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
             <a
               href="#bao-gia"
-              className="btn-primary text-xs py-3 px-6 shadow-xl shadow-black/20 flex items-center gap-2 whitespace-nowrap"
+              className="btn-primary text-xs py-3 px-6 shadow-xl shadow-black/20 flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto"
             >
               <FileText className="w-4 h-4" />
               <span>Yêu cầu bản gốc kiểm định</span>

@@ -15,25 +15,25 @@ export default function FinalCtaSection() {
   const phone = getOverride("nav_phone", "083 572 6666");
 
   return (
-    <section className="py-16 md:py-24 bg-[#062B4F] text-white relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-4 md:px-6 text-center space-y-8 relative z-10">
-        <div className="inline-flex items-center gap-2 bg-[#0B63CE]/20 border border-[#0B63CE]/40 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#EAF3FC] uppercase tracking-wider">
-          <ShieldCheck className="w-4 h-4 text-[#0B63CE]" />
+    <section className="py-12 md:py-24 bg-[#062B4F] text-white relative overflow-hidden">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 text-center space-y-6 sm:space-y-8 relative z-10">
+        <div className="inline-flex items-center gap-2 bg-[#0B63CE]/20 border border-[#0B63CE]/40 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold text-[#EAF3FC] uppercase tracking-wider">
+          <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0B63CE]" />
           <span>BẢO VỆ TOÀN DIỆN THƯƠNG HIỆU</span>
         </div>
 
-        {/* H2 Title with Protected Semantic Phrase Wrapping */}
+        {/* H2 Title with Responsive Mobile Heading Wrap */}
         <h2
-          className="text-[30px] md:text-[40px] font-bold leading-snug text-white max-w-3xl mx-auto [text-wrap:balance]"
+          className="text-[24px] sm:text-[30px] md:text-[40px] font-bold leading-snug text-white max-w-3xl mx-auto [text-wrap:balance]"
           data-cms-section="final_cta"
           data-cms-id="final_cta_title"
           data-cms-type="text"
         >
           {ctaTitle.includes("trở thành") ? (
             <>
-              <span className="inline-block">Đừng&nbsp;để bao&nbsp;bì</span>{" "}
-              <span className="inline-block">trở&nbsp;thành điểm&nbsp;yếu</span>{" "}
-              <span className="inline-block">của một sản&nbsp;phẩm&nbsp;tốt</span>
+              <span className="sm:inline-block">Đừng&nbsp;để bao&nbsp;bì</span>{" "}
+              <span className="sm:inline-block">trở&nbsp;thành điểm&nbsp;yếu</span>{" "}
+              <span className="sm:inline-block">của một sản&nbsp;phẩm&nbsp;tốt</span>
             </>
           ) : (
             ctaTitle
@@ -42,7 +42,7 @@ export default function FinalCtaSection() {
 
         {/* Subtext Paragraph */}
         <div
-          className="text-[16px] md:text-[17px] text-[#D9E4EF] max-w-2xl mx-auto leading-relaxed"
+          className="text-[15px] sm:text-[16px] md:text-[17px] text-[#D9E4EF] max-w-2xl mx-auto leading-relaxed"
           data-cms-section="final_cta"
           data-cms-id="final_cta_subtext"
           data-cms-type="text"
@@ -51,26 +51,23 @@ export default function FinalCtaSection() {
         </div>
 
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-          <a href="#bao-gia" className="btn-primary w-full sm:w-auto group">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2">
+          <a href="#bao-gia" className="btn-primary w-full sm:w-auto group justify-center text-sm py-3">
             <span>Nhận tư vấn giải pháp</span>
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </a>
 
-          <a href="#bao-gia" className="btn-secondary w-full sm:w-auto">
+          <a href="#bao-gia" className="btn-secondary w-full sm:w-auto justify-center text-sm py-3">
             <span>Gửi mẫu để nhận báo giá</span>
           </a>
         </div>
 
-        {/* Price Info Notice (Fixed "vật liệu" phrase splitting!) */}
-        <div className="pt-6 border-t border-[#103E6B] max-w-xl mx-auto">
-          <p className="text-xs md:text-sm text-[#D9E4EF] font-medium flex items-center justify-center gap-2 [text-wrap:balance] text-center">
+        {/* Price Info Notice */}
+        <div className="pt-4 sm:pt-6 border-t border-[#103E6B] max-w-xl mx-auto">
+          <p className="text-xs md:text-sm text-[#D9E4EF] font-medium flex items-center justify-center gap-2 [text-wrap:pretty] text-center px-2">
             <PhoneCall className="w-4 h-4 text-[#0B63CE] shrink-0" />
             <span>
-              <span className="inline-block">Liên&nbsp;hệ hotline <strong className="text-white">{phone}</strong></span>{" "}
-              <span className="inline-block">để được tư&nbsp;vấn và báo&nbsp;giá</span>{" "}
-              <span className="inline-block">theo kích&nbsp;thước, vật&nbsp;liệu,</span>{" "}
-              <span className="inline-block">sản&nbsp;lượng và yêu&nbsp;cầu gia&nbsp;công.</span>
+              Liên hệ hotline <strong className="text-white">{phone}</strong> để được tư vấn và báo giá theo kích thước, vật liệu, sản lượng và yêu cầu gia công.
             </span>
           </p>
         </div>

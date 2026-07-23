@@ -65,22 +65,22 @@ export default function Home() {
       <Footer />
 
       {/* Floating Quick Contact Widget (Zalo & Hotline Call) */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+      <div className="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-40 flex flex-col gap-2.5">
         <a
           href="https://zalo.me/0835726666"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-12 h-12 rounded-full bg-[#0068FF] text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform border border-white/40"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0068FF] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform border border-white/40 backdrop-blur-md"
           title="Chat Zalo B2B 24/7"
         >
-          <span className="font-bold text-[11px]">Zalo</span>
+          <span className="font-bold text-[10px] sm:text-[11px]">Zalo</span>
         </a>
         <a
           href="tel:0835726666"
-          className="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform border border-white/40 animate-bounce"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform border border-white/40 animate-bounce"
           title="Gọi Hotline 083 572 6666"
         >
-          <Phone className="w-5 h-5" />
+          <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
         </a>
       </div>
     </main>
