@@ -21,6 +21,12 @@ import {
   MapPin,
   FileText,
   Eye,
+  Layers,
+  Award,
+  ShieldCheck,
+  CheckCircle2,
+  SlidersHorizontal,
+  Home as HomeIcon,
 } from "lucide-react";
 import { useCMS } from "@/context/CMSContext";
 import Home from "@/app/page";
@@ -50,7 +56,20 @@ export default function AdminPage() {
   const [passwordInput, setPasswordInput] = useState("");
   const [loginError, setLoginError] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
-  const [activeTab, setActiveTab] = useState<"contact" | "quote_form" | "media" | "seo" | "revisions">("contact");
+  const [activeTab, setActiveTab] = useState<
+    | "contact"
+    | "hero"
+    | "intro"
+    | "pain_points"
+    | "products"
+    | "quote_form"
+    | "certifications"
+    | "workflow"
+    | "final_cta"
+    | "media"
+    | "seo"
+    | "revisions"
+  >("contact");
   const [uploadingMedia, setUploadingMedia] = useState(false);
   const [isLoggedInState, setIsLoggedInState] = useState(false);
 
@@ -91,10 +110,17 @@ export default function AdminPage() {
       quote_email: "bao-gia",
       quote_factory_address: "bao-gia",
       footer_address: "footer",
+      hero_badge: "hero",
+      hero_title: "hero",
+      hero_desc: "hero",
+      catalog_title: "san-pham",
+      cert_title: "chung-nhan",
+      workflow_title: "quy-trinh",
       quote_title: "bao-gia",
       quote_desc: "bao-gia",
       form_title: "bao-gia",
       form_submit_btn: "bao-gia",
+      final_cta_title: "final_cta",
     };
 
     const sectionId = mapping[targetId] || targetId;
@@ -195,7 +221,7 @@ export default function AdminPage() {
             <div className="w-14 h-14 bg-[#0B63CE] text-white font-bold text-2xl rounded-2xl flex items-center justify-center mx-auto shadow-lg">
               DP
             </div>
-            <h2 className="text-2xl font-bold text-[#102A43]">Đăng nhập Admin CMS</h2>
+            <h2 className="text-2xl font-bold text-[#102A43]">Đăng nhập Admin CMS Full Perms</h2>
             <p className="text-xs text-[#6B7C93]">CÔNG TY TNHH SẢN XUẤT PE FOAM ĐỨC PHÚC</p>
           </div>
 
@@ -248,7 +274,7 @@ export default function AdminPage() {
 
           <div className="text-center pt-2">
             <span className="text-[11px] text-[#6B7C93]">
-              Bảo mật mã hóa SHA-256 hash • Phân quyền Server-side
+              Bảo mật mã hóa SHA-256 hash • Phân quyền toàn bộ Văn bản Website
             </span>
           </div>
         </div>
@@ -269,7 +295,7 @@ export default function AdminPage() {
             DP
           </div>
           <div>
-            <h1 className="font-bold text-sm leading-none text-white">Bảng Quản Trị CMS — ĐỨC PHÚC PE FOAM</h1>
+            <h1 className="font-bold text-sm leading-none text-white">Quản Trị Nội Dung Toàn Trang (Full Admin Perms)</h1>
             <span className="text-[11px] text-[#D9E4EF]">Quyền: Admin (baotrung2107)</span>
           </div>
 
@@ -363,9 +389,9 @@ export default function AdminPage() {
         </div>
       </header>
 
-      {/* Completely Independent 50-50 Split-Screen Layout (Height = calc(100vh - 57px)) */}
+      {/* Completely Independent 50-50 Split-Screen Layout */}
       <div className="h-[calc(100vh-57px)] w-full flex overflow-hidden">
-        {/* LEFT COLUMN: Admin Edit Panel (100% Independent Scrolling) */}
+        {/* LEFT COLUMN: Full Text Admin Edit Panel */}
         <div
           ref={leftPanelRef}
           className="w-full lg:w-1/2 h-full border-r border-[#D9E4EF] bg-white overflow-y-auto flex flex-col shrink-0"
@@ -381,7 +407,31 @@ export default function AdminPage() {
               }`}
             >
               <Phone className="w-3.5 h-3.5" />
-              <span>Hotline, Mail & Địa Chỉ</span>
+              <span>Hotline & Địa Chỉ</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("hero")}
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+                activeTab === "hero"
+                  ? "border-[#0B63CE] text-[#0B63CE]"
+                  : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
+              }`}
+            >
+              <HomeIcon className="w-3.5 h-3.5" />
+              <span>Banner Hero</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("products")}
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+                activeTab === "products"
+                  ? "border-[#0B63CE] text-[#0B63CE]"
+                  : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>Sản Phẩm (Bento)</span>
             </button>
 
             <button
@@ -393,7 +443,43 @@ export default function AdminPage() {
               }`}
             >
               <FileText className="w-3.5 h-3.5" />
-              <span>Thông Tin Biểu Mẫu Báo Giá</span>
+              <span>Biểu Mẫu Báo Giá</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("certifications")}
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+                activeTab === "certifications"
+                  ? "border-[#0B63CE] text-[#0B63CE]"
+                  : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
+              }`}
+            >
+              <Award className="w-3.5 h-3.5" />
+              <span>Giấy Chứng Nhận</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("workflow")}
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+                activeTab === "workflow"
+                  ? "border-[#0B63CE] text-[#0B63CE]"
+                  : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
+              }`}
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              <span>Quy Trình 6 Bước</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("final_cta")}
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+                activeTab === "final_cta"
+                  ? "border-[#0B63CE] text-[#0B63CE]"
+                  : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>CTA Cuối Trang</span>
             </button>
 
             <button
@@ -429,28 +515,27 @@ export default function AdminPage() {
               }`}
             >
               <History className="w-3.5 h-3.5" />
-              <span>Lịch Sử (Revisions)</span>
+              <span>Lịch Sử</span>
             </button>
           </div>
 
-          {/* Left Form Content (Scrolls independently up and down) */}
+          {/* Left Form Content */}
           <div className="p-6 space-y-4 flex-1 overflow-y-auto">
-            {/* TAB 1: HOTLINE, EMAIL & FACTORY ADDRESS */}
+            {/* TAB 1: HOTLINE, EMAIL & ADDRESS */}
             {activeTab === "contact" && (
               <div className="space-y-4">
                 <div className="bg-[#EAF3FC] p-4 rounded-xl border border-[#D9E4EF] space-y-1">
                   <h3 className="font-bold text-sm text-[#102A43] flex items-center gap-2">
                     <Phone className="w-4 h-4 text-[#0B63CE]" />
-                    Quản Lý Thông Tin Hotline, Email & Địa Chỉ Nhà Máy
+                    Quản Lý Thông Tin Liên Hệ & Địa Chỉ Nhà Máy
                   </h3>
                   <p className="text-xs text-[#40566F]">
-                    Thay đổi thông tin liên hệ chính thức hiển thị tại Thanh Menu, Biểu Mẫu Báo Giá và Chân Trang (Footer). Hai cột Admin và Web cuộn hoàn toàn độc lập!
+                    Thay đổi Hotline, Email và Địa chỉ nhà máy hiển thị tại Header, Footer và Biểu mẫu báo giá.
                   </p>
                 </div>
 
                 <div className="space-y-4">
-                  {/* Hotline Input */}
-                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm relative group">
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
                     <div className="flex items-center justify-between">
                       <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
                         <Phone className="w-3.5 h-3.5 text-[#0B63CE]" />
@@ -459,7 +544,6 @@ export default function AdminPage() {
                       <button
                         onClick={() => handleManualScrollToTarget("nav_phone")}
                         className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
-                        title="Xem vị trí hiển thị trên web"
                       >
                         <Eye className="w-3 h-3" /> Xem vị trí web
                       </button>
@@ -468,25 +552,19 @@ export default function AdminPage() {
                       type="text"
                       value={draft.nav_phone || "083 572 6666"}
                       onChange={(e) => updateDraft("nav_phone", e.target.value)}
-                      placeholder="083 572 6666"
                       className="admin-input font-bold text-[#0B63CE]"
                     />
-                    <span className="text-[11px] text-[#6B7C93] block">
-                      Hiển thị tại Header Navbar, Hỗ trợ trực tiếp từ nhà máy và Footer.
-                    </span>
                   </div>
 
-                  {/* Email Input */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
                     <div className="flex items-center justify-between">
                       <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
                         <Mail className="w-3.5 h-3.5 text-[#0B63CE]" />
-                        Email tiếp nhận bản vẽ & báo giá
+                        Email nhận bản vẽ & báo giá
                       </label>
                       <button
-                        onClick={() => handleManualScrollToTarget("quote_email")}
+                        onClick={() => handleManualScrollToTarget("nav_email")}
                         className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
-                        title="Xem vị trí hiển thị trên web"
                       >
                         <Eye className="w-3 h-3" /> Xem vị trí web
                       </button>
@@ -495,25 +573,19 @@ export default function AdminPage() {
                       type="email"
                       value={draft.nav_email || "phuocpefoam@gmail.com"}
                       onChange={(e) => updateDraft("nav_email", e.target.value)}
-                      placeholder="phuocpefoam@gmail.com"
                       className="admin-input font-bold text-[#102A43]"
                     />
-                    <span className="text-[11px] text-[#6B7C93] block">
-                      Email chính thức nhận yêu cầu bản vẽ CAD/PDF từ khách hàng doanh nghiệp.
-                    </span>
                   </div>
 
-                  {/* Factory Address Input */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
                     <div className="flex items-center justify-between">
                       <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
                         <MapPin className="w-3.5 h-3.5 text-[#0B63CE]" />
-                        Địa chỉ nhà máy & xưởng gia công
+                        Địa chỉ nhà máy sản xuất
                       </label>
                       <button
                         onClick={() => handleManualScrollToTarget("quote_factory_address")}
                         className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
-                        title="Xem vị trí hiển thị trên web"
                       >
                         <Eye className="w-3 h-3" /> Xem vị trí web
                       </button>
@@ -522,24 +594,116 @@ export default function AdminPage() {
                       rows={2}
                       value={draft.footer_address || "Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An"}
                       onChange={(e) => updateDraft("footer_address", e.target.value)}
-                      placeholder="Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An"
                       className="admin-input font-medium text-[#102A43]"
                     />
-                    <span className="text-[11px] text-[#6B7C93] block">
-                      Địa chỉ nhà máy sản xuất chính thức của Đức Phúc PE Foam.
-                    </span>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* TAB 2: QUOTE FORM CONFIGURATION */}
+            {/* TAB 2: HERO BANNER */}
+            {activeTab === "hero" && (
+              <div className="space-y-4">
+                <div className="bg-[#EAF3FC] p-4 rounded-xl border border-[#D9E4EF] space-y-1">
+                  <h3 className="font-bold text-sm text-[#102A43] flex items-center gap-2">
+                    <HomeIcon className="w-4 h-4 text-[#0B63CE]" />
+                    Chỉnh Sửa Văn Bản Banner Trang Chủ (Hero Section)
+                  </h3>
+                  <p className="text-xs text-[#40566F]">
+                    Thay đổi huy hiệu, tiêu đề chính, mô tả và các nút kêu gọi hành động của trang chủ.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] block">Huy hiệu trên cùng (Badge)</label>
+                    <input
+                      type="text"
+                      value={draft.hero_badge || "GIẢI PHÁP LDPE VÀ PE FOAM THEO YÊU CẦU"}
+                      onChange={(e) => updateDraft("hero_badge", e.target.value)}
+                      className="admin-input font-bold text-[#0B63CE]"
+                    />
+                  </div>
+
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] block">Tiêu đề chính Hero (H1)</label>
+                    <input
+                      type="text"
+                      value={draft.hero_title || "Ôm trọn sản phẩm. Bảo vệ hàng hóa. Giữ vững uy tín thương hiệu."}
+                      onChange={(e) => updateDraft("hero_title", e.target.value)}
+                      className="admin-input font-bold text-[#102A43]"
+                    />
+                  </div>
+
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] block">Mô tả chi tiết Hero</label>
+                    <textarea
+                      rows={4}
+                      value={
+                        draft.hero_desc ||
+                        "Cung cấp màng LDPE, túi đóng gói, xốp PE foam chống sốc, khay định hình và các giải pháp bảo vệ sản phẩm theo kích thước, đặc tính và quy trình vận chuyển thực tế."
+                      }
+                      onChange={(e) => updateDraft("hero_desc", e.target.value)}
+                      className="admin-input"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                      <label className="font-bold text-xs text-[#102A43] block">Nút chính (Primary CTA)</label>
+                      <input
+                        type="text"
+                        value={draft.hero_cta_primary || "Nhận tư vấn và báo giá"}
+                        onChange={(e) => updateDraft("hero_cta_primary", e.target.value)}
+                        className="admin-input font-bold text-[#0B63CE]"
+                      />
+                    </div>
+                    <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                      <label className="font-bold text-xs text-[#102A43] block">Nút phụ (Secondary CTA)</label>
+                      <input
+                        type="text"
+                        value={draft.hero_cta_secondary || "Khám phá sản phẩm LDPE"}
+                        onChange={(e) => updateDraft("hero_cta_secondary", e.target.value)}
+                        className="admin-input"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 3: PRODUCTS CATALOG */}
+            {activeTab === "products" && (
+              <div className="space-y-4">
+                <div className="bg-[#EAF3FC] p-4 rounded-xl border border-[#D9E4EF] space-y-1">
+                  <h3 className="font-bold text-sm text-[#102A43] flex items-center gap-2">
+                    <Layers className="w-4 h-4 text-[#0B63CE]" />
+                    Chỉnh Sửa Văn Bản Danh Mục Sản Phẩm (Bento Grid)
+                  </h3>
+                  <p className="text-xs text-[#40566F]">
+                    Thay đổi tiêu đề chung và mô tả khối sản phẩm LDPE & PE Foam.
+                  </p>
+                </div>
+
+                <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                  <label className="font-bold text-xs text-[#102A43] block">Tiêu đề khối sản phẩm (H2)</label>
+                  <input
+                    type="text"
+                    value={draft.catalog_title || "Danh Mục Sản Phẩm LDPE & Xốp PE Foam Nhà Máy Đức Phúc"}
+                    onChange={(e) => updateDraft("catalog_title", e.target.value)}
+                    className="admin-input font-bold text-[#102A43]"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* TAB 4: QUOTE FORM */}
             {activeTab === "quote_form" && (
               <div className="space-y-4">
                 <div className="bg-[#EAF3FC] p-4 rounded-xl border border-[#D9E4EF] space-y-1">
                   <h3 className="font-bold text-sm text-[#102A43] flex items-center gap-2">
                     <FileText className="w-4 h-4 text-[#0B63CE]" />
-                    Quản Lý Nội Dung Biểu Mẫu Nhận Báo Giá
+                    Chỉnh Sửa Văn Bản Biểu Mẫu Nhận Báo Giá
                   </h3>
                   <p className="text-xs text-[#40566F]">
                     Chỉnh sửa các tiêu đề, mô tả hướng dẫn, nhãn nút bấm và thông tin cọc mẫu SePay QR.
@@ -547,19 +711,8 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-4">
-                  {/* Section Title */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <label className="font-bold text-xs text-[#102A43] block">
-                        Tiêu đề khối báo giá (H2)
-                      </label>
-                      <button
-                        onClick={() => handleManualScrollToTarget("quote_title")}
-                        className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
-                      >
-                        <Eye className="w-3 h-3" /> Xem vị trí web
-                      </button>
-                    </div>
+                    <label className="font-bold text-xs text-[#102A43] block">Tiêu đề khối báo giá (H2)</label>
                     <input
                       type="text"
                       value={draft.quote_title || "Bạn chưa biết nên chọn loại LDPE hoặc PE foam nào?"}
@@ -568,43 +721,21 @@ export default function AdminPage() {
                     />
                   </div>
 
-                  {/* Section Description */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <label className="font-bold text-xs text-[#102A43] block">
-                        Mô tả hướng dẫn gửi mẫu & quy cách
-                      </label>
-                      <button
-                        onClick={() => handleManualScrollToTarget("quote_desc")}
-                        className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
-                      >
-                        <Eye className="w-3 h-3" /> Xem vị trí web
-                      </button>
-                    </div>
+                    <label className="font-bold text-xs text-[#102A43] block">Mô tả hướng dẫn gửi mẫu</label>
                     <textarea
                       rows={3}
                       value={
                         draft.quote_desc ||
-                        "Hãy gửi cho chúng tôi mẫu sản phẩm, kích thước, số lượng dự kiến và yêu cầu vận chuyển. Đội ngũ tư vấn sẽ hỗ trợ xác định phương án phù hợp trước khi báo giá."
+                        "Hãy gửi cho chúng tôi mẫu sản phẩm, kích thước, số lượng dự kiến và yêu cầu vận chuyển."
                       }
                       onChange={(e) => updateDraft("quote_desc", e.target.value)}
                       className="admin-input"
                     />
                   </div>
 
-                  {/* Form Submit Button Text */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <label className="font-bold text-xs text-[#102A43] block">
-                        Chữ hiển thị trên Nút Gửi Báo Giá
-                      </label>
-                      <button
-                        onClick={() => handleManualScrollToTarget("form_submit_btn")}
-                        className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
-                      >
-                        <Eye className="w-3 h-3" /> Xem vị trí web
-                      </button>
-                    </div>
+                    <label className="font-bold text-xs text-[#102A43] block">Chữ hiển thị Nút Gửi Báo Giá</label>
                     <input
                       type="text"
                       value={draft.form_submit_btn || "Gửi yêu cầu báo giá"}
@@ -616,7 +747,97 @@ export default function AdminPage() {
               </div>
             )}
 
-            {/* TAB 3: MEDIA LIBRARY */}
+            {/* TAB 5: CERTIFICATIONS */}
+            {activeTab === "certifications" && (
+              <div className="space-y-4">
+                <div className="bg-[#EAF3FC] p-4 rounded-xl border border-[#D9E4EF] space-y-1">
+                  <h3 className="font-bold text-sm text-[#102A43] flex items-center gap-2">
+                    <Award className="w-4 h-4 text-[#0B63CE]" />
+                    Chỉnh Sửa Văn Bản Chứng Nhận Chất Lượng
+                  </h3>
+                  <p className="text-xs text-[#40566F]">
+                    Quản lý thông tin tiêu đề chứng chỉ ISO 9001:2015, SGS REACH & RoHS.
+                  </p>
+                </div>
+
+                <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                  <label className="font-bold text-xs text-[#102A43] block">Tiêu đề khối chứng nhận</label>
+                  <input
+                    type="text"
+                    value={draft.cert_title || "Chứng Nhận Chất Lượng & Tiêu Chuẩn Quốc Tế Nhà Máy Đức Phúc"}
+                    onChange={(e) => updateDraft("cert_title", e.target.value)}
+                    className="admin-input font-bold text-[#102A43]"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* TAB 6: WORKFLOW */}
+            {activeTab === "workflow" && (
+              <div className="space-y-4">
+                <div className="bg-[#EAF3FC] p-4 rounded-xl border border-[#D9E4EF] space-y-1">
+                  <h3 className="font-bold text-sm text-[#102A43] flex items-center gap-2">
+                    <SlidersHorizontal className="w-4 h-4 text-[#0B63CE]" />
+                    Chỉnh Sửa Tiêu Đề Quy Trình Làm Việc
+                  </h3>
+                  <p className="text-xs text-[#40566F]">
+                    Cập nhật tiêu đề và mô tả 6 bước tiếp nhận đơn hàng.
+                  </p>
+                </div>
+
+                <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                  <label className="font-bold text-xs text-[#102A43] block">Tiêu đề quy trình làm việc</label>
+                  <input
+                    type="text"
+                    value={draft.workflow_title || "Quy Trình 6 Bước Hợp Tác & Sản Xuất"}
+                    onChange={(e) => updateDraft("workflow_title", e.target.value)}
+                    className="admin-input font-bold text-[#102A43]"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* TAB 7: FINAL CTA */}
+            {activeTab === "final_cta" && (
+              <div className="space-y-4">
+                <div className="bg-[#EAF3FC] p-4 rounded-xl border border-[#D9E4EF] space-y-1">
+                  <h3 className="font-bold text-sm text-[#102A43] flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-[#0B63CE]" />
+                    Chỉnh Sửa Văn Bản Nút Kêu Gọi Cuối Trang (CTA)
+                  </h3>
+                  <p className="text-xs text-[#40566F]">
+                    Cập nhật thông điệp chốt sale ở chân trang.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] block">Tiêu đề CTA cuối trang</label>
+                    <input
+                      type="text"
+                      value={draft.final_cta_title || "Đừng để bao bì trở thành điểm yếu của một sản phẩm tốt"}
+                      onChange={(e) => updateDraft("final_cta_title", e.target.value)}
+                      className="admin-input font-bold text-[#102A43]"
+                    />
+                  </div>
+
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] block">Mô tả CTA cuối trang</label>
+                    <textarea
+                      rows={3}
+                      value={
+                        draft.final_cta_subtext ||
+                        "Một giải pháp LDPE hoặc PE foam phù hợp giúp sản phẩm được bảo vệ tốt hơn, đóng gói nhanh hơn."
+                      }
+                      onChange={(e) => updateDraft("final_cta_subtext", e.target.value)}
+                      className="admin-input"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 8: MEDIA */}
             {activeTab === "media" && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -647,7 +868,7 @@ export default function AdminPage() {
               </div>
             )}
 
-            {/* TAB 4: SEO MANAGER */}
+            {/* TAB 9: SEO MANAGER */}
             {activeTab === "seo" && (
               <div className="space-y-4 text-xs">
                 <h3 className="font-bold text-sm text-[#102A43]">Cấu Hình SEO Meta & Social Card</h3>
@@ -674,7 +895,7 @@ export default function AdminPage() {
               </div>
             )}
 
-            {/* TAB 5: REVISIONS HISTORY */}
+            {/* TAB 10: REVISIONS HISTORY */}
             {activeTab === "revisions" && (
               <div className="space-y-3">
                 <h3 className="font-bold text-sm text-[#102A43]">Lịch Sử Phiên Bản Đã Xuất Bản (Revisions)</h3>
@@ -707,7 +928,7 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Live Web Preview (100% Independent Scrolling) */}
+        {/* RIGHT COLUMN: Live Web Preview */}
         <div
           ref={previewContainerRef}
           id="admin-live-preview-window"
