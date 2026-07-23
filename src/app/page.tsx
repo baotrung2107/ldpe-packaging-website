@@ -8,6 +8,7 @@ import PainPointsSection from "@/components/sections/PainPointsSection";
 import ProductCatalogSection from "@/components/sections/ProductCatalogSection";
 import IndustrySolutionsSection from "@/components/sections/IndustrySolutionsSection";
 import BenefitsSection from "@/components/sections/BenefitsSection";
+import CertificationsSection from "@/components/sections/CertificationsSection";
 import WorkflowSection from "@/components/sections/WorkflowSection";
 import QuoteFormSection from "@/components/sections/QuoteFormSection";
 import FaqSection from "@/components/sections/FaqSection";
@@ -35,25 +36,28 @@ export default function Home() {
       {/* 3. Vấn đề khách hàng */}
       <PainPointsSection />
 
-      {/* 4. Danh mục sản phẩm (8 sản phẩm & CTAs) */}
+      {/* 4. Danh mục sản phẩm */}
       <ProductCatalogSection onSelectProduct={handleSelectProduct} />
 
-      {/* 5. Giải pháp theo ngành (7 ngành) */}
+      {/* 5. Giải pháp theo ngành */}
       <IndustrySolutionsSection />
 
-      {/* 6. Lợi ích dành cho doanh nghiệp (10 lợi ích) */}
+      {/* 6. Lợi ích dành cho doanh nghiệp */}
       <BenefitsSection />
 
-      {/* 7. Quy trình làm việc 6 bước */}
+      {/* 7. Chứng nhận kiểm định SGS REACH & RoHS */}
+      <CertificationsSection />
+
+      {/* 8. Quy trình làm việc 6 bước */}
       <WorkflowSection />
 
-      {/* 8. Khối báo giá & Tích hợp SePay QR Payment */}
+      {/* 9. Khối báo giá & Tích hợp SePay QR Payment */}
       <QuoteFormSection preselectedProduct={selectedProduct} />
 
-      {/* 9. Kiến thức LDPE (6 FAQs Accordion) */}
+      {/* 10. Kiến thức LDPE */}
       <FaqSection />
 
-      {/* 10. CTA Cuối trang */}
+      {/* 11. CTA Cuối trang */}
       <FinalCtaSection />
 
       {/* Footer */}

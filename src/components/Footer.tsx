@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldCheck, Phone, Mail, MapPin } from "lucide-react";
+import { ShieldCheck, Phone, Mail, MapPin, Award } from "lucide-react";
 import { useCMS } from "@/context/CMSContext";
 
 export default function Footer() {
@@ -8,7 +8,7 @@ export default function Footer() {
 
   const phone = getOverride("nav_phone", "083 572 6666");
   const email = getOverride("nav_email", "lienhe@ldpe-packaging.vn");
-  const copyright = getOverride("footer_copyright", "© 2026 ĐỨC PHÚC PE FOAM. Tất cả quyền được bảo lưu.");
+  const copyright = getOverride("footer_copyright", "© 2026 CÔNG TY TNHH SẢN XUẤT PE FOAM ĐỨC PHÚC. Tất cả quyền được bảo lưu.");
   const logoUrl = getOverride("nav_logo_url", "");
 
   return (
@@ -31,12 +31,18 @@ export default function Footer() {
             </div>
 
             <p className="text-xs leading-relaxed text-[#D9E4EF]">
-              Nhà máy Đức Phúc chuyên sản xuất và gia công trực tiếp các sản phẩm màng LDPE, túi nhựa, tấm cuộn PE foam chống sốc, khay định hình cao cấp theo yêu cầu doanh nghiệp.
+              Công ty TNHH Sản Xuất PE Foam Đức Phúc chuyên sản xuất và gia công trực tiếp các sản phẩm màng LDPE, túi nhựa, tấm cuộn PE foam chống sốc, khay định hình cao cấp theo chuẩn SGS REACH & RoHS.
             </p>
 
-            <div className="flex items-center gap-3 pt-2 text-xs text-[#EAF3FC]">
-              <ShieldCheck className="w-4 h-4 text-[#0B63CE]" />
-              <span>Tiêu chuẩn quản lý chất lượng ISO 9001:2015</span>
+            <div className="space-y-1.5 pt-1 text-xs text-[#EAF3FC]">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#0B63CE] shrink-0" />
+                <span>ISO 9001:2015 • Kiếm định SGS REACH No. VNHL2401000844EE</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Award className="w-4 h-4 text-[#38BDF8] shrink-0" />
+                <span>Kiểm định SGS RoHS 2.0 No. VNHL2204007729EE</span>
+              </div>
             </div>
           </div>
 
@@ -72,7 +78,7 @@ export default function Footer() {
             <div className="space-y-2.5 text-xs text-[#D9E4EF]">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#0B63CE] shrink-0 mt-0.5" />
-                <span>Nhà máy Đức Phúc: Cụm Công Nghiệp Sản Xuất Bao Bì</span>
+                <span>Nhà máy: Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An, Việt Nam</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#0B63CE] shrink-0" />
@@ -90,9 +96,9 @@ export default function Footer() {
         <div className="pt-8 border-t border-[#103E6B] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#6B7C93]">
           <p>{copyright}</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-[#D9E4EF]">Chính sách bảo mật</a>
-            <a href="#" className="hover:text-[#D9E4EF]">Điều khoản dịch vụ</a>
-            <a href="#" className="hover:text-[#D9E4EF]">Quy chuẩn kỹ thuật</a>
+            <a href="#chung-nhan" className="hover:text-[#D9E4EF]">Báo cáo SGS REACH</a>
+            <a href="#chung-nhan" className="hover:text-[#D9E4EF]">Báo cáo SGS RoHS</a>
+            <a href="#chung-nhan" className="hover:text-[#D9E4EF]">Catalogue #27319</a>
           </div>
         </div>
       </div>
