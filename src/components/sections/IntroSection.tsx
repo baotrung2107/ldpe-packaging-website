@@ -11,12 +11,12 @@ export default function IntroSection() {
               KIẾN THỨC VẬT LIỆU
             </span>
 
-            {/* H2 Title - 40px desktop, 30px mobile */}
+            {/* H2 Title */}
             <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43] leading-snug [text-wrap:balance]">
               LDPE là gì?
             </h2>
 
-            <p className="text-[16px] md:text-[17px] text-[#40566F] leading-relaxed">
+            <p className="text-[16px] md:text-[17px] text-[#40566F] leading-relaxed [text-wrap:pretty]">
               LDPE là nhựa polyethylene mật độ thấp, có đặc tính mềm, nhẹ, linh hoạt và dễ gia công. Vật liệu này được sử dụng rộng rãi trong sản xuất màng nhựa, túi đóng gói, bao bì mềm, lớp bảo vệ và nhiều sản phẩm phục vụ công nghiệp, thương mại và đời sống.
             </p>
 
@@ -25,19 +25,21 @@ export default function IntroSection() {
                 <Sparkles className="w-4 h-4 text-[#0B63CE]" />
                 <span>Giải pháp đa dạng từ LDPE gốc</span>
               </div>
-              <p className="text-xs text-[#6B7C93]">
+              <p className="text-xs text-[#6B7C93] [text-wrap:pretty]">
                 Từ LDPE, doanh nghiệp có thể phát triển nhiều giải pháp khác nhau như màng cuộn, túi hàn nhiệt, màng co, tấm xốp PE foam, khay chống sốc và chi tiết định hình theo sản phẩm.
               </p>
             </div>
           </div>
 
-          {/* Right Column: Decision Factors Cards */}
+          {/* Right Column: Decision Factors Cards (Fixed "lựa chọn" and "đóng gói" phrase splitting!) */}
           <div className="lg:col-span-7 bg-white p-6 md:p-8 rounded-2xl border border-[#D9E4EF] shadow-md space-y-6">
             <h3 className="text-[21px] md:text-[24px] font-semibold text-[#102A43] [text-wrap:balance]">
-              Các yếu tố quyết định khi lựa chọn <span className="inline-block">giải pháp đóng&nbsp;gói&nbsp;LDPE</span>
+              <span className="inline-block">Các yếu&nbsp;tố quyết&nbsp;định</span>{" "}
+              <span className="inline-block">khi lựa&nbsp;chọn giải&nbsp;pháp</span>{" "}
+              <span className="inline-block">đóng&nbsp;gói&nbsp;LDPE</span>
             </h3>
 
-            <p className="text-[15px] text-[#40566F]">
+            <p className="text-[15px] text-[#40566F] [text-wrap:pretty]">
               Việc lựa chọn đúng loại vật liệu không chỉ phụ thuộc vào độ dày. Cần xem xét toàn diện các thông số thực tế của sản phẩm và quy trình vận chuyển:
             </p>
 
@@ -48,7 +50,7 @@ export default function IntroSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-[#102A43] text-sm">Kích thước & Trọng lượng</h4>
-                  <p className="text-xs text-[#6B7C93] mt-1">Đánh giá khả năng chịu lực nén, lực kéo dãn và điểm phân bổ trọng lượng.</p>
+                  <p className="text-xs text-[#6B7C93] mt-1 [text-wrap:pretty]">Đánh giá khả năng chịu lực nén, lực kéo dãn và điểm phân bổ trọng lượng.</p>
                 </div>
               </div>
 
@@ -58,7 +60,7 @@ export default function IntroSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-[#102A43] text-sm">Độ sắc cạnh & Bề mặt</h4>
-                  <p className="text-xs text-[#6B7C93] mt-1">Lựa chọn xốp PE foam lót hoặc khay định hình chống đâm thủng, trầy sơn.</p>
+                  <p className="text-xs text-[#6B7C93] mt-1 [text-wrap:pretty]">Lựa chọn xốp PE foam lót hoặc khay định hình chống đâm thủng, trầy sơn.</p>
                 </div>
               </div>
 
@@ -68,7 +70,7 @@ export default function IntroSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-[#102A43] text-sm">Môi trường lưu kho</h4>
-                  <p className="text-xs text-[#6B7C93] mt-1">Khả năng chống ẩm, bụi bẩn, chống tĩnh điện ESD hoặc bảo vệ trong kho lạnh.</p>
+                  <p className="text-xs text-[#6B7C93] mt-1 [text-wrap:pretty]">Khả năng chống ẩm, bụi bẩn, chống tĩnh điện ESD hoặc bảo vệ trong kho lạnh.</p>
                 </div>
               </div>
 
@@ -78,7 +80,7 @@ export default function IntroSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-[#102A43] text-sm">Quãng đường vận chuyển</h4>
-                  <p className="text-xs text-[#6B7C93] mt-1">Tính toán độ dày vật liệu chống xóc nẩy qua nhiều chặng giao vận.</p>
+                  <p className="text-xs text-[#6B7C93] mt-1 [text-wrap:pretty]">Tính toán độ dày vật liệu chống xóc nẩy qua nhiều chặng giao vận.</p>
                 </div>
               </div>
             </div>

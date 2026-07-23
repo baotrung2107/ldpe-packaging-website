@@ -53,7 +53,7 @@ export default function HeroSection() {
               </span>
             </div>
 
-            {/* Main Title with Smart Text Wrapping & Balanced Line Breaks */}
+            {/* Main Title with Semantic Phrase Protection */}
             <h1
               className="text-[36px] sm:text-[44px] lg:text-[54px] font-extrabold leading-[1.15] text-white tracking-tight drop-shadow-sm [text-wrap:balance]"
               data-cms-section="hero"
@@ -62,10 +62,10 @@ export default function HeroSection() {
             >
               {title.includes("Giữ vững uy") ? (
                 <>
-                  <span className="block">Ôm trọn sản phẩm.</span>
-                  <span className="block">Bảo vệ hàng hóa.</span>
+                  <span className="block">Ôm&nbsp;trọn sản&nbsp;phẩm.</span>
+                  <span className="block">Bảo&nbsp;vệ hàng&nbsp;hóa.</span>
                   <span className="bg-gradient-to-r from-[#38BDF8] via-[#60A5FA] to-[#93C5FD] bg-clip-text text-transparent inline-block">
-                    Giữ vững uy&nbsp;tín thương&nbsp;hiệu.
+                    Giữ&nbsp;vững uy&nbsp;tín thương&nbsp;hiệu.
                   </span>
                 </>
               ) : (
@@ -75,7 +75,7 @@ export default function HeroSection() {
               )}
             </h1>
 
-            {/* Subtext Paragraph rendered via SmartTextRenderer (Double Enter -> <p>, Single Enter -> \n) */}
+            {/* Subtext Paragraph */}
             <div
               className="text-[15px] sm:text-[16px] lg:text-[17px] text-[#D9E4EF] leading-relaxed max-w-2xl font-normal"
               data-cms-section="hero"
@@ -109,28 +109,28 @@ export default function HeroSection() {
               </a>
             </div>
 
-            {/* Value Proposition Badges Grid */}
+            {/* Value Proposition Badges Grid (Fixed "Sản xuất theo nhu cầu" splitting!) */}
             <div className="pt-6 border-t border-[#103E6B]/80 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs md:text-sm text-[#D9E4EF]">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
-                <span>Tư vấn theo mẫu</span>
+                <span>Tư&nbsp;vấn theo&nbsp;mẫu</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
-                <span>Gia công kích thước</span>
+                <span>Gia&nbsp;công kích&nbsp;thước</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
-                <span>Hỗ trợ thử mẫu</span>
+                <span>Hỗ&nbsp;trợ thử&nbsp;mẫu</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
-                <span>Sản xuất theo nhu cầu</span>
+                <span>Sản&nbsp;xuất theo <span className="whitespace-nowrap">nhu&nbsp;cầu</span></span>
               </div>
             </div>
           </div>
 
-          {/* Right Media Column - Perfectly Spaced Glass Showcase */}
+          {/* Right Media Column */}
           <div className="lg:col-span-5 space-y-4">
             <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl group bg-[#062B4F]/90 backdrop-blur-md">
               {youtubeUrl ? (
@@ -171,25 +171,27 @@ export default function HeroSection() {
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#041B32] via-[#041B32]/90 to-transparent p-5 space-y-1">
                     <h3 className="text-sm font-bold text-white flex items-center gap-1.5 [text-wrap:balance]">
                       <Award className="w-4 h-4 text-[#38BDF8]" />
-                      Khay Xốp PE Foam Định Hình CNC Cao Cấp
+                      Khay Xốp PE Foam Định&nbsp;Hình CNC Cao&nbsp;Cấp
                     </h3>
                     <p className="text-xs text-[#D9E4EF] leading-relaxed [text-wrap:pretty]">
-                      Dây chuyền đùn thổi màng LDPE & dập định hình CNC chính xác theo kích thước sản phẩm.
+                      Dây chuyền đùn thổi màng LDPE & dập định&nbsp;hình CNC chính&nbsp;xác theo kích&nbsp;thước sản&nbsp;phẩm.
                     </p>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Clean Feature Info Badges Row */}
+            {/* Clean Feature Info Badges Row (Fixed "tuyệt đối" and "miễn phí" phrase splitting!) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-white text-[#102A43] p-3.5 rounded-xl border border-[#D9E4EF] shadow-lg flex items-center gap-3">
                 <div className="p-2.5 bg-[#EAF3FC] text-[#0B63CE] rounded-lg shrink-0">
                   <PackageCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-bold text-xs text-[#102A43]">Chính xác 100%</div>
-                  <div className="text-[11px] text-[#6B7C93]">Khay định hình vừa vặn tuyệt đối</div>
+                  <div className="font-bold text-xs text-[#102A43]">Chính&nbsp;xác 100%</div>
+                  <div className="text-[11px] text-[#6B7C93] [text-wrap:pretty]">
+                    Khay định&nbsp;hình vừa&nbsp;vặn <span className="whitespace-nowrap">tuyệt&nbsp;đối</span>
+                  </div>
                 </div>
               </div>
 
@@ -198,8 +200,10 @@ export default function HeroSection() {
                   <Clock3 className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-bold text-xs text-white">Thử mẫu nhanh 24h</div>
-                  <div className="text-[11px] text-[#D9E4EF]">Tư vấn & thiết kế 3D miễn phí</div>
+                  <div className="font-bold text-xs text-white">Thử&nbsp;mẫu nhanh&nbsp;24h</div>
+                  <div className="text-[11px] text-[#D9E4EF] [text-wrap:pretty]">
+                    Tư&nbsp;vấn & thiết&nbsp;kế 3D <span className="whitespace-nowrap">miễn&nbsp;phí</span>
+                  </div>
                 </div>
               </div>
             </div>

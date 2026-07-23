@@ -68,22 +68,29 @@ export default function CertificationsSection() {
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#0B63CE]/15 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 space-y-12">
-        {/* Section Header */}
+        {/* Section Header (Fixed "chất lượng" splitting!) */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="inline-flex items-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider bg-[#0B63CE]/20 px-3.5 py-1.5 rounded-full border border-[#38BDF8]/30 backdrop-blur-md">
             <Award className="w-4 h-4 text-[#38BDF8]" />
             CHỨNG NHẬN CHẤT LƯỢNG ISO 9001:2015 & SGS / EUROFINS QUỐC TẾ
           </span>
           <h2
-            className="text-[30px] md:text-[40px] font-extrabold text-white tracking-tight"
+            className="text-[30px] md:text-[40px] font-extrabold text-white tracking-tight [text-wrap:balance]"
             data-cms-section="certifications"
             data-cms-id="cert_title"
             data-cms-type="text"
           >
-            {title}
+            {title.includes("Nhà Máy Đức Phúc") ? (
+              <>
+                <span className="inline-block">Hồ sơ chứng&nbsp;nhận chất&nbsp;lượng</span>{" "}
+                <span className="inline-block">Nhà&nbsp;Máy Đức&nbsp;Phúc</span>
+              </>
+            ) : (
+              title
+            )}
           </h2>
           <p
-            className="text-[16px] md:text-[17px] text-[#D9E4EF] font-normal leading-relaxed"
+            className="text-[16px] md:text-[17px] text-[#D9E4EF] font-normal leading-relaxed [text-wrap:pretty]"
             data-cms-section="certifications"
             data-cms-id="cert_desc"
             data-cms-type="text"
@@ -92,7 +99,7 @@ export default function CertificationsSection() {
           </p>
         </div>
 
-        {/* 4 Official Certification Cards Grid (No Catalogue!) */}
+        {/* 4 Official Certification Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {certs.map((c, i) => (
             <div
@@ -137,7 +144,7 @@ export default function CertificationsSection() {
               <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
                 <div className="space-y-2">
                   <h3
-                    className="text-[16px] font-bold text-white group-hover:text-[#38BDF8] transition-colors leading-snug"
+                    className="text-[16px] font-bold text-white group-hover:text-[#38BDF8] transition-colors leading-snug [text-wrap:balance]"
                     data-cms-section="certifications"
                     data-cms-id={`cert_title_${i}`}
                     data-cms-type="text"
@@ -148,7 +155,7 @@ export default function CertificationsSection() {
                     Mã số: <span className="text-white font-semibold">{c.number}</span>
                   </div>
                   <p
-                    className="text-xs text-[#D9E4EF] leading-relaxed line-clamp-3"
+                    className="text-xs text-[#D9E4EF] leading-relaxed line-clamp-3 [text-wrap:pretty]"
                     data-cms-section="certifications"
                     data-cms-id={`cert_desc_${i}`}
                     data-cms-type="text"
@@ -179,10 +186,10 @@ export default function CertificationsSection() {
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
               CÔNG TY TNHH SẢN XUẤT PE FOAM ĐỨC PHÚC
             </div>
-            <h3 className="text-lg md:text-xl font-extrabold text-white">
+            <h3 className="text-lg md:text-xl font-extrabold text-white [text-wrap:balance]">
               Nhà máy chính thức: Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An
             </h3>
-            <p className="text-xs text-[#EAF3FC] max-w-2xl">
+            <p className="text-xs text-[#EAF3FC] max-w-2xl [text-wrap:pretty]">
               100% tài liệu chứng nhận thật: ISO 9001:2015 9199293409672-QMS, SGS REACH VNHL2401000844EE, SGS RoHS VNHL2204007729EE & Eurofins MTS 76122-070905 sẵn sàng đáp ứng mọi tiêu chuẩn kiểm định B2B.
             </p>
           </div>
