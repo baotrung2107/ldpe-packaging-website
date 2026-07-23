@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, ArrowRight, ShieldCheck, PackageCheck, Factory, Sparkles, Award, Zap } from "lucide-react";
+import { CheckCircle2, ArrowRight, ShieldCheck, PackageCheck, Factory, Sparkles, Clock3, Award } from "lucide-react";
 import { useCMS } from "@/context/CMSContext";
 
 export default function HeroSection() {
@@ -20,14 +20,14 @@ export default function HeroSection() {
 
   return (
     <section className="relative bg-[#041B32] text-white py-16 lg:py-24 overflow-hidden border-b border-[#0B3B6F]">
-      {/* Real High-Tech LDPE Factory Floor Background Image */}
+      {/* High-Tech LDPE Factory Floor Background */}
       <div className="absolute inset-0 z-0">
         <img
           src={factoryBg}
           alt="Nhà máy sản xuất LDPE & PE Foam"
           className="w-full h-full object-cover object-center filter brightness-[0.45] contrast-[1.1] scale-105"
         />
-        {/* Navy Gradient Overlay for Text Legibility & Glassmorphism Aesthetics */}
+        {/* Navy Gradient Overlay for High Readability & Glassmorphism */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#041A30]/95 via-[#062B4F]/85 to-[#062B4F]/60" />
         <div className="absolute inset-0 bg-[radial-gradient(#0B63CE_1px,transparent_1px)] [background-size:32px_32px] opacity-15" />
       </div>
@@ -43,7 +43,7 @@ export default function HeroSection() {
               <span>{badge}</span>
             </div>
 
-            {/* Main Title - 54px desktop with High Contrast Gradient Accent */}
+            {/* Main Title with Gradient Highlight */}
             <h1 className="text-[36px] sm:text-[44px] lg:text-[54px] font-extrabold leading-[1.15] text-white tracking-tight drop-shadow-sm">
               Ôm trọn sản phẩm. <br />
               Bảo vệ hàng hóa. <br />
@@ -53,7 +53,7 @@ export default function HeroSection() {
             </h1>
 
             {/* Subtext Paragraph */}
-            <div className="text-[15px] sm:text-[16px] lg:text-[17px] text-[#D9E4EF] leading-relaxed max-w-2xl whitespace-pre-line font-normal text-shadow-sm">
+            <div className="text-[15px] sm:text-[16px] lg:text-[17px] text-[#D9E4EF] leading-relaxed max-w-2xl whitespace-pre-line font-normal">
               {desc}
             </div>
 
@@ -90,8 +90,8 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Showcase Column - Glassmorphic Product Card Showcase over Factory Background */}
-          <div className="lg:col-span-5 relative">
+          {/* Right Media Column - Perfectly Spaced Glass Showcase (Zero Overlap!) */}
+          <div className="lg:col-span-5 space-y-4">
             <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl group bg-[#062B4F]/90 backdrop-blur-md">
               {youtubeUrl ? (
                 <div className="aspect-video w-full">
@@ -110,35 +110,49 @@ export default function HeroSection() {
                     alt="Sản phẩm mút xốp định hình LDPE"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#041B32] via-transparent to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#041B32]/90 via-transparent to-black/30" />
 
-                  {/* Clean Bottom Overlay Card */}
-                  <div className="absolute bottom-4 left-4 right-4 bg-[#041B32]/80 backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-xl space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5 text-[#38BDF8]" />
-                        QUY TRÌNH CHUẨN ISO 9001:2015
-                      </span>
-                      <span className="bg-[#0B63CE] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                        NHÀ MÁY ĐỨC PHÚC
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#D9E4EF]">
-                      Hệ thống dây chuyền đùn thổi màng LDPE & gia công mút xốp PE foam CNC tự động hóa.
+                  {/* Sleek Header Glass Pill Badge (Top Left inside Image) */}
+                  <div className="absolute top-3.5 left-3.5 flex items-center gap-2 bg-[#041B32]/85 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg">
+                    <Sparkles className="w-3.5 h-3.5 text-[#38BDF8]" />
+                    <span>ISO 9001:2015</span>
+                    <span className="text-[#38BDF8] font-bold">| NHÀ MÁY ĐỨC PHÚC</span>
+                  </div>
+
+                  {/* Clean Bottom Overlay Information Bar */}
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#041B32] via-[#041B32]/90 to-transparent p-5 space-y-1">
+                    <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                      <Award className="w-4 h-4 text-[#38BDF8]" />
+                      Khay Xốp PE Foam Định Hình CNC Cao Cấp
+                    </h3>
+                    <p className="text-xs text-[#D9E4EF] leading-relaxed">
+                      Dây chuyền đùn thổi màng LDPE & dập định hình CNC chính xác theo kích thước sản phẩm.
                     </p>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Separate Floating Badge */}
-            <div className="hidden sm:flex items-center gap-3.5 absolute -bottom-6 -left-6 bg-white text-[#102A43] p-4 rounded-2xl border border-[#D9E4EF] shadow-2xl">
-              <div className="p-3 bg-[#EAF3FC] text-[#0B63CE] rounded-xl shrink-0">
-                <PackageCheck className="w-6 h-6" />
+            {/* Clean Feature Info Badges Row (Positioned below image with ZERO overlap!) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="bg-white text-[#102A43] p-3.5 rounded-xl border border-[#D9E4EF] shadow-lg flex items-center gap-3">
+                <div className="p-2.5 bg-[#EAF3FC] text-[#0B63CE] rounded-lg shrink-0">
+                  <PackageCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="font-bold text-xs text-[#102A43]">Chính xác 100%</div>
+                  <div className="text-[11px] text-[#6B7C93]">Khay định hình vừa vặn tuyệt đối</div>
+                </div>
               </div>
-              <div>
-                <div className="font-bold text-sm text-[#102A43]">Chính xác 100%</div>
-                <div className="text-xs text-[#6B7C93]">Khay xốp định hình vừa vặn tuyệt đối</div>
+
+              <div className="bg-[#0B3B6F]/80 backdrop-blur-md text-white p-3.5 rounded-xl border border-[#38BDF8]/30 shadow-lg flex items-center gap-3">
+                <div className="p-2.5 bg-[#38BDF8]/20 text-[#38BDF8] rounded-lg shrink-0">
+                  <Clock3 className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="font-bold text-xs text-white">Thử mẫu nhanh 24h</div>
+                  <div className="text-[11px] text-[#D9E4EF]">Tư vấn & thiết kế 3D miễn phí</div>
+                </div>
               </div>
             </div>
           </div>
