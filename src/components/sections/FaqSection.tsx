@@ -49,10 +49,22 @@ export default function FaqSection() {
           <span className="text-xs font-semibold text-[#0B63CE] uppercase tracking-wider bg-[#EAF3FC] px-3 py-1 rounded-full border border-[#D9E4EF]">
             GIẢI ĐÁP KỸ THUẬT
           </span>
-          <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43]">
-            {faqTitle}
+          <h2
+            className="text-[30px] md:text-[40px] font-bold text-[#102A43] [text-wrap:balance]"
+            data-cms-section="faq"
+            data-cms-id="faq_title"
+            data-cms-type="text"
+          >
+            {faqTitle.includes("Giải") ? (
+              <>
+                <span className="inline-block">Kiến&nbsp;thức vật&nbsp;liệu</span> &amp;{" "}
+                <span className="inline-block">Giải&nbsp;đáp thắc&nbsp;mắc&nbsp;LDPE</span>
+              </>
+            ) : (
+              faqTitle
+            )}
           </h2>
-          <p className="text-[16px] md:text-[17px] text-[#40566F]">
+          <p className="text-[16px] md:text-[17px] text-[#40566F] [text-wrap:pretty]">
             Các câu hỏi thường gặp giúp doanh nghiệp lựa chọn đúng quy cách vật liệu bao bì.
           </p>
         </div>
@@ -71,7 +83,7 @@ export default function FaqSection() {
                 >
                   <div className="flex items-center gap-3">
                     <HelpCircle className="w-5 h-5 text-[#0B63CE] shrink-0" />
-                    <span>{faq.question}</span>
+                    <span className="[text-wrap:balance]">{faq.question}</span>
                   </div>
                   <ChevronDown
                     className={`w-5 h-5 text-[#6B7C93] shrink-0 transition-transform duration-200 ${
@@ -81,7 +93,7 @@ export default function FaqSection() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-[15px] text-[#40566F] leading-relaxed border-t border-[#D9E4EF]/60 bg-white">
+                  <div className="px-5 pb-5 pt-1 text-[15px] text-[#40566F] leading-relaxed border-t border-[#D9E4EF]/60 bg-white [text-wrap:pretty]">
                     {faq.answer}
                   </div>
                 )}

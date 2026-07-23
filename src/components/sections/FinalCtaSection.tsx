@@ -22,14 +22,22 @@ export default function FinalCtaSection() {
           <span>BẢO VỆ TOÀN DIỆN THƯƠNG HIỆU</span>
         </div>
 
-        {/* H2 Title with Smart Text Wrapping */}
+        {/* H2 Title with Protected Semantic Phrase Wrapping */}
         <h2
           className="text-[30px] md:text-[40px] font-bold leading-snug text-white max-w-3xl mx-auto [text-wrap:balance]"
           data-cms-section="final_cta"
           data-cms-id="final_cta_title"
           data-cms-type="text"
         >
-          {ctaTitle}
+          {ctaTitle.includes("trở thành") ? (
+            <>
+              <span className="inline-block">Đừng&nbsp;để bao&nbsp;bì</span>{" "}
+              <span className="inline-block">trở&nbsp;thành điểm&nbsp;yếu</span>{" "}
+              <span className="inline-block">của một sản&nbsp;phẩm&nbsp;tốt</span>
+            </>
+          ) : (
+            ctaTitle
+          )}
         </h2>
 
         {/* Subtext Paragraph */}
