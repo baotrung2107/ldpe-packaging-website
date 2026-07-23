@@ -62,12 +62,15 @@ export default function FinalCtaSection() {
           </a>
         </div>
 
-        {/* Price Info Notice */}
+        {/* Price Info Notice (Fixed "vật liệu" phrase splitting!) */}
         <div className="pt-6 border-t border-[#103E6B] max-w-xl mx-auto">
-          <p className="text-xs md:text-sm text-[#D9E4EF] font-medium flex items-center justify-center gap-2 [text-wrap:pretty]">
+          <p className="text-xs md:text-sm text-[#D9E4EF] font-medium flex items-center justify-center gap-2 [text-wrap:balance] text-center">
             <PhoneCall className="w-4 h-4 text-[#0B63CE] shrink-0" />
             <span>
-              Liên hệ hotline <strong className="text-white">{phone}</strong> để được tư vấn và báo giá theo kích thước, vật liệu, sản lượng và yêu cầu gia công.
+              <span className="inline-block">Liên&nbsp;hệ hotline <strong className="text-white">{phone}</strong></span>{" "}
+              <span className="inline-block">để được tư&nbsp;vấn và báo&nbsp;giá</span>{" "}
+              <span className="inline-block">theo kích&nbsp;thước, vật&nbsp;liệu,</span>{" "}
+              <span className="inline-block">sản&nbsp;lượng và yêu&nbsp;cầu gia&nbsp;công.</span>
             </span>
           </p>
         </div>

@@ -15,7 +15,7 @@ export default function PainPointsSection() {
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-12">
-        {/* Section Header */}
+        {/* Section Header (Fixed "xốp, mà" line break splitting!) */}
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold px-3 py-1 rounded-full">
             <AlertTriangle className="w-4 h-4 text-amber-600" />
@@ -23,10 +23,12 @@ export default function PainPointsSection() {
           </div>
 
           <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43] leading-snug [text-wrap:balance]">
-            Chi phí lớn nhất không nằm ở miếng xốp, mà ở sản phẩm bị hỏng <span className="inline-block">khi đến tay khách&nbsp;hàng</span>
+            <span className="inline-block">Chi&nbsp;phí lớn&nbsp;nhất không nằm ở miếng&nbsp;xốp,</span>{" "}
+            <span className="inline-block">mà ở sản&nbsp;phẩm bị hỏng</span>{" "}
+            <span className="inline-block">khi đến&nbsp;tay khách&nbsp;hàng</span>
           </h2>
 
-          <p className="text-[16px] md:text-[17px] text-[#40566F]">
+          <p className="text-[16px] md:text-[17px] text-[#40566F] [text-wrap:pretty]">
             Một phương án đóng gói không phù hợp có thể dẫn đến những tổn hại trực tiếp về chi phí và thương hiệu:
           </p>
         </div>
@@ -41,7 +43,7 @@ export default function PainPointsSection() {
               <span className="w-7 h-7 rounded-full bg-red-100 text-red-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#0B63CE] group-hover:text-white transition-colors">
                 0{index + 1}
               </span>
-              <p className="text-[15px] text-[#102A43] font-medium leading-relaxed">
+              <p className="text-[15px] text-[#102A43] font-medium leading-relaxed [text-wrap:pretty]">
                 {point}
               </p>
             </div>
@@ -58,7 +60,7 @@ export default function PainPointsSection() {
               <h3 className="text-xl md:text-2xl font-bold text-white [text-wrap:balance]">
                 Bảo vệ sản phẩm cũng chính là bảo vệ trải nghiệm khách hàng và <span className="inline-block">giá&nbsp;trị thương&nbsp;hiệu.</span>
               </h3>
-              <p className="text-sm text-[#D9E4EF] mt-1">
+              <p className="text-sm text-[#D9E4EF] mt-1 [text-wrap:pretty]">
                 Liên hệ đội ngũ chuyên gia để đo đạc và đưa ra thiết kế bao bì tối ưu cho doanh nghiệp của bạn.
               </p>
             </div>
