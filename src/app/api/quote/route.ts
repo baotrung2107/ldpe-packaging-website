@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { getCMSStore } from "@/lib/cms-store";
 
 const TELEGRAM_BOT_TOKEN = "8957063322:AAGJm4c-d1s4nOn9-cg26NVWzhLS33rFpao";
+const BOT_USERNAME = "Nhamaydppepoam_bot";
 
 export async function POST(request: Request) {
   try {
@@ -40,42 +42,67 @@ export async function POST(request: Request) {
 ⏰ *Thời gian*: ${formattedTime}
 🌐 *Nguồn*: Website LDPE Packaging Đức Phúc`;
 
-    // Attempt to get active chat IDs from Telegram getUpdates or process.env
-    let chatId = process.env.TELEGRAM_CHAT_ID;
+    // Collect all candidate chat IDs
+    const targetChatIds: Array<string | number> = [];
 
-    if (!chatId) {
-      try {
-        const updatesRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates`);
-        const updatesData = await updatesRes.json();
-        if (updatesData.ok && updatesData.result && updatesData.result.length > 0) {
-          // Grab the last chat ID from getUpdates
-          const lastUpdate = updatesData.result[updatesData.result.length - 1];
-          chatId = lastUpdate.message?.chat?.id || lastUpdate.channel_post?.chat?.id;
+    // 1. Check CMS Store for manually configured chat ID
+    const store = getCMSStore();
+    const cmsChatId = store.published?.telegram_chat_id || store.draft?.telegram_chat_id || process.env.TELEGRAM_CHAT_ID;
+    if (cmsChatId) {
+      targetChatIds.push(cmsChatId);
+    }
+
+    // 2. Fetch updates from Telegram API to find all users/groups that have messaged the bot
+    try {
+      const updatesRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates`);
+      const updatesData = await updatesRes.json();
+      if (updatesData.ok && Array.isArray(updatesData.result)) {
+        for (const item of updatesData.result) {
+          const chat = item.message?.chat || item.channel_post?.chat || item.my_chat_member?.chat;
+          if (chat && chat.id && !targetChatIds.includes(chat.id)) {
+            targetChatIds.push(chat.id);
+          }
         }
-      } catch (err) {
-        console.error("Failed to auto-detect Telegram chat ID:", err);
       }
+    } catch (err) {
+      console.error("Error fetching Telegram getUpdates:", err);
     }
 
-    // Send Telegram Notification
-    let telegramResult = null;
-    if (chatId) {
-      const telegramRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: "Markdown",
-        }),
-      });
-      telegramResult = await telegramRes.json();
+    // 3. Send message to all active chat IDs
+    const sendResults = [];
+    if (targetChatIds.length > 0) {
+      for (const chatId of targetChatIds) {
+        try {
+          const telegramRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: message,
+              parse_mode: "Markdown",
+            }),
+          });
+          const resultData = await telegramRes.json();
+          sendResults.push({ chatId, ok: resultData.ok, resultData });
+        } catch (e) {
+          console.error(`Error sending message to chatId ${chatId}:`, e);
+        }
+      }
+    } else {
+      console.warn(`[TELEGRAM WARNING] No chat_id found for bot @${BOT_USERNAME}. Please start the bot at https://t.me/${BOT_USERNAME}`);
     }
+
+    const anySuccess = sendResults.some((r) => r.ok);
 
     return NextResponse.json({
       success: true,
-      message: "Yêu cầu báo giá đã được nhận thành công!",
-      telegramSent: !!(telegramResult && telegramResult.ok),
+      message: "Yêu cầu báo giá đã được tiếp nhận thành công!",
+      telegramSent: anySuccess,
+      chatCount: targetChatIds.length,
+      sendResults,
+      notice: !anySuccess
+        ? `Vui lòng truy cập https://t.me/${BOT_USERNAME} và bấm START để kích hoạt nhận tin nhắn Telegram.`
+        : null,
     });
   } catch (error) {
     console.error("Error processing quote submission:", error);
