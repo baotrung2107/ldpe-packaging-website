@@ -36,7 +36,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 transition-all duration-300">
+    <header id="navbar" className="sticky top-0 z-50 transition-all duration-300">
       {/* Top Utility Announcement Bar */}
       <div className="bg-[#041E38] text-white text-[12px] py-1.5 px-4 border-b border-[#0B3B6F]">
         <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
@@ -48,7 +48,14 @@ export default function Navbar() {
           <div className="flex items-center gap-4 text-[#D9E4EF] shrink-0 text-[12px]">
             <a href={`tel:${phone.replace(/\s+/g, "")}`} className="hover:text-white flex items-center gap-1.5 transition-colors group">
               <PhoneCall className="w-3.5 h-3.5 text-[#0B63CE] group-hover:scale-110 transition-transform" />
-              <span className="font-bold text-white">{phone}</span>
+              <span
+                className="font-bold text-white"
+                data-cms-section="navbar"
+                data-cms-id="nav_phone"
+                data-cms-type="contact"
+              >
+                {phone}
+              </span>
               <span className="text-[#9FB3C8] font-normal hidden sm:inline">(Hỗ trợ 24/7)</span>
             </a>
             <span className="hidden md:inline text-[#103E6B]">|</span>
@@ -71,7 +78,7 @@ export default function Navbar() {
             {logoUrl ? (
               <img src={logoUrl} alt="DUC PHUC PE FOAM" className="h-10 object-contain" />
             ) : (
-              <div className="w-10 h-10 rounded-xl bg-[#062B4F] flex items-center justify-center text-white font-bold text-xl tracking-wider group-hover:bg-[#0B63CE] transition-colors shadow-md">
+              <div className="w-10 h-10 rounded-xl bg-[#062B4F] flex items-center justify-center text-[#38BDF8] font-bold text-xl tracking-wider group-hover:bg-[#0B63CE] group-hover:text-white transition-colors shadow-md">
                 DP
               </div>
             )}

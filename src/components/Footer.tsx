@@ -7,12 +7,13 @@ export default function Footer() {
   const { getOverride } = useCMS();
 
   const phone = getOverride("nav_phone", "083 572 6666");
-  const email = getOverride("nav_email", "lienhe@ldpe-packaging.vn");
+  const email = getOverride("nav_email", "phuocpefoam@gmail.com");
+  const address = getOverride("footer_address", "Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An, Việt Nam");
   const copyright = getOverride("footer_copyright", "© 2026 CÔNG TY TNHH SẢN XUẤT PE FOAM ĐỨC PHÚC. Tất cả quyền được bảo lưu.");
   const logoUrl = getOverride("nav_logo_url", "");
 
   return (
-    <footer id="lien-he" className="bg-[#062B4F] text-[#D9E4EF] pt-16 pb-12 border-t border-[#103E6B]">
+    <footer id="footer" className="bg-[#062B4F] text-[#D9E4EF] pt-16 pb-12 border-t border-[#103E6B]">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
           {/* Company Brand Column */}
@@ -78,15 +79,34 @@ export default function Footer() {
             <div className="space-y-2.5 text-xs text-[#D9E4EF]">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#0B63CE] shrink-0 mt-0.5" />
-                <span>Nhà máy: Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An, Việt Nam</span>
+                <span
+                  data-cms-section="footer"
+                  data-cms-id="footer_address"
+                  data-cms-type="text"
+                >
+                  Nhà máy: {address}
+                </span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#0B63CE] shrink-0" />
-                <span className="font-bold text-white">{phone} (Hotline/Zalo B2B)</span>
+                <span
+                  className="font-bold text-white"
+                  data-cms-section="footer"
+                  data-cms-id="nav_phone"
+                  data-cms-type="contact"
+                >
+                  {phone} (Hotline/Zalo B2B)
+                </span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#0B63CE] shrink-0" />
-                <span>{email}</span>
+                <span
+                  data-cms-section="footer"
+                  data-cms-id="nav_email"
+                  data-cms-type="contact"
+                >
+                  {email}
+                </span>
               </div>
             </div>
           </div>
@@ -94,7 +114,13 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-[#103E6B] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#6B7C93]">
-          <p>{copyright}</p>
+          <p
+            data-cms-section="footer"
+            data-cms-id="footer_copyright"
+            data-cms-type="text"
+          >
+            {copyright}
+          </p>
           <div className="flex items-center gap-6">
             <a href="#chung-nhan" className="hover:text-[#D9E4EF]">Báo cáo SGS REACH</a>
             <a href="#chung-nhan" className="hover:text-[#D9E4EF]">Báo cáo SGS RoHS</a>

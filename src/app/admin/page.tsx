@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Lock,
   User,
@@ -25,7 +25,10 @@ import {
   Search,
   ArrowUp,
   ArrowDown,
-  Power,
+  Phone,
+  Mail,
+  MapPin,
+  FileText,
 } from "lucide-react";
 import { useCMS } from "@/context/CMSContext";
 import Home from "@/app/page";
@@ -53,16 +56,19 @@ export default function AdminPage() {
     setPreviewMode,
     isVisualEditActive,
     setIsVisualEditActive,
+    selectedElementMeta,
   } = useCMS();
 
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [loginError, setLoginError] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
-  const [activeTab, setActiveTab] = useState<"content" | "repeaters" | "media" | "seo" | "revisions">("content");
-  const [activeSection, setActiveSection] = useState<string>("hero");
+  const [activeTab, setActiveTab] = useState<"contact" | "quote_form" | "media" | "seo" | "revisions">("contact");
+  const [activeSection, setActiveSection] = useState<string>("contact_info");
   const [uploadingMedia, setUploadingMedia] = useState(false);
   const [isLoggedInState, setIsLoggedInState] = useState(false);
+
+  const previewContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch("/api/admin/cms")
@@ -85,6 +91,52 @@ export default function AdminPage() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasUnsavedChanges]);
+
+  // Auto-scroll sync to live preview window whenever selected target changes
+  const scrollToPreviewTarget = (targetId: string) => {
+    if (!previewContainerRef.current) return;
+
+    const container = previewContainerRef.current;
+    const mapping: Record<string, string> = {
+      nav_phone: "navbar",
+      nav_email: "navbar",
+      quote_phone: "bao-gia",
+      quote_email: "bao-gia",
+      quote_factory_address: "bao-gia",
+      footer_address: "footer",
+      quote_title: "bao-gia",
+      quote_desc: "bao-gia",
+      form_title: "bao-gia",
+      form_submit_btn: "bao-gia",
+      contact_info: "bao-gia",
+      quote_form: "bao-gia",
+    };
+
+    const sectionId = mapping[targetId] || targetId;
+
+    // Search for element inside live preview container
+    const targetEl =
+      container.querySelector(`[data-cms-id="${targetId}"]`) ||
+      container.querySelector(`#${sectionId}`) ||
+      container.querySelector(`[data-cms-section="${sectionId}"]`);
+
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // Add temporary highlight ring
+      targetEl.classList.add("ring-4", "ring-[#0B63CE]", "ring-offset-2");
+      setTimeout(() => {
+        targetEl.classList.remove("ring-4", "ring-[#0B63CE]", "ring-offset-2");
+      }, 2000);
+    }
+  };
+
+  // Sync scroll when visual element selected
+  useEffect(() => {
+    if (selectedElementMeta?.cmsId) {
+      scrollToPreviewTarget(selectedElementMeta.cmsId);
+    }
+  }, [selectedElementMeta]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -240,7 +292,7 @@ export default function AdminPage() {
 
           {hasUnsavedChanges && (
             <span className="bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full animate-pulse ml-2">
-              Có thay đổi bản nháp
+              Có thay đổi chưa xuất bản
             </span>
           )}
 
@@ -335,337 +387,205 @@ export default function AdminPage() {
           {/* Tabs Navigation */}
           <div className="flex items-center border-b border-[#D9E4EF] bg-[#F7FAFC] px-4 pt-3 gap-2 overflow-x-auto">
             <button
-              onClick={() => setActiveTab("content")}
-              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors ${
-                activeTab === "content"
+              onClick={() => {
+                setActiveTab("contact");
+                scrollToPreviewTarget("bao-gia");
+              }}
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+                activeTab === "contact"
                   ? "border-[#0B63CE] text-[#0B63CE]"
                   : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
               }`}
             >
-              Nội dung Văn Bản
+              <Phone className="w-3.5 h-3.5" />
+              <span>Hotline, Mail & Địa Chỉ</span>
             </button>
 
             <button
-              onClick={() => setActiveTab("repeaters")}
-              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors ${
-                activeTab === "repeaters"
+              onClick={() => {
+                setActiveTab("quote_form");
+                scrollToPreviewTarget("bao-gia");
+              }}
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+                activeTab === "quote_form"
                   ? "border-[#0B63CE] text-[#0B63CE]"
                   : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
               }`}
             >
-              Khối Lặp (Repeaters)
+              <FileText className="w-3.5 h-3.5" />
+              <span>Thông Tin Biểu Mẫu Báo Giá</span>
             </button>
 
             <button
               onClick={() => setActiveTab("media")}
-              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors ${
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                 activeTab === "media"
                   ? "border-[#0B63CE] text-[#0B63CE]"
                   : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
               }`}
             >
-              Thư Viện Ảnh (Media)
+              <ImageIcon className="w-3.5 h-3.5" />
+              <span>Thư Viện Ảnh</span>
             </button>
 
             <button
               onClick={() => setActiveTab("seo")}
-              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors ${
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                 activeTab === "seo"
                   ? "border-[#0B63CE] text-[#0B63CE]"
                   : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
               }`}
             >
-              SEO & Metadata
+              <Globe className="w-3.5 h-3.5" />
+              <span>SEO Meta</span>
             </button>
 
             <button
               onClick={() => setActiveTab("revisions")}
-              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors ${
+              className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                 activeTab === "revisions"
                   ? "border-[#0B63CE] text-[#0B63CE]"
                   : "border-transparent text-[#6B7C93] hover:text-[#102A43]"
               }`}
             >
-              Lịch Sử (Revisions)
+              <History className="w-3.5 h-3.5" />
+              <span>Lịch Sử (Revisions)</span>
             </button>
           </div>
 
           <div className="p-6 space-y-4 flex-1 overflow-y-auto">
-            {/* TAB 1: TEXT CONTENT */}
-            {activeTab === "content" && (
-              <div className="space-y-3">
-                <FormSectionAccordion
-                  title="1. Header & Thanh Menu (Navbar)"
-                  id="navbar"
-                  activeSection={activeSection}
-                  setActiveSection={setActiveSection}
-                >
-                  <div className="space-y-3 text-xs">
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Logo Text Badge (Icon)</label>
-                      <input
-                        type="text"
-                        value={draft.nav_logo_text || "DP"}
-                        onChange={(e) => updateDraft("nav_logo_text", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Tên Thương Hiệu Header</label>
-                      <input
-                        type="text"
-                        value={draft.nav_brand_title || "DUC PHUC PE FOAM"}
-                        onChange={(e) => updateDraft("nav_brand_title", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Hotline điện thoại</label>
-                      <input
-                        type="text"
-                        value={draft.nav_phone || "083 572 6666"}
-                        onChange={(e) => updateDraft("nav_phone", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
-                  </div>
-                </FormSectionAccordion>
+            {/* TAB 1: HOTLINE, EMAIL & FACTORY ADDRESS */}
+            {activeTab === "contact" && (
+              <div className="space-y-4">
+                <div className="bg-[#EAF3FC] p-4 rounded-xl border border-[#D9E4EF] space-y-1">
+                  <h3 className="font-bold text-sm text-[#102A43] flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-[#0B63CE]" />
+                    Quản Lý Thông Tin Hotline, Email & Địa Chỉ Nhà Máy
+                  </h3>
+                  <p className="text-xs text-[#40566F]">
+                    Thay đổi thông tin liên hệ chính thức hiển thị tại Thanh Menu, Biểu Mẫu Báo Giá và Chân Trang (Footer). Khi nhấn hoặc nhập dữ liệu, trang bên phải sẽ tự động cuộn đến vị trí hiển thị!
+                  </p>
+                </div>
 
-                <FormSectionAccordion
-                  title="2. Khối Hero (Banner Đầu Trang)"
-                  id="hero"
-                  activeSection={activeSection}
-                  setActiveSection={setActiveSection}
-                >
-                  <div className="space-y-3 text-xs">
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Nhãn nhỏ (Badge)</label>
-                      <input
-                        type="text"
-                        value={draft.hero_badge || ""}
-                        onChange={(e) => updateDraft("hero_badge", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Tiêu đề chính H1</label>
-                      <textarea
-                        rows={2}
-                        value={draft.hero_title || ""}
-                        onChange={(e) => updateDraft("hero_title", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Mô tả Hero</label>
-                      <textarea
-                        rows={3}
-                        value={draft.hero_desc || ""}
-                        onChange={(e) => updateDraft("hero_desc", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Ảnh Nền Nhà Máy Hero (URL)</label>
-                      <input
-                        type="text"
-                        value={draft.hero_image_url || "/images/ldpe/ldpe-factory-bg.jpg"}
-                        onChange={(e) => updateDraft("hero_image_url", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Video YouTube Giới Thiệu (URL)</label>
-                      <input
-                        type="text"
-                        value={draft.hero_youtube_url || ""}
-                        onChange={(e) => updateDraft("hero_youtube_url", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
+                <div className="space-y-4">
+                  {/* Hotline Input */}
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
+                      <Phone className="w-3.5 h-3.5 text-[#0B63CE]" />
+                      Hotline tư vấn kỹ thuật (Zalo / Call)
+                    </label>
+                    <input
+                      type="text"
+                      value={draft.nav_phone || "083 572 6666"}
+                      onFocus={() => scrollToPreviewTarget("nav_phone")}
+                      onChange={(e) => updateDraft("nav_phone", e.target.value)}
+                      placeholder="083 572 6666"
+                      className="admin-input font-bold text-[#0B63CE]"
+                    />
+                    <span className="text-[11px] text-[#6B7C93] block">
+                      Hiển thị tại Header Navbar, Hỗ trợ trực tiếp từ nhà máy và Footer.
+                    </span>
                   </div>
-                </FormSectionAccordion>
 
-                <FormSectionAccordion
-                  title="3. Giới Thiệu & Lợi Thế Nhà Máy"
-                  id="intro"
-                  activeSection={activeSection}
-                  setActiveSection={setActiveSection}
-                >
-                  <div className="space-y-3 text-xs">
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Tiêu đề Giới thiệu</label>
-                      <input
-                        type="text"
-                        value={draft.intro_title || ""}
-                        onChange={(e) => updateDraft("intro_title", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Mô tả Giới thiệu</label>
-                      <textarea
-                        rows={3}
-                        value={draft.intro_desc || ""}
-                        onChange={(e) => updateDraft("intro_desc", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
+                  {/* Email Input */}
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
+                      <Mail className="w-3.5 h-3.5 text-[#0B63CE]" />
+                      Email tiếp nhận bản vẽ & báo giá
+                    </label>
+                    <input
+                      type="email"
+                      value={draft.nav_email || "phuocpefoam@gmail.com"}
+                      onFocus={() => scrollToPreviewTarget("quote_email")}
+                      onChange={(e) => updateDraft("nav_email", e.target.value)}
+                      placeholder="phuocpefoam@gmail.com"
+                      className="admin-input font-bold text-[#102A43]"
+                    />
+                    <span className="text-[11px] text-[#6B7C93] block">
+                      Email chính thức nhận yêu cầu bản vẽ CAD/PDF từ khách hàng doanh nghiệp.
+                    </span>
                   </div>
-                </FormSectionAccordion>
 
-                <FormSectionAccordion
-                  title="4. Biểu Mẫu Nhận Báo Giá (Quote Form)"
-                  id="quote_form"
-                  activeSection={activeSection}
-                  setActiveSection={setActiveSection}
-                >
-                  <div className="space-y-3 text-xs">
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Tiêu đề biểu mẫu</label>
-                      <input
-                        type="text"
-                        value={draft.form_title || "Yêu cầu tư vấn & báo giá PE Foam / LDPE"}
-                        onChange={(e) => updateDraft("form_title", e.target.value)}
-                        className="admin-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="font-semibold text-[#102A43] block mb-1">Nút Gửi Yêu Cầu (Label)</label>
-                      <input
-                        type="text"
-                        value={draft.form_submit_btn || "GỬI YÊU CẦU BÁO GIÁ NGAY"}
-                        onChange={(e) => updateDraft("form_submit_btn", e.target.value)}
-                        className="admin-input font-bold text-[#0B63CE]"
-                      />
-                    </div>
+                  {/* Factory Address Input */}
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#0B63CE]" />
+                      Địa chỉ nhà máy & xưởng gia công
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={draft.footer_address || "Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An"}
+                      onFocus={() => scrollToPreviewTarget("quote_factory_address")}
+                      onChange={(e) => updateDraft("footer_address", e.target.value)}
+                      placeholder="Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An"
+                      className="admin-input font-medium text-[#102A43]"
+                    />
+                    <span className="text-[11px] text-[#6B7C93] block">
+                      Địa chỉ nhà máy sản xuất chính thức của Đức Phúc PE Foam.
+                    </span>
                   </div>
-                </FormSectionAccordion>
+                </div>
               </div>
             )}
 
-            {/* TAB 2: REPEATERS */}
-            {activeTab === "repeaters" && (
-              <div className="space-y-6">
-                {/* 1. Products Repeater */}
-                <div className="space-y-3 bg-[#F7FAFC] p-4 rounded-xl border border-[#D9E4EF]">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-bold text-sm text-[#102A43]">Danh Mục Sản Phẩm (Products List)</h3>
-                    <button
-                      onClick={() =>
-                        addArrayItem("products_list", {
-                          title: "Sản phẩm mới",
-                          image: "/images/ldpe/mang-ldpe.png",
-                          description: "Mô tả quy cách sản phẩm mới...",
-                          enabled: true,
-                        })
-                      }
-                      className="btn-primary text-xs py-1 px-3"
-                    >
-                      <Plus className="w-3.5 h-3.5 mr-1" />
-                      <span>Thêm Sản Phẩm</span>
-                    </button>
-                  </div>
-
-                  {(draft.products_list || []).map((prod: any, idx: number) => (
-                    <div key={idx} className="p-3 bg-white rounded-xl border border-[#D9E4EF] space-y-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-xs text-[#0B63CE]">#{idx + 1}</span>
-                          <span className="font-bold text-xs text-[#102A43]">{prod.title}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <button
-                            onClick={() => reorderArrayItems("products_list", idx, Math.max(0, idx - 1))}
-                            disabled={idx === 0}
-                            className="p-1 text-[#6B7C93] hover:text-[#0B63CE] disabled:opacity-30"
-                          >
-                            <ArrowUp className="w-3.5 h-3.5" />
-                          </button>
-                          <button
-                            onClick={() =>
-                              reorderArrayItems("products_list", idx, Math.min((draft.products_list || []).length - 1, idx + 1))
-                            }
-                            disabled={idx === (draft.products_list || []).length - 1}
-                            className="p-1 text-[#6B7C93] hover:text-[#0B63CE] disabled:opacity-30"
-                          >
-                            <ArrowDown className="w-3.5 h-3.5" />
-                          </button>
-                          <button
-                            onClick={() => removeArrayItem("products_list", idx)}
-                            className="p-1 text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-2 text-xs">
-                        <input
-                          type="text"
-                          value={prod.title || ""}
-                          onChange={(e) => updateArrayItem("products_list", idx, "title", e.target.value)}
-                          placeholder="Tên sản phẩm"
-                          className="admin-input font-semibold"
-                        />
-                        <input
-                          type="text"
-                          value={prod.image || ""}
-                          onChange={(e) => updateArrayItem("products_list", idx, "image", e.target.value)}
-                          placeholder="/images/ldpe/..."
-                          className="admin-input"
-                        />
-                      </div>
-                    </div>
-                  ))}
+            {/* TAB 2: QUOTE FORM CONFIGURATION */}
+            {activeTab === "quote_form" && (
+              <div className="space-y-4">
+                <div className="bg-[#EAF3FC] p-4 rounded-xl border border-[#D9E4EF] space-y-1">
+                  <h3 className="font-bold text-sm text-[#102A43] flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-[#0B63CE]" />
+                    Quản Lý Nội Dung Biểu Mẫu Nhận Báo Giá
+                  </h3>
+                  <p className="text-xs text-[#40566F]">
+                    Chỉnh sửa các tiêu đề, mô tả hướng dẫn, nhãn nút bấm và thông tin cọc mẫu SePay QR. Mọi chỉnh sửa sẽ cuộn trực tiếp trang web bên phải về khối Biểu mẫu báo giá!
+                  </p>
                 </div>
 
-                {/* 2. FAQ Repeater */}
-                <div className="space-y-3 bg-[#F7FAFC] p-4 rounded-xl border border-[#D9E4EF]">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-bold text-sm text-[#102A43]">Danh Sách FAQ Hỏi Đáp</h3>
-                    <button
-                      onClick={() =>
-                        addArrayItem("faq_list", {
-                          question: "Câu hỏi thắc mắc mới?",
-                          answer: "Giải đáp chi tiết kỹ thuật...",
-                        })
-                      }
-                      className="btn-primary text-xs py-1 px-3"
-                    >
-                      <Plus className="w-3.5 h-3.5 mr-1" />
-                      <span>Thêm FAQ</span>
-                    </button>
+                <div className="space-y-4">
+                  {/* Section Title */}
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] block">
+                      Tiêu đề khối báo giá (H2)
+                    </label>
+                    <input
+                      type="text"
+                      value={draft.quote_title || "Bạn chưa biết nên chọn loại LDPE hoặc PE foam nào?"}
+                      onFocus={() => scrollToPreviewTarget("quote_title")}
+                      onChange={(e) => updateDraft("quote_title", e.target.value)}
+                      className="admin-input font-bold text-[#102A43]"
+                    />
                   </div>
 
-                  {(draft.faq_list || []).map((faq: any, idx: number) => (
-                    <div key={idx} className="p-3 bg-white rounded-xl border border-[#D9E4EF] space-y-2 text-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-[#0B63CE]">FAQ #{idx + 1}</span>
-                        <button
-                          onClick={() => removeArrayItem("faq_list", idx)}
-                          className="text-red-500 hover:text-red-700"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
+                  {/* Section Description */}
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] block">
+                      Mô tả hướng dẫn gửi mẫu & quy cách
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={
+                        draft.quote_desc ||
+                        "Hãy gửi cho chúng tôi mẫu sản phẩm, kích thước, số lượng dự kiến và yêu cầu vận chuyển. Đội ngũ tư vấn sẽ hỗ trợ xác định phương án phù hợp trước khi báo giá."
+                      }
+                      onFocus={() => scrollToPreviewTarget("quote_desc")}
+                      onChange={(e) => updateDraft("quote_desc", e.target.value)}
+                      className="admin-input"
+                    />
+                  </div>
 
-                      <input
-                        type="text"
-                        value={faq.question || ""}
-                        onChange={(e) => updateArrayItem("faq_list", idx, "question", e.target.value)}
-                        placeholder="Câu hỏi"
-                        className="admin-input font-semibold"
-                      />
-                      <textarea
-                        rows={2}
-                        value={faq.answer || ""}
-                        onChange={(e) => updateArrayItem("faq_list", idx, "answer", e.target.value)}
-                        placeholder="Câu trả lời"
-                        className="admin-input"
-                      />
-                    </div>
-                  ))}
+                  {/* Form Submit Button Text */}
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
+                    <label className="font-bold text-xs text-[#102A43] block">
+                      Chữ hiển thị trên Nút Gửi Báo Giá
+                    </label>
+                    <input
+                      type="text"
+                      value={draft.form_submit_btn || "Gửi yêu cầu báo giá"}
+                      onFocus={() => scrollToPreviewTarget("form_submit_btn")}
+                      onChange={(e) => updateDraft("form_submit_btn", e.target.value)}
+                      className="admin-input font-bold text-[#0B63CE]"
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -725,16 +645,6 @@ export default function AdminPage() {
                     className="admin-input"
                   />
                 </div>
-
-                <div>
-                  <label className="font-semibold text-[#102A43] block mb-1">Open Graph Image (Ảnh chia sẻ Facebook/Zalo)</label>
-                  <input
-                    type="text"
-                    value={draft.seo_og_image || "/images/ldpe/ldpe-factory-bg.jpg"}
-                    onChange={(e) => updateDraft("seo_og_image", e.target.value)}
-                    className="admin-input"
-                  />
-                </div>
               </div>
             )}
 
@@ -771,8 +681,12 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Right Live Preview Panel (50% width) */}
-        <div className="hidden lg:flex lg:w-1/2 bg-[#062B4F]/10 overflow-y-auto p-4 items-start justify-center relative">
+        {/* Right Live Preview Panel (50% width) with Auto-Scroll Target Window */}
+        <div
+          ref={previewContainerRef}
+          id="admin-live-preview-window"
+          className="hidden lg:flex lg:w-1/2 bg-[#062B4F]/10 overflow-y-auto p-4 items-start justify-center relative scroll-smooth"
+        >
           <div
             className={`bg-white shadow-2xl rounded-2xl overflow-hidden border border-[#D9E4EF] transition-all duration-300 ${
               previewMode === "mobile"
@@ -787,37 +701,6 @@ export default function AdminPage() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-// Helper Accordion Form Component
-function FormSectionAccordion({
-  title,
-  id,
-  activeSection,
-  setActiveSection,
-  children,
-}: {
-  title: string;
-  id: string;
-  activeSection: string;
-  setActiveSection: (id: string) => void;
-  children: React.ReactNode;
-}) {
-  const isOpen = activeSection === id;
-
-  return (
-    <div className="border border-[#D9E4EF] rounded-xl overflow-hidden bg-white shadow-sm">
-      <button
-        onClick={() => setActiveSection(isOpen ? "" : id)}
-        className="w-full px-4 py-3 bg-[#F7FAFC] flex items-center justify-between text-left font-bold text-xs text-[#102A43] hover:bg-[#EAF3FC] transition-colors border-b border-[#D9E4EF]"
-      >
-        <span>{title}</span>
-        {isOpen ? <ChevronUp className="w-4 h-4 text-[#0B63CE]" /> : <ChevronDown className="w-4 h-4 text-[#6B7C93]" />}
-      </button>
-
-      {isOpen && <div className="p-4 bg-white space-y-3">{children}</div>}
     </div>
   );
 }
