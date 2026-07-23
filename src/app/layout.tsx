@@ -11,12 +11,12 @@ const beVietnamPro = Be_Vietnam_Pro({
 });
 
 export const metadata: Metadata = {
-  title: "Giải pháp LDPE & PE Foam Chống Sốc Theo Yêu Cầu | Sản xuất & Gia công Nhà máy",
-  description: "Cung cấp màng LDPE, túi đóng gói, xốp PE foam chống sốc, khay định hình và các giải pháp bảo vệ sản phẩm theo kích thước, đặc tính và quy trình vận chuyển thực tế.",
-  keywords: ["màng LDPE", "túi LDPE", "PE foam chống sốc", "khay định hình xốp PE", "bao bì bảo vệ sản phẩm", "gia công PE foam"],
-  authors: [{ name: "Nhà Máy Sản Xuất & Gia Công LDPE" }],
+  title: "ĐỨC PHÚC PE FOAM | Nhà Máy Sản Xuất & Gia Công Màng LDPE, Xốp PE Foam",
+  description: "Cung cấp màng LDPE, túi đóng gói, xốp PE foam chống sốc, khay định hình và các giải pháp bảo vệ sản phẩm theo kích thước, đặc tính và quy trình vận chuyển thực tế từ Nhà Máy Đức Phúc.",
+  keywords: ["Đức Phúc PE Foam", "màng LDPE", "túi LDPE", "PE foam chống sốc", "khay định hình xốp PE", "bao bì bảo vệ sản phẩm", "gia công PE foam"],
+  authors: [{ name: "Nhà Máy Đức Phúc PE Foam" }],
   openGraph: {
-    title: "Ôm trọn sản phẩm. Bảo vệ hàng hóa. Giữ vững uy tín thương hiệu.",
+    title: "ĐỨC PHÚC PE FOAM — Ôm trọn sản phẩm. Bảo vệ hàng hóa.",
     description: "Cung cấp giải pháp đóng gói & chống sốc LDPE/PE Foam gia công theo yêu cầu cho nhà máy, logistics, thương mại điện tử.",
     type: "website",
     locale: "vi_VN",
@@ -37,13 +37,13 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "Giải pháp LDPE & PE Foam Việt Nam",
-              "url": "https://ldpe-packaging.vn",
-              "logo": "https://ldpe-packaging.vn/logo.png",
-              "description": "Nhà máy sản xuất màng nhựa LDPE, túi đóng gói, cuộn tấm PE foam chống sốc, khay xốp định hình theo yêu cầu.",
+              "name": "ĐỨC PHÚC PE FOAM",
+              "url": "https://ldpe-packaging-website.vercel.app",
+              "logo": "https://ldpe-packaging-website.vercel.app/images/ldpe/factory-hero.png",
+              "description": "Nhà máy Đức Phúc chuyên sản xuất màng nhựa LDPE, túi đóng gói, cuộn tấm PE foam chống sốc, khay xốp định hình theo yêu cầu.",
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+84-900-000-000",
+                "telephone": "+84-835-726-666",
                 "contactType": "customer service",
                 "areaServed": "VN",
                 "availableLanguage": "Vietnamese"

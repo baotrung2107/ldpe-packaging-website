@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, PhoneCall, ShieldCheck, ChevronRight, Factory } from "lucide-react";
+import { Menu, X, PhoneCall, ShieldCheck, ChevronRight } from "lucide-react";
 import { useCMS } from "@/context/CMSContext";
 
 export default function Navbar() {
@@ -69,15 +69,15 @@ export default function Navbar() {
           {/* Logo Brand */}
           <a href="#" className="flex items-center gap-3 shrink-0 group">
             {logoUrl ? (
-              <img src={logoUrl} alt="Logo Packaging" className="h-10 object-contain" />
+              <img src={logoUrl} alt="DUC PHUC PE FOAM" className="h-10 object-contain" />
             ) : (
               <div className="w-10 h-10 rounded-xl bg-[#062B4F] flex items-center justify-center text-white font-bold text-xl tracking-wider group-hover:bg-[#0B63CE] transition-colors shadow-md">
-                LD
+                DP
               </div>
             )}
             <div className="flex flex-col">
-              <span className="font-bold text-[17px] leading-tight text-[#102A43] tracking-tight">
-                PACKAGING <span className="text-[#0B63CE]">LDPE</span>
+              <span className="font-extrabold text-[17px] leading-tight text-[#102A43] tracking-tight">
+                DUC PHUC <span className="text-[#0B63CE]">PE FOAM</span>
               </span>
               <span className="text-[10px] text-[#6B7C93] font-semibold tracking-wider uppercase">
                 BẢO VỆ HÀNG HÓA CHUYÊN NGHIỆP
@@ -85,7 +85,7 @@ export default function Navbar() {
             </div>
           </a>
 
-          {/* Desktop Navigation Items (Centred & Well-spaced) */}
+          {/* Desktop Navigation Items */}
           <div className="hidden lg:flex items-center gap-1 xl:gap-2">
             {navLinks.map((link) => (
               <a

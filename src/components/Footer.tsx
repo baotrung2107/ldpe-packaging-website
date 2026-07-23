@@ -6,9 +6,9 @@ import { useCMS } from "@/context/CMSContext";
 export default function Footer() {
   const { getOverride } = useCMS();
 
-  const phone = getOverride("nav_phone", "0900 000 000");
+  const phone = getOverride("nav_phone", "083 572 6666");
   const email = getOverride("nav_email", "lienhe@ldpe-packaging.vn");
-  const copyright = getOverride("footer_copyright", "© 2026 LDPE Packaging Solutions. Tất cả quyền được bảo lưu.");
+  const copyright = getOverride("footer_copyright", "© 2026 ĐỨC PHÚC PE FOAM. Tất cả quyền được bảo lưu.");
   const logoUrl = getOverride("nav_logo_url", "");
 
   return (
@@ -17,21 +17,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
           {/* Company Brand Column */}
           <div className="lg:col-span-4 space-y-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               {logoUrl ? (
-                <img src={logoUrl} alt="Logo Packaging" className="h-10 object-contain" />
+                <img src={logoUrl} alt="DUC PHUC PE FOAM" className="h-10 object-contain" />
               ) : (
-                <div className="w-10 h-10 rounded-lg bg-[#0B63CE] text-white font-bold text-xl flex items-center justify-center">
-                  LD
+                <div className="w-10 h-10 rounded-xl bg-[#0B63CE] text-white font-bold text-xl flex items-center justify-center shadow-md">
+                  DP
                 </div>
               )}
-              <span className="font-bold text-xl text-white tracking-wide">
-                PACKAGING <span className="text-[#0B63CE]">LDPE</span>
+              <span className="font-extrabold text-xl text-white tracking-wide">
+                DUC PHUC <span className="text-[#0B63CE]">PE FOAM</span>
               </span>
             </div>
 
             <p className="text-xs leading-relaxed text-[#D9E4EF]">
-              Nhà máy chuyên sản xuất và gia công các sản phẩm màng LDPE, túi nhựa, tấm cuộn PE foam chống sốc, khay định hình cao cấp theo yêu cầu doanh nghiệp.
+              Nhà máy Đức Phúc chuyên sản xuất và gia công trực tiếp các sản phẩm màng LDPE, túi nhựa, tấm cuộn PE foam chống sốc, khay định hình cao cấp theo yêu cầu doanh nghiệp.
             </p>
 
             <div className="flex items-center gap-3 pt-2 text-xs text-[#EAF3FC]">
@@ -68,15 +68,11 @@ export default function Footer() {
 
           {/* Contact Column */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="font-bold text-white text-sm uppercase tracking-wider">LIÊN HỆ NHÀ MÁY</h4>
+            <h4 className="font-bold text-white text-sm uppercase tracking-wider">LIÊN HỆ NHÀ MÁY ĐỨC PHÚC</h4>
             <div className="space-y-2.5 text-xs text-[#D9E4EF]">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#0B63CE] shrink-0 mt-0.5" />
-                <span>Nhà máy 1: Đường số 3, KCN Tân Bình, TPHCM</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#0B63CE] shrink-0 mt-0.5" />
-                <span>Nhà máy 2: KCN Tiên Sơn, Bắc Ninh</span>
+                <span>Nhà máy Đức Phúc: Cụm Công Nghiệp Sản Xuất Bao Bì</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#0B63CE] shrink-0" />
