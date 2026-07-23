@@ -25,14 +25,13 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Trang chủ", href: "#" },
-    { name: "Sản phẩm LDPE", href: "#san-pham" },
-    { name: "Giải pháp theo ngành", href: "#giai-phap" },
-    { name: "Gia công theo yêu cầu", href: "#gia-cong" },
-    { name: "Quy trình sản xuất", href: "#quy-trinh" },
-    { name: "Kiến thức LDPE", href: "#kien-thuc" },
-    { name: "Báo giá", href: "#bao-gia" },
-    { name: "Liên hệ", href: "#lien-he" },
+    { name: "Trang chủ", href: "/" },
+    { name: "Mút PE Foam CNC", href: "/mut-dinh-hinh-pe-foam-cnc" },
+    { name: "Sản phẩm LDPE", href: "/#san-pham" },
+    { name: "Giải pháp theo ngành", href: "/#giai-phap" },
+    { name: "Gia công theo yêu cầu", href: "/#gia-cong" },
+    { name: "Quy trình", href: "/#quy-trinh" },
+    { name: "Báo giá", href: "/#bao-gia" },
   ];
 
   return (
