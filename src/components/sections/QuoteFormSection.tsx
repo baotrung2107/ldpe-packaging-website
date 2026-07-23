@@ -45,9 +45,18 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+    try {
+      await fetch("/api/quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+    } catch (err) {
+      console.error("Quote submission error:", err);
+    }
   };
 
   const handleOpenSepayDeposit = () => {
@@ -171,7 +180,7 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
                 </div>
                 <h3 className="text-2xl font-bold text-[#102A43]">Gửi yêu cầu thành công!</h3>
                 <p className="text-[16px] text-[#40566F] max-w-md mx-auto [text-wrap:pretty]">
-                  Yêu cầu của bạn đã được ghi nhận. Bộ phận tư vấn sẽ kiểm tra thông tin và liên hệ lại trong thời gian sớm nhất.
+                  Yêu cầu của bạn đã được gửi đến hệ thống Telegram Bot nhà máy. Bộ phận tư vấn sẽ kiểm tra thông tin và liên hệ lại trong thời gian sớm nhất.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
