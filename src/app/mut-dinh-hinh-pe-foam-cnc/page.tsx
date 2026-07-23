@@ -28,6 +28,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SmartTextRenderer from "@/components/SmartTextRenderer";
 import ProductQuoteForm from "./ProductQuoteForm";
+import FactoryImageGallery from "./FactoryImageGallery";
 
 export const metadata = {
   title: "Mút Định Hình EPE & PE Foam CNC Cao Cấp | Báo Giá Nhà Máy Đức Phúc",
@@ -385,7 +386,10 @@ export default function PeFoamCncLandingPage() {
         </div>
       </section>
 
-      {/* 4. PROTOTYPING & WORKFLOW SECTION */}
+      {/* 4. HIGH-RES FACTORY & PRODUCT IMAGE GALLERY WITH LIGHTBOX */}
+      <FactoryImageGallery />
+
+      {/* 5. PROTOTYPING & WORKFLOW SECTION */}
       <section className="py-12 sm:py-16 bg-[#041A30] text-white">
         <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-8 sm:space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -441,14 +445,14 @@ export default function PeFoamCncLandingPage() {
         </div>
       </section>
 
-      {/* 5. DEDICATED QUOTE FORM WITH TELEGRAM BOT */}
+      {/* 6. DEDICATED QUOTE FORM WITH TELEGRAM BOT */}
       <section id="bao-gia-cnc" className="py-12 sm:py-16 bg-[#EAF3FC] border-t border-[#D9E4EF]">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <ProductQuoteForm />
         </div>
       </section>
 
-      {/* 6. FAQ SECTION FOR PE FOAM CNC */}
+      {/* 7. FAQ SECTION FOR PE FOAM CNC */}
       <section className="py-12 sm:py-16 bg-white border-t border-[#D9E4EF]">
         <div className="max-w-4xl mx-auto px-4 md:px-6 space-y-8">
           <div className="text-center space-y-3">
