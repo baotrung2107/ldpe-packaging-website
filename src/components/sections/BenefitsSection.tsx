@@ -1,51 +1,61 @@
-import { CheckCircle, ShieldCheck } from "lucide-react";
+"use client";
+
+import { useCMS } from "@/context/CMSContext";
+import { ShieldCheck, Zap, DollarSign, Award, Layers, Sparkles } from "lucide-react";
 
 export default function BenefitsSection() {
-  const benefits = [
-    "Tư vấn vật liệu theo sản phẩm thực tế.",
-    "Lựa chọn kích thước và độ dày phù hợp.",
-    "Giảm khoảng trống và chuyển động trong bao bì.",
-    "Hạn chế tình trạng móp, xước, vỡ hoặc biến dạng.",
-    "Tối ưu thao tác đóng gói.",
-    "Hỗ trợ đồng bộ với dây chuyền sản xuất.",
-    "Có thể gia công theo mẫu hoặc bản vẽ.",
-    "Chủ động điều chỉnh theo từng nhóm sản phẩm.",
-    "Nâng cao trải nghiệm mở hộp của khách hàng.",
-    "Góp phần bảo vệ hình ảnh thương hiệu.",
-  ];
+  const { getOverride } = useCMS();
+
+  const title = getOverride("benefits_title", "Tại Sao Hơn 500+ Doanh Nghiệp Chọn ĐỨC PHÚC PE FOAM?");
 
   return (
-    <section className="py-16 md:py-24 bg-[#F7FAFC]">
+    <section className="py-16 md:py-24 bg-[#F7FAFC] text-[#102A43] border-b border-[#D9E4EF]">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-12">
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <span className="text-xs font-semibold text-[#0B63CE] uppercase tracking-wider bg-[#EAF3FC] px-3 py-1 rounded-full border border-[#D9E4EF]">
-            GIÁ TRỊ DOANH NGHIỆP
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <span className="inline-flex items-center gap-2 text-xs font-bold text-[#0B63CE] uppercase tracking-wider bg-[#EAF3FC] px-3.5 py-1.5 rounded-full border border-[#0B63CE]/20">
+            <Sparkles className="w-4 h-4 text-[#0B63CE]" />
+            LỢI THẾ CẠNH TRANH VƯỢT TRỘI
           </span>
-          <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43]">
-            Một giải pháp đóng gói tốt phải bảo vệ được cả sản phẩm và chi phí vận hành
+          <h2
+            className="text-[30px] md:text-[38px] font-extrabold text-[#102A43] tracking-tight"
+            data-cms-section="benefits"
+            data-cms-id="benefits_title"
+            data-cms-type="text"
+          >
+            {title}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          {benefits.map((benefit, idx) => (
-            <div
-              key={idx}
-              className="bg-white p-5 rounded-xl border border-[#D9E4EF] hover:border-[#0B63CE] transition-all duration-200 shadow-sm flex flex-col justify-between"
-            >
-              <div className="space-y-3">
-                <div className="w-8 h-8 rounded-lg bg-[#EAF3FC] text-[#0B63CE] flex items-center justify-center font-bold text-xs">
-                  {idx + 1}
-                </div>
-                <p className="text-[15px] font-semibold text-[#102A43] leading-snug">
-                  {benefit}
-                </p>
-              </div>
-              <div className="pt-4 flex items-center gap-1.5 text-xs text-[#0B63CE] font-medium">
-                <CheckCircle className="w-3.5 h-3.5" />
-                <span>Tiêu chuẩn nhà máy</span>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-6 bg-white rounded-2xl border border-[#D9E4EF] shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-[#EAF3FC] text-[#0B63CE] flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5" />
             </div>
-          ))}
+            <h3 className="font-bold text-lg text-[#102A43]">Bảo Vệ Hàng Hóa Tuyệt Đối</h3>
+            <p className="text-xs text-[#6B7C93] leading-relaxed">
+              Màng LDPE dẻo dai chống thấm nước và xốp PE Foam đàn hồi cao hấp thụ 99% chấn động va đập trong quá trình vận chuyển đường dài.
+            </p>
+          </div>
+
+          <div className="p-6 bg-white rounded-2xl border border-[#D9E4EF] shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-[#EAF3FC] text-[#0B63CE] flex items-center justify-center">
+              <DollarSign className="w-5 h-5" />
+            </div>
+            <h3 className="font-bold text-lg text-[#102A43]">Tối Ưu Chi Phí Đóng Gói</h3>
+            <p className="text-xs text-[#6B7C93] leading-relaxed">
+              Nhà máy sản xuất trực tiếp quy mô lớn giúp tiết kiệm 15% - 25% chi phí bao bì đóng gói so với mua qua các đơn vị thương mại trung gian.
+            </p>
+          </div>
+
+          <div className="p-6 bg-white rounded-2xl border border-[#D9E4EF] shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-[#EAF3FC] text-[#0B63CE] flex items-center justify-center">
+              <Zap className="w-5 h-5" />
+            </div>
+            <h3 className="font-bold text-lg text-[#102A43]">Tiến Độ Giao Hàng Nhanh 24/7</h3>
+            <p className="text-xs text-[#6B7C93] leading-relaxed">
+              Dây chuyền hoạt động liên tục 24/7 với kho bãi lớn luôn sẵn hàng mẫu tiêu chuẩn, giao hàng siêu tốc khu vực Long An, TP.HCM & Bình Dương.
+            </p>
+          </div>
         </div>
       </div>
     </section>

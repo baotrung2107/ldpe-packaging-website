@@ -1,30 +1,32 @@
 import { NextResponse } from "next/server";
-import { verifyAdminCredentials } from "@/lib/cms-auth";
+import { verifyAdminCredentials, generateSessionToken, SESSION_TOKEN_NAME } from "@/lib/cms-auth";
 
 export async function POST(request: Request) {
   try {
-    const { username, password } = await request.json();
+    const body = await request.json();
+    const { username, password } = body;
+
+    if (!username || !password) {
+      return NextResponse.json({ success: false, error: "Thiếu tên đăng nhập hoặc mật khẩu" }, { status: 400 });
+    }
 
     if (verifyAdminCredentials(username, password)) {
+      const token = generateSessionToken(username);
       const response = NextResponse.json({ success: true, message: "Đăng nhập thành công" });
       
-      // Set HTTP-only session cookie valid for 7 days
-      response.cookies.set("admin_session", "authenticated_baotrung2107_session", {
+      response.cookies.set(SESSION_TOKEN_NAME, token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        sameSite: "lax",
         path: "/",
+        maxAge: 60 * 60 * 24 * 7, // 7 days
       });
 
       return response;
     }
 
-    return NextResponse.json(
-      { success: false, error: "Tên đăng nhập hoặc mật khẩu không chính xác" },
-      { status: 401 }
-    );
+    return NextResponse.json({ success: false, error: "Sai tên đăng nhập hoặc mật khẩu" }, { status: 401 });
   } catch (error) {
-    return NextResponse.json({ success: false, error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Lỗi máy chủ" }, { status: 500 });
   }
 }

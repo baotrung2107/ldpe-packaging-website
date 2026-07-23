@@ -11,7 +11,7 @@ export default function FinalCtaSection() {
     "final_cta_subtext",
     "Một giải pháp LDPE hoặc PE foam phù hợp giúp sản phẩm được bảo vệ tốt hơn, đóng gói nhanh hơn và đến tay khách hàng trong trạng thái chỉn chu hơn."
   );
-  const phone = getOverride("nav_phone", "0900 000 000");
+  const phone = getOverride("nav_phone", "083 572 6666");
 
   return (
     <section className="py-16 md:py-24 bg-[#062B4F] text-white relative overflow-hidden">
@@ -21,17 +21,24 @@ export default function FinalCtaSection() {
           <span>BẢO VỆ TOÀN DIỆN THƯƠNG HIỆU</span>
         </div>
 
-        {/* H2 Title - 40px desktop, 30px mobile */}
-        <h2 className="text-[30px] md:text-[40px] font-bold leading-snug text-white max-w-3xl mx-auto">
+        <h2
+          className="text-[30px] md:text-[40px] font-bold leading-snug text-white max-w-3xl mx-auto"
+          data-cms-section="final_cta"
+          data-cms-id="final_cta_title"
+          data-cms-type="text"
+        >
           {ctaTitle}
         </h2>
 
-        {/* Subtext - 17px desktop, 16px mobile */}
-        <p className="text-[16px] md:text-[17px] text-[#D9E4EF] max-w-2xl mx-auto leading-relaxed">
+        <p
+          className="text-[16px] md:text-[17px] text-[#D9E4EF] max-w-2xl mx-auto leading-relaxed"
+          data-cms-section="final_cta"
+          data-cms-id="final_cta_subtext"
+          data-cms-type="text"
+        >
           {ctaSubtext}
         </p>
 
-        {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
           <a href="#bao-gia" className="btn-primary w-full sm:w-auto group">
             <span>Nhận tư vấn giải pháp</span>
@@ -43,12 +50,11 @@ export default function FinalCtaSection() {
           </a>
         </div>
 
-        {/* Price Info Notice */}
         <div className="pt-6 border-t border-[#103E6B] max-w-xl mx-auto">
           <p className="text-xs md:text-sm text-[#D9E4EF] font-medium flex items-center justify-center gap-2">
             <PhoneCall className="w-4 h-4 text-[#0B63CE] shrink-0" />
             <span>
-              Liên hệ hotline <strong className="text-white">{phone}</strong> để được tư vấn và báo giá theo kích thước, vật liệu, sản lượng và yêu cầu gia công.
+              Liên hệ hotline <strong className="text-white">{phone}</strong> để được tư vấn và báo giá theo kích thước, vật liệu và sản lượng.
             </span>
           </p>
         </div>

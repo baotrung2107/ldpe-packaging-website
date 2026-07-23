@@ -1,72 +1,72 @@
-import { AlertTriangle, ShieldCheck, HeartHandshake } from "lucide-react";
+"use client";
+
+import { useCMS } from "@/context/CMSContext";
+import { AlertCircle, ShieldAlert, PackageX, TrendingDown, Clock, HelpCircle } from "lucide-react";
 
 export default function PainPointsSection() {
-  const painPoints = [
-    "Sản phẩm bị móp, xước, nứt hoặc vỡ trong quá trình vận chuyển.",
-    "Kích thước túi hoặc khay không vừa với sản phẩm.",
-    "Vật liệu quá mỏng, không đủ khả năng bảo vệ.",
-    "Vật liệu quá dày, làm tăng chi phí không cần thiết.",
-    "Đường hàn không ổn định, bao bì dễ bung hoặc rách.",
-    "Đóng gói mất nhiều thời gian, làm chậm dây chuyền sản xuất.",
-    "Khách hàng trả hàng hoặc đánh giá không tốt.",
-    "Hình ảnh và uy tín thương hiệu bị ảnh hưởng.",
-  ];
+  const { getOverride } = useCMS();
+
+  const title = getOverride("pain_points_title", "Những Rủi Rộ Thường Gặp Khi Chọn Sai Quy Cách Bao Bì");
+  const desc = getOverride(
+    "pain_points_desc",
+    "Bao bì đóng gói không đúng tỉ trọng hoặc vật liệu bọc lót kéo kém dễ dẫn đến những tổn thất lớn cho doanh nghiệp."
+  );
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-16 md:py-24 bg-[#041E38] text-white relative border-b border-[#0B3B6F]">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-12">
-        {/* Section Header */}
-        <div className="max-w-4xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold px-3 py-1 rounded-full">
-            <AlertTriangle className="w-4 h-4 text-amber-600" />
-            <span>RỦI RO THƯỜNG GẶP TRONG ĐÓNG GÓI</span>
-          </div>
-
-          <h2 className="text-[30px] md:text-[40px] font-bold text-[#102A43] leading-snug">
-            Chi phí lớn nhất không nằm ở miếng xốp, mà ở sản phẩm bị hỏng khi đến tay khách hàng
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-950/60 px-3.5 py-1.5 rounded-full border border-amber-500/30">
+            ⚠️ THÁCH THỨC ĐÓNG GÓI DOANH NGHIỆP
+          </span>
+          <h2
+            className="text-[30px] md:text-[40px] font-extrabold text-white tracking-tight"
+            data-cms-section="pain_points"
+            data-cms-id="pain_points_title"
+            data-cms-type="text"
+          >
+            {title}
           </h2>
-
-          <p className="text-[16px] md:text-[17px] text-[#40566F]">
-            Một phương án đóng gói không phù hợp có thể dẫn đến những tổn hại trực tiếp về chi phí và thương hiệu:
+          <p
+            className="text-[16px] text-[#D9E4EF] leading-relaxed"
+            data-cms-section="pain_points"
+            data-cms-id="pain_points_desc"
+            data-cms-type="text"
+          >
+            {desc}
           </p>
         </div>
 
-        {/* 8 Pain points Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {painPoints.map((point, index) => (
-            <div
-              key={index}
-              className="p-5 rounded-xl bg-[#F7FAFC] border border-[#D9E4EF] hover:border-[#0B63CE] transition-all duration-200 hover:shadow-md flex items-start gap-3 group"
-            >
-              <span className="w-7 h-7 rounded-full bg-red-100 text-red-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#0B63CE] group-hover:text-white transition-colors">
-                0{index + 1}
-              </span>
-              <p className="text-[15px] text-[#102A43] font-medium leading-relaxed">
-                {point}
-              </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-6 bg-[#062B4F] rounded-2xl border border-white/10 space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-red-950/60 text-red-400 flex items-center justify-center border border-red-500/30">
+              <PackageX className="w-5 h-5" />
             </div>
-          ))}
-        </div>
-
-        {/* Message Banner */}
-        <div className="bg-[#062B4F] text-white p-6 md:p-8 rounded-2xl border border-[#103E6B] shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-[#0B63CE] rounded-xl shrink-0">
-              <HeartHandshake className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h3 className="text-xl md:text-2xl font-bold text-white">
-                Bảo vệ sản phẩm cũng chính là bảo vệ trải nghiệm khách hàng và giá trị thương hiệu.
-              </h3>
-              <p className="text-sm text-[#D9E4EF] mt-1">
-                Liên hệ đội ngũ chuyên gia để đo đạc và đưa ra thiết kế bao bì tối ưu cho doanh nghiệp của bạn.
-              </p>
-            </div>
+            <h3 className="font-bold text-lg text-white">Trầy Xước & Dập Nát Sản Phẩm</h3>
+            <p className="text-xs text-[#D9E4EF] leading-relaxed">
+              Mút xốp quá mỏng hoặc không đủ tỉ trọng khiến sản phẩm va đập vào thành thùng carton trong vận chuyển đường xa.
+            </p>
           </div>
 
-          <a href="#bao-gia" className="btn-primary shrink-0 whitespace-nowrap">
-            Tư vấn giải pháp ngay
-          </a>
+          <div className="p-6 bg-[#062B4F] rounded-2xl border border-white/10 space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-red-950/60 text-red-400 flex items-center justify-center border border-red-500/30">
+              <TrendingDown className="w-5 h-5" />
+            </div>
+            <h3 className="font-bold text-lg text-white">Tốn Kém Chi Phí Đổi Trả</h3>
+            <p className="text-xs text-[#D9E4EF] leading-relaxed">
+              Hàng hóa bị hư hỏng khi giao đến tay khách dẫn đến chi phí bảo hành, đền bù và ảnh hưởng nghiêm trọng uy tín thương hiệu.
+            </p>
+          </div>
+
+          <div className="p-6 bg-[#062B4F] rounded-2xl border border-white/10 space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-red-950/60 text-red-400 flex items-center justify-center border border-red-500/30">
+              <Clock className="w-5 h-5" />
+            </div>
+            <h3 className="font-bold text-lg text-white">Thao Tác Đóng Gói Chậm</h3>
+            <p className="text-xs text-[#D9E4EF] leading-relaxed">
+              Không dùng mút dập định hình CNC hoặc túi cắt sẵn khiến công nhân mất nhiều thời gian cắt quấn thủ công rườm rà.
+            </p>
+          </div>
         </div>
       </div>
     </section>

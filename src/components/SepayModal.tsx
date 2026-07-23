@@ -6,17 +6,17 @@ import { X, CheckCircle2, Copy, RefreshCw, ShieldCheck, QrCode } from "lucide-re
 interface SepayModalProps {
   isOpen: boolean;
   onClose: () => void;
-  orderCode: string;
-  amount: number;
-  customerName: string;
+  orderCode?: string;
+  amount?: number;
+  customerName?: string;
 }
 
 export default function SepayModal({
   isOpen,
   onClose,
-  orderCode,
-  amount,
-  customerName,
+  orderCode = "DP8888",
+  amount = 500000,
+  customerName = "Khách hàng B2B",
 }: SepayModalProps) {
   const [copiedMemo, setCopiedMemo] = useState(false);
   const [copiedAcc, setCopiedAcc] = useState(false);
@@ -24,8 +24,8 @@ export default function SepayModal({
   const [secondsLeft, setSecondsLeft] = useState(1800); // 30 mins
 
   const bankName = "MBBank";
-  const accountNumber = "0123456789";
-  const accountHolder = "CONG TY LDPE PACKAGING";
+  const accountNumber = "0835726666";
+  const accountHolder = "CONG TY TNHH SAN XUAT PE FOAM DUC PHUC";
   const prefix = "LDPE";
   const memo = `${prefix}${orderCode}`;
 
@@ -39,9 +39,8 @@ export default function SepayModal({
       setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
 
-    // Polling payment status mock & webhook check
+    // Polling payment status check
     const pollInterval = setInterval(() => {
-      // simulate status check call to /api/sepay/status
       fetch(`/api/sepay/status?memo=${memo}`)
         .then((res) => res.json())
         .then((data) => {
@@ -154,7 +153,7 @@ export default function SepayModal({
                 </div>
               </div>
 
-              {/* Content Code Notice (CRITICAL) */}
+              {/* Content Code Notice */}
               <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-amber-900 uppercase">
