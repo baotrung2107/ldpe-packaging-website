@@ -8,48 +8,48 @@ export default function CertificationsSection() {
 
   const certs = [
     {
-      badge: "SGS REACH COMPLIANT",
+      badge: "ISO 9001:2015 CHÍNH THỨC",
+      number: "9199293409672-QMS",
+      date: "24/05/2022 - 23/05/2025",
+      title: "Giấy Chứng Nhận ISO 9001:2015 ISOCERT",
+      lab: "Tổ Chức ISOCERT (ThS. Vũ Văn Thao)",
+      desc: "Chứng nhận Hệ thống Quản lý Chất lượng cho sản phẩm Xốp PE FOAM, Xốp OPP cách nhiệt & Xốp chống tĩnh điện. QĐ 24052201/QĐ-ISOCERT.",
+      image: "/images/ldpe/cert-isocert-iso9001.jpg",
+      pdfUrl: "#",
+      status: "ĐẠT CHUẨN ISOCERT",
+    },
+    {
+      badge: "SGS REACH SVHC (EU)",
       number: "VNHL2401000844EE",
       date: "16/01/2024",
-      title: "Chứng Nhận Kiểm Định REACH SVHC (Châu Âu)",
-      lab: "SGS Vietnam Ltd",
-      desc: "Kiểm định 235 hợp chất nguy hại (SVHC) theo Quy định (EC) No 1907/2006 REACH của Liên minh Châu Âu. Kết quả PASS (Hàm lượng ≤ 0.1% w/w), đủ điều kiện xuất khẩu toàn cầu.",
+      title: "Chứng Nhận Kiểm Định SGS REACH (235 SVHC)",
+      lab: "Tập Đoàn SGS Vietnam Ltd",
+      desc: "Kiểm định 235 hợp chất nguy hại (SVHC) theo Quy định (EC) No 1907/2006 REACH Liên minh Châu Âu. Kết quả PASS (Hàm lượng ≤ 0.1% w/w).",
       image: "/images/ldpe/cert-sgs-reach.jpg",
       pdfUrl: "/test reach. VNHL2401000844EE .pdf",
       status: "ĐẠT TIÊU CHUẨN PASS",
     },
     {
-      badge: "SGS ROHS COMPLIANT",
+      badge: "SGS ROHS 2.0 (EU)",
       number: "VNHL2204007729EE",
       date: "22/04/2022",
-      title: "Chứng Nhận RoHS 2.0 (Chỉ thị 2011/65/EU)",
-      lab: "SGS Vietnam Ltd",
-      desc: "Cam kết an toàn tuyệt đối không chứa 10 kim loại nặng & hóa chất độc hại (Chì, Thủy ngân, Cadmium, Hexavalent Chromium, PBBs, PBDEs, DIBP, DEHP). An toàn cho linh kiện điện tử.",
+      title: "Chứng Nhận SGS RoHS 2.0 An Toàn Hóa Chất",
+      lab: "Tập Đoàn SGS Vietnam Ltd",
+      desc: "Chỉ thị 2011/65/EU [Directive (EU) 2015/863]. An toàn 100% không chứa 10 kim loại nặng độc hại (Chì, Thủy ngân, Cadmium, Hexavalent Chromium...).",
       image: "/images/ldpe/cert-sgs-rohs.jpg",
       pdfUrl: "/TEST REPORT - ĐƯỚC PHÚC.pdf",
       status: "ĐẠT TIÊU CHUẨN COMPLY",
     },
     {
-      badge: "ISO 9001:2015",
-      number: "CERT-ISO-9001-DP",
-      date: "Hệ thống quản lý",
-      title: "Hệ Thống Quản Lý Chất Lượng Nhà Máy Đức Phúc",
-      lab: "Nhà Máy Long An",
-      desc: "Dây chuyền sản xuất màng LDPE, cuộn xốp PE Foam và khay định hình CNC tự động hóa đạt chuẩn ISO 9001:2015, kiểm soát dung sai và quy cách chính xác 100%.",
-      image: "/images/ldpe/cert-iso-9001.jpg",
+      badge: "EUROFINS / MTS REPORT",
+      number: "76122-070905",
+      date: "03/08/2022",
+      title: "Báo Cáo Kiểm Định Eurofins / MTS Quốc Tế",
+      lab: "Eurofins MTS Vietnam Ltd",
+      desc: "Kiểm định chất lượng kỹ thuật sản phẩm Poly Seat Wedge Đức Phúc đạt đánh giá OVERALL RATING: PASS (X) tiêu chuẩn xuất khẩu quốc tế.",
+      image: "/images/ldpe/cert-eurofins-mts.jpg",
       pdfUrl: "#",
-      status: "ĐÃ CHỨNG NHẬN",
-    },
-    {
-      badge: "CATALOGUE SẢN PHẨM",
-      number: "#27319-CATALOGUE-TK2",
-      date: "2026 Edition",
-      title: "Catalogue Quy Chuẩn Kỹ Thuật Nhà Máy Đức Phúc",
-      lab: "Công Ty TNHH Sản Xuất PE Foam Đức Phúc",
-      desc: "Bảng tổng hợp chi tiết quy cách, tỉ trọng, kích thước cuộn màng LDPE, tấm PE foam chống sốc, khay định hình CNC và các dòng nệm PE foam 3 gấp chính hãng.",
-      image: "/images/ldpe/cert-catalogue.jpg",
-      pdfUrl: "/#27319-catalogue-tk2.pdf",
-      status: "XUẤT BẢN CHÍNH THỨC",
+      status: "OVERALL RATING: PASS",
     },
   ];
 
@@ -64,17 +64,17 @@ export default function CertificationsSection() {
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="inline-flex items-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider bg-[#0B63CE]/20 px-3.5 py-1.5 rounded-full border border-[#38BDF8]/30 backdrop-blur-md">
             <Award className="w-4 h-4 text-[#38BDF8]" />
-            TIÊU CHUẨN KIỂM ĐỊNH QUỐC TẾ & CHỨNG NHẬN SGS
+            CHỨNG NHẬN CHẤT LƯỢNG ISO 9001:2015 & SGS / EUROFINS QUỐC TẾ
           </span>
           <h2 className="text-[30px] md:text-[40px] font-extrabold text-white tracking-tight">
             Hồ sơ chứng nhận chất lượng Nhà Máy Đức Phúc
           </h2>
           <p className="text-[16px] md:text-[17px] text-[#D9E4EF] font-normal leading-relaxed">
-            Tất cả sản phẩm màng LDPE & mút xốp PE Foam của Công ty TNHH Sản Xuất PE Foam Đức Phúc đều đi kèm tài liệu thử nghiệm thực tế tại tập đoàn SGS quốc tế.
+            100% hình ảnh giấy chứng nhận ISO 9001:2015, kết quả thử nghiệm SGS REACH, SGS RoHS và Eurofins MTS chính thức của Công ty TNHH Sản Xuất PE Foam Đức Phúc.
           </p>
         </div>
 
-        {/* 4 Certification Cards Grid with Image Preview Thumbnails */}
+        {/* 4 Official Certification Cards Grid (No Catalogue!) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {certs.map((c, i) => (
             <div
@@ -82,13 +82,13 @@ export default function CertificationsSection() {
               className="bg-[#062B4F]/90 backdrop-blur-md border border-white/15 rounded-2xl overflow-hidden hover:border-[#38BDF8] transition-all duration-300 hover:shadow-2xl flex flex-col justify-between group"
             >
               {/* Document Image Thumbnail Preview Header */}
-              <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#041E38] border-b border-white/10">
+              <div className="relative aspect-[3/4] w-full overflow-hidden bg-white border-b border-white/10">
                 <img
                   src={c.image}
                   alt={c.title}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#062B4F] via-transparent to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#062B4F] via-transparent to-black/10" />
 
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
                   <span className="text-[10px] font-bold text-[#38BDF8] tracking-wider uppercase bg-[#041E38]/90 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#38BDF8]/30 shadow">
@@ -102,8 +102,8 @@ export default function CertificationsSection() {
                 {/* Hover Quick Zoom Button */}
                 <button
                   onClick={() => setActiveModalImage({ src: c.image, title: c.title })}
-                  className="absolute bottom-3 right-3 p-2 rounded-xl bg-white/20 hover:bg-white/40 text-white backdrop-blur-md transition-colors border border-white/30"
-                  title="Phóng to chứng nhận"
+                  className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-[#062B4F]/80 hover:bg-[#0B63CE] text-white backdrop-blur-md transition-colors border border-white/30 shadow-lg"
+                  title="Phóng to giấy chứng nhận"
                 >
                   <Eye className="w-4 h-4" />
                 </button>
@@ -125,15 +125,13 @@ export default function CertificationsSection() {
 
                 <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs">
                   <span className="text-[#9FB3C8] text-[11px] truncate">{c.lab}</span>
-                  <a
-                    href={c.pdfUrl}
-                    target="_blank"
-                    rel="noreferrer"
+                  <button
+                    onClick={() => setActiveModalImage({ src: c.image, title: c.title })}
                     className="text-[#38BDF8] font-bold hover:underline flex items-center gap-1 shrink-0 text-xs"
                   >
-                    <Download className="w-3.5 h-3.5" />
-                    Tải PDF
-                  </a>
+                    <Eye className="w-3.5 h-3.5" />
+                    Xem ảnh
+                  </button>
                 </div>
               </div>
             </div>
@@ -151,7 +149,7 @@ export default function CertificationsSection() {
               Nhà máy chính thức: Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An
             </h3>
             <p className="text-xs text-[#EAF3FC] max-w-2xl">
-              Cam kết 100% tài liệu chứng nhận thật: SGS REACH VNHL2401000844EE, SGS RoHS VNHL2204007729EE & Catalogue #27319 sẵn sàng cho các hợp đồng B2B xuất khẩu Châu Âu, Mỹ & Nhật Bản.
+              100% tài liệu chứng nhận thật: ISO 9001:2015 9199293409672-QMS, SGS REACH VNHL2401000844EE, SGS RoHS VNHL2204007729EE & Eurofins MTS 76122-070905 sẵn sàng đáp ứng mọi tiêu chuẩn kiểm định B2B.
             </p>
           </div>
 
@@ -161,7 +159,7 @@ export default function CertificationsSection() {
               className="btn-primary text-xs py-3 px-6 shadow-xl shadow-black/20 flex items-center gap-2 whitespace-nowrap"
             >
               <FileText className="w-4 h-4" />
-              <span>Yêu cầu bản gốc SGS</span>
+              <span>Yêu cầu bản gốc kiểm định</span>
             </a>
           </div>
         </div>
@@ -183,7 +181,7 @@ export default function CertificationsSection() {
             <img
               src={activeModalImage.src}
               alt={activeModalImage.title}
-              className="max-h-[80vh] w-auto object-contain rounded-xl border border-white/20 shadow-2xl"
+              className="max-h-[80vh] w-auto object-contain rounded-xl border border-white/20 shadow-2xl bg-white p-2"
             />
           </div>
         </div>
