@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
-import { getCMSStore } from "@/lib/cms-store";
+import { getCMSStore, saveCMSStore } from "@/lib/cms-store";
 
 const TELEGRAM_BOT_TOKEN = "8957063322:AAGJm4c-d1s4nOn9-cg26NVWzhLS33rFpao";
 const BOT_USERNAME = "Nhamaydppepoam_bot";
+
+function escapeHTML(str: string): string {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
 
 export async function POST(request: Request) {
   try {
@@ -19,40 +27,69 @@ export async function POST(request: Request) {
       storageCondition = "",
       processingRequirements = "",
       consultingContent = "",
+      fileName = null,
     } = body;
 
     const formattedTime = new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" });
 
-    // Format rich Telegram message
-    const message = `🚨 *YÊU CẦU BÁO GIÁ MỚI TỪ WEBSITE* 🚨
+    // Safe HTML Telegram message format (100% immune to special chars in emails & underscores)
+    const messageHtml = `<b>🚨 YÊU CẦU BÁO GIÁ MỚI TỪ WEBSITE 🚨</b>
 ━━━━━━━━━━━━━━━━━━
-🏢 *Doanh nghiệp*: ${companyName || "Chưa nhập"}
-👤 *Người liên hệ*: ${contactName || "Chưa nhập"}
-📞 *Số điện thoại / Zalo*: ${phone || "Chưa nhập"}
-✉️ *Email*: ${email || "Chưa nhập"}
+🏢 <b>Doanh nghiệp</b>: ${escapeHTML(companyName) || "Chưa nhập"}
+👤 <b>Người liên hệ</b>: ${escapeHTML(contactName) || "Chưa nhập"}
+📞 <b>Số điện thoại / Zalo</b>: ${escapeHTML(phone) || "Chưa nhập"}
+✉️ <b>Email</b>: ${escapeHTML(email) || "Chưa nhập"}
 
-📦 *Sản phẩm cần đóng gói*: ${productToPack || "Chưa nhập"}
-🧩 *Nhóm vật liệu*: ${materialGroup || "Chưa chọn"}
-📐 *Kích thước*: ${dimensions || "Chưa nhập"}
-🔢 *Số lượng dự kiến*: ${quantity || "Chưa nhập"}
-🚚 *Lưu kho / Vận chuyển*: ${storageCondition || "Chưa nhập"}
-🛠️ *Yêu cầu gia công*: ${processingRequirements || "Chưa nhập"}
-💬 *Ghi chú thêm*: ${consultingContent || "Không có"}
+📦 <b>Sản phẩm cần đóng gói</b>: ${escapeHTML(productToPack) || "Chưa nhập"}
+🧩 <b>Nhóm vật liệu</b>: ${escapeHTML(materialGroup) || "Chưa chọn"}
+📐 <b>Kích thước</b>: ${escapeHTML(dimensions) || "Chưa nhập"}
+🔢 <b>Số lượng dự kiến</b>: ${escapeHTML(quantity) || "Chưa nhập"}
+🚚 <b>Lưu kho / Vận chuyển</b>: ${escapeHTML(storageCondition) || "Chưa nhập"}
+🛠️ <b>Yêu cầu gia công</b>: ${escapeHTML(processingRequirements) || "Chưa nhập"}
+${fileName ? `📄 <b>Tệp bản vẽ</b>: ${escapeHTML(fileName)}\n` : ""}💬 <b>Ghi chú thêm</b>: ${escapeHTML(consultingContent) || "Không có"}
 
-⏰ *Thời gian*: ${formattedTime}
-🌐 *Nguồn*: Website LDPE Packaging Đức Phúc`;
+⏰ <b>Thời gian gửi</b>: ${escapeHTML(formattedTime)}
+🌐 <b>Nguồn</b>: Website LDPE Packaging Đức Phúc`;
 
-    // Collect all candidate chat IDs
+    // 1. Store lead in CMS store so zero leads are ever lost
+    try {
+      const store = getCMSStore();
+      const existingQuotes = (store as any).quotes || [];
+      const newQuoteItem = {
+        id: `quote_${Date.now()}`,
+        createdAt: formattedTime,
+        companyName,
+        contactName,
+        phone,
+        email,
+        productToPack,
+        materialGroup,
+        dimensions,
+        quantity,
+        storageCondition,
+        processingRequirements,
+        consultingContent,
+        fileName,
+      };
+      saveCMSStore({
+        ...store,
+        quotes: [newQuoteItem, ...existingQuotes].slice(0, 100), // Keep latest 100 quotes
+      } as any);
+    } catch (e) {
+      console.error("Error storing quote lead to CMS store:", e);
+    }
+
+    // 2. Collect all candidate Telegram chat IDs
     const targetChatIds: Array<string | number> = [];
 
-    // 1. Check CMS Store for manually configured chat ID
+    // Check CMS store for manually configured chat ID
     const store = getCMSStore();
     const cmsChatId = store.published?.telegram_chat_id || store.draft?.telegram_chat_id || process.env.TELEGRAM_CHAT_ID;
-    if (cmsChatId) {
+    if (cmsChatId && !targetChatIds.includes(cmsChatId)) {
       targetChatIds.push(cmsChatId);
     }
 
-    // 2. Fetch updates from Telegram API to find all users/groups that have messaged the bot
+    // Query Telegram API getUpdates to find all active chat IDs
     try {
       const updatesRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates`);
       const updatesData = await updatesRes.json();
@@ -68,7 +105,7 @@ export async function POST(request: Request) {
       console.error("Error fetching Telegram getUpdates:", err);
     }
 
-    // 3. Send message to all active chat IDs
+    // 3. Dispatch to all active chat IDs with parse_mode: HTML
     const sendResults = [];
     if (targetChatIds.length > 0) {
       for (const chatId of targetChatIds) {
@@ -78,30 +115,28 @@ export async function POST(request: Request) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               chat_id: chatId,
-              text: message,
-              parse_mode: "Markdown",
+              text: messageHtml,
+              parse_mode: "HTML",
             }),
           });
           const resultData = await telegramRes.json();
-          sendResults.push({ chatId, ok: resultData.ok, resultData });
+          sendResults.push({ chatId, ok: resultData.ok, description: resultData.description });
         } catch (e) {
           console.error(`Error sending message to chatId ${chatId}:`, e);
         }
       }
-    } else {
-      console.warn(`[TELEGRAM WARNING] No chat_id found for bot @${BOT_USERNAME}. Please start the bot at https://t.me/${BOT_USERNAME}`);
     }
 
     const anySuccess = sendResults.some((r) => r.ok);
 
     return NextResponse.json({
       success: true,
-      message: "Yêu cầu báo giá đã được tiếp nhận thành công!",
+      message: "Yêu cầu báo giá đã được nhận thành công!",
       telegramSent: anySuccess,
       chatCount: targetChatIds.length,
       sendResults,
       notice: !anySuccess
-        ? `Vui lòng truy cập https://t.me/${BOT_USERNAME} và bấm START để kích hoạt nhận tin nhắn Telegram.`
+        ? `Bot chưa có Chat ID. Vui lòng mở https://t.me/${BOT_USERNAME} và bấm START.`
         : null,
     });
   } catch (error) {

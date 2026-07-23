@@ -6,11 +6,9 @@ const BOT_USERNAME = "Nhamaydppepoam_bot";
 
 export async function GET() {
   try {
-    // 1. Get bot info
     const meRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getMe`);
     const meData = await meRes.json();
 
-    // 2. Get updates to find active chat IDs
     const updatesRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates`);
     const updatesData = await updatesRes.json();
 
@@ -41,9 +39,6 @@ export async function GET() {
       configuredChatId: cmsChatId || null,
       activeChats,
       hasActiveChat: activeChats.length > 0 || !!cmsChatId,
-      instruction: activeChats.length === 0 && !cmsChatId
-        ? `⚠️ Bot chưa có Chat ID! Vui lòng truy cập https://t.me/${BOT_USERNAME} và bấm START hoặc gửi 1 tin nhắn bất kỳ cho Bot, sau đó thử lại.`
-        : "✅ Đã tìm thấy Chat ID sẵn sàng nhận thông báo báo giá!",
     });
   } catch (error) {
     return NextResponse.json({ success: false, error: String(error) }, { status: 500 });
@@ -56,11 +51,11 @@ export async function POST(request: Request) {
     const store = getCMSStore();
     const cmsChatId = body.chat_id || store.published?.telegram_chat_id || store.draft?.telegram_chat_id || process.env.TELEGRAM_CHAT_ID;
 
-    // Collect all candidate chat IDs
     const targetChatIds: Array<string | number> = [];
-    if (cmsChatId) targetChatIds.push(cmsChatId);
+    if (cmsChatId && !targetChatIds.includes(cmsChatId)) {
+      targetChatIds.push(cmsChatId);
+    }
 
-    // Also get active chats from getUpdates
     const updatesRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates`);
     const updatesData = await updatesRes.json();
     if (updatesData.ok && Array.isArray(updatesData.result)) {
@@ -75,16 +70,16 @@ export async function POST(request: Request) {
     if (targetChatIds.length === 0) {
       return NextResponse.json({
         success: false,
-        error: `Bot chưa nhận được tin nhắn từ bạn! Vui lòng truy cập https://t.me/${BOT_USERNAME} trên điện thoại/máy tính, bấm START hoặc gửi 1 tin nhắn bất kỳ cho Bot rồi bấm Thử Lại.`,
+        error: `Bot chưa nhận được tin nhắn từ bạn! Vui lòng truy cập https://t.me/${BOT_USERNAME} trên điện thoại hoặc máy tính, bấm START (hoặc gửi 1 tin nhắn bất kỳ cho Bot) rồi thử lại.`,
         botLink: `https://t.me/${BOT_USERNAME}`,
       }, { status: 400 });
     }
 
-    const testMessage = `🔔 *THỬ NGHIỆM KẾT NỐI TELEGRAM BOT THÀNH CÔNG!* 🔔
+    const testMessage = `<b>🔔 THỬ NGHIỆM KẾT NỐI TELEGRAM BOT THÀNH CÔNG! 🔔</b>
 ━━━━━━━━━━━━━━━━━━
 ✅ Hệ thống báo giá tự động Nhà Máy LDPE Đức Phúc đã kết nối thành công tới Telegram của bạn.
-⏰ Thời gian test: ${new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })}
-🌐 Website: https://ldpe-packaging-website.vercel.app`;
+⏰ <b>Thời gian test</b>: ${new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })}
+🌐 <b>Website</b>: https://ldpe-packaging-website.vercel.app`;
 
     const sendResults = [];
     for (const chatId of targetChatIds) {
@@ -94,17 +89,21 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           chat_id: chatId,
           text: testMessage,
-          parse_mode: "Markdown",
+          parse_mode: "HTML",
         }),
       });
       const data = await res.json();
       sendResults.push({ chatId, ok: data.ok, description: data.description });
     }
 
+    const anyOk = sendResults.some((r) => r.ok);
+
     return NextResponse.json({
-      success: sendResults.some((r) => r.ok),
+      success: anyOk,
       results: sendResults,
-      message: "Đã thử gửi tin nhắn đến các Telegram Chat!",
+      message: anyOk
+        ? "✅ Đã thử gửi tin nhắn kết nối thành công tới Telegram!"
+        : `⚠️ Gửi tin nhắn thất bại: ${sendResults[0]?.description || "Lỗi Telegram API"}`,
     });
   } catch (error) {
     return NextResponse.json({ success: false, error: String(error) }, { status: 500 });
