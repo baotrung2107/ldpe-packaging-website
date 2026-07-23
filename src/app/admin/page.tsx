@@ -9,26 +9,18 @@ import {
   Monitor,
   Smartphone,
   LogOut,
-  ChevronDown,
-  ChevronUp,
-  Plus,
-  Trash2,
   Image as ImageIcon,
   AlertTriangle,
   Sparkles,
-  Eye,
   Check,
   History,
   Upload,
   Globe,
-  Layers,
-  Search,
-  ArrowUp,
-  ArrowDown,
   Phone,
   Mail,
   MapPin,
   FileText,
+  Eye,
 } from "lucide-react";
 import { useCMS } from "@/context/CMSContext";
 import Home from "@/app/page";
@@ -42,10 +34,6 @@ export default function AdminPage() {
     revisions,
     mediaList,
     updateDraft,
-    updateArrayItem,
-    addArrayItem,
-    removeArrayItem,
-    reorderArrayItems,
     saveDraft,
     publish,
     restoreRev,
@@ -56,7 +44,6 @@ export default function AdminPage() {
     setPreviewMode,
     isVisualEditActive,
     setIsVisualEditActive,
-    selectedElementMeta,
   } = useCMS();
 
   const [usernameInput, setUsernameInput] = useState("");
@@ -64,11 +51,11 @@ export default function AdminPage() {
   const [loginError, setLoginError] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
   const [activeTab, setActiveTab] = useState<"contact" | "quote_form" | "media" | "seo" | "revisions">("contact");
-  const [activeSection, setActiveSection] = useState<string>("contact_info");
   const [uploadingMedia, setUploadingMedia] = useState(false);
   const [isLoggedInState, setIsLoggedInState] = useState(false);
 
   const previewContainerRef = useRef<HTMLDivElement>(null);
+  const leftPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch("/api/admin/cms")
@@ -92,8 +79,8 @@ export default function AdminPage() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasUnsavedChanges]);
 
-  // Auto-scroll sync strictly inside right preview container ONLY (Left panel stays 100% fixed!)
-  const scrollToPreviewTarget = (targetId: string) => {
+  // Optional manual scroll trigger strictly inside right preview container
+  const handleManualScrollToTarget = (targetId: string) => {
     const container = previewContainerRef.current;
     if (!container) return;
 
@@ -108,13 +95,10 @@ export default function AdminPage() {
       quote_desc: "bao-gia",
       form_title: "bao-gia",
       form_submit_btn: "bao-gia",
-      contact_info: "bao-gia",
-      quote_form: "bao-gia",
     };
 
     const sectionId = mapping[targetId] || targetId;
 
-    // Search for element inside live preview container
     const targetEl =
       (container.querySelector(`[data-cms-id="${targetId}"]`) as HTMLElement) ||
       (container.querySelector(`#${sectionId}`) as HTMLElement) ||
@@ -125,26 +109,17 @@ export default function AdminPage() {
       const targetRect = targetEl.getBoundingClientRect();
       const relativeTop = targetRect.top - containerRect.top + container.scrollTop;
 
-      // Scroll ONLY the right container. Left edit window position stays 100% fixed!
       container.scrollTo({
         top: Math.max(0, relativeTop - 80),
         behavior: "smooth",
       });
 
-      // Add temporary highlight ring
       targetEl.classList.add("ring-4", "ring-[#0B63CE]", "ring-offset-2", "transition-all");
       setTimeout(() => {
         targetEl.classList.remove("ring-4", "ring-[#0B63CE]", "ring-offset-2", "transition-all");
       }, 2000);
     }
   };
-
-  // Sync scroll when visual element selected
-  useEffect(() => {
-    if (selectedElementMeta?.cmsId) {
-      scrollToPreviewTarget(selectedElementMeta.cmsId);
-    }
-  }, [selectedElementMeta]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -283,12 +258,12 @@ export default function AdminPage() {
 
   // Admin Split-Screen CMS Interface Render
   return (
-    <div className="min-h-screen bg-[#F7FAFC] flex flex-col font-sans relative overflow-x-hidden">
+    <div className="h-screen bg-[#F7FAFC] flex flex-col font-sans relative overflow-hidden">
       <VisualEditorOverlay />
       <CMSInlineDrawer />
 
-      {/* Top Controls Toolbar */}
-      <header className="bg-[#062B4F] text-white px-6 py-3 flex items-center justify-between sticky top-0 z-50 border-b border-[#103E6B] shadow-md">
+      {/* Top Controls Toolbar (Fixed 57px) */}
+      <header className="bg-[#062B4F] text-white px-6 py-3 flex items-center justify-between z-50 border-b border-[#103E6B] shadow-md shrink-0 h-[57px]">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-[#0B63CE] font-bold text-white flex items-center justify-center text-sm">
             DP
@@ -388,17 +363,17 @@ export default function AdminPage() {
         </div>
       </header>
 
-      {/* Main Split-Screen Layout */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Left Form Panel (50% width) - Keeps scroll position 100% intact */}
-        <div className="w-full lg:w-1/2 border-r border-[#D9E4EF] bg-white overflow-y-auto flex flex-col">
-          {/* Tabs Navigation */}
-          <div className="flex items-center border-b border-[#D9E4EF] bg-[#F7FAFC] px-4 pt-3 gap-2 overflow-x-auto">
+      {/* Completely Independent 50-50 Split-Screen Layout (Height = calc(100vh - 57px)) */}
+      <div className="h-[calc(100vh-57px)] w-full flex overflow-hidden">
+        {/* LEFT COLUMN: Admin Edit Panel (100% Independent Scrolling) */}
+        <div
+          ref={leftPanelRef}
+          className="w-full lg:w-1/2 h-full border-r border-[#D9E4EF] bg-white overflow-y-auto flex flex-col shrink-0"
+        >
+          {/* Sticky Left Tabs Header */}
+          <div className="sticky top-0 z-20 flex items-center border-b border-[#D9E4EF] bg-[#F7FAFC] px-4 pt-3 gap-2 overflow-x-auto shrink-0 shadow-sm">
             <button
-              onClick={() => {
-                setActiveTab("contact");
-                scrollToPreviewTarget("bao-gia");
-              }}
+              onClick={() => setActiveTab("contact")}
               className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                 activeTab === "contact"
                   ? "border-[#0B63CE] text-[#0B63CE]"
@@ -410,10 +385,7 @@ export default function AdminPage() {
             </button>
 
             <button
-              onClick={() => {
-                setActiveTab("quote_form");
-                scrollToPreviewTarget("bao-gia");
-              }}
+              onClick={() => setActiveTab("quote_form")}
               className={`pb-3 px-3 text-xs font-bold border-b-2 whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                 activeTab === "quote_form"
                   ? "border-[#0B63CE] text-[#0B63CE]"
@@ -461,6 +433,7 @@ export default function AdminPage() {
             </button>
           </div>
 
+          {/* Left Form Content (Scrolls independently up and down) */}
           <div className="p-6 space-y-4 flex-1 overflow-y-auto">
             {/* TAB 1: HOTLINE, EMAIL & FACTORY ADDRESS */}
             {activeTab === "contact" && (
@@ -471,21 +444,29 @@ export default function AdminPage() {
                     Quản Lý Thông Tin Hotline, Email & Địa Chỉ Nhà Máy
                   </h3>
                   <p className="text-xs text-[#40566F]">
-                    Thay đổi thông tin liên hệ chính thức hiển thị tại Thanh Menu, Biểu Mẫu Báo Giá và Chân Trang (Footer). Khi nhấn hoặc nhập dữ liệu, trang bên phải sẽ tự động cuộn đến vị trí hiển thị!
+                    Thay đổi thông tin liên hệ chính thức hiển thị tại Thanh Menu, Biểu Mẫu Báo Giá và Chân Trang (Footer). Hai cột Admin và Web cuộn hoàn toàn độc lập!
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   {/* Hotline Input */}
-                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
-                    <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
-                      <Phone className="w-3.5 h-3.5 text-[#0B63CE]" />
-                      Hotline tư vấn kỹ thuật (Zalo / Call)
-                    </label>
+                  <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm relative group">
+                    <div className="flex items-center justify-between">
+                      <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
+                        <Phone className="w-3.5 h-3.5 text-[#0B63CE]" />
+                        Hotline tư vấn kỹ thuật (Zalo / Call)
+                      </label>
+                      <button
+                        onClick={() => handleManualScrollToTarget("nav_phone")}
+                        className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
+                        title="Xem vị trí hiển thị trên web"
+                      >
+                        <Eye className="w-3 h-3" /> Xem vị trí web
+                      </button>
+                    </div>
                     <input
                       type="text"
                       value={draft.nav_phone || "083 572 6666"}
-                      onFocus={() => scrollToPreviewTarget("nav_phone")}
                       onChange={(e) => updateDraft("nav_phone", e.target.value)}
                       placeholder="083 572 6666"
                       className="admin-input font-bold text-[#0B63CE]"
@@ -497,14 +478,22 @@ export default function AdminPage() {
 
                   {/* Email Input */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
-                    <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
-                      <Mail className="w-3.5 h-3.5 text-[#0B63CE]" />
-                      Email tiếp nhận bản vẽ & báo giá
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
+                        <Mail className="w-3.5 h-3.5 text-[#0B63CE]" />
+                        Email tiếp nhận bản vẽ & báo giá
+                      </label>
+                      <button
+                        onClick={() => handleManualScrollToTarget("quote_email")}
+                        className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
+                        title="Xem vị trí hiển thị trên web"
+                      >
+                        <Eye className="w-3 h-3" /> Xem vị trí web
+                      </button>
+                    </div>
                     <input
                       type="email"
                       value={draft.nav_email || "phuocpefoam@gmail.com"}
-                      onFocus={() => scrollToPreviewTarget("quote_email")}
                       onChange={(e) => updateDraft("nav_email", e.target.value)}
                       placeholder="phuocpefoam@gmail.com"
                       className="admin-input font-bold text-[#102A43]"
@@ -516,14 +505,22 @@ export default function AdminPage() {
 
                   {/* Factory Address Input */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
-                    <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#0B63CE]" />
-                      Địa chỉ nhà máy & xưởng gia công
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="font-bold text-xs text-[#102A43] flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-[#0B63CE]" />
+                        Địa chỉ nhà máy & xưởng gia công
+                      </label>
+                      <button
+                        onClick={() => handleManualScrollToTarget("quote_factory_address")}
+                        className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
+                        title="Xem vị trí hiển thị trên web"
+                      >
+                        <Eye className="w-3 h-3" /> Xem vị trí web
+                      </button>
+                    </div>
                     <textarea
                       rows={2}
                       value={draft.footer_address || "Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An"}
-                      onFocus={() => scrollToPreviewTarget("quote_factory_address")}
                       onChange={(e) => updateDraft("footer_address", e.target.value)}
                       placeholder="Ấp Lập Điền, Xã Tân Mỹ, Huyện Đức Hòa, Tỉnh Long An"
                       className="admin-input font-medium text-[#102A43]"
@@ -545,20 +542,27 @@ export default function AdminPage() {
                     Quản Lý Nội Dung Biểu Mẫu Nhận Báo Giá
                   </h3>
                   <p className="text-xs text-[#40566F]">
-                    Chỉnh sửa các tiêu đề, mô tả hướng dẫn, nhãn nút bấm và thông tin cọc mẫu SePay QR. Mọi chỉnh sửa sẽ cuộn trực tiếp trang web bên phải về khối Biểu mẫu báo giá!
+                    Chỉnh sửa các tiêu đề, mô tả hướng dẫn, nhãn nút bấm và thông tin cọc mẫu SePay QR.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   {/* Section Title */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
-                    <label className="font-bold text-xs text-[#102A43] block">
-                      Tiêu đề khối báo giá (H2)
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="font-bold text-xs text-[#102A43] block">
+                        Tiêu đề khối báo giá (H2)
+                      </label>
+                      <button
+                        onClick={() => handleManualScrollToTarget("quote_title")}
+                        className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
+                      >
+                        <Eye className="w-3 h-3" /> Xem vị trí web
+                      </button>
+                    </div>
                     <input
                       type="text"
                       value={draft.quote_title || "Bạn chưa biết nên chọn loại LDPE hoặc PE foam nào?"}
-                      onFocus={() => scrollToPreviewTarget("quote_title")}
                       onChange={(e) => updateDraft("quote_title", e.target.value)}
                       className="admin-input font-bold text-[#102A43]"
                     />
@@ -566,16 +570,23 @@ export default function AdminPage() {
 
                   {/* Section Description */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
-                    <label className="font-bold text-xs text-[#102A43] block">
-                      Mô tả hướng dẫn gửi mẫu & quy cách
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="font-bold text-xs text-[#102A43] block">
+                        Mô tả hướng dẫn gửi mẫu & quy cách
+                      </label>
+                      <button
+                        onClick={() => handleManualScrollToTarget("quote_desc")}
+                        className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
+                      >
+                        <Eye className="w-3 h-3" /> Xem vị trí web
+                      </button>
+                    </div>
                     <textarea
                       rows={3}
                       value={
                         draft.quote_desc ||
                         "Hãy gửi cho chúng tôi mẫu sản phẩm, kích thước, số lượng dự kiến và yêu cầu vận chuyển. Đội ngũ tư vấn sẽ hỗ trợ xác định phương án phù hợp trước khi báo giá."
                       }
-                      onFocus={() => scrollToPreviewTarget("quote_desc")}
                       onChange={(e) => updateDraft("quote_desc", e.target.value)}
                       className="admin-input"
                     />
@@ -583,13 +594,20 @@ export default function AdminPage() {
 
                   {/* Form Submit Button Text */}
                   <div className="p-4 bg-white rounded-xl border border-[#D9E4EF] space-y-2 shadow-sm">
-                    <label className="font-bold text-xs text-[#102A43] block">
-                      Chữ hiển thị trên Nút Gửi Báo Giá
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="font-bold text-xs text-[#102A43] block">
+                        Chữ hiển thị trên Nút Gửi Báo Giá
+                      </label>
+                      <button
+                        onClick={() => handleManualScrollToTarget("form_submit_btn")}
+                        className="text-[10px] text-[#0B63CE] font-semibold hover:underline flex items-center gap-1"
+                      >
+                        <Eye className="w-3 h-3" /> Xem vị trí web
+                      </button>
+                    </div>
                     <input
                       type="text"
                       value={draft.form_submit_btn || "Gửi yêu cầu báo giá"}
-                      onFocus={() => scrollToPreviewTarget("form_submit_btn")}
                       onChange={(e) => updateDraft("form_submit_btn", e.target.value)}
                       className="admin-input font-bold text-[#0B63CE]"
                     />
@@ -689,11 +707,11 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Right Live Preview Panel (50% width) with Isolated Auto-Scroll Target Window */}
+        {/* RIGHT COLUMN: Live Web Preview (100% Independent Scrolling) */}
         <div
           ref={previewContainerRef}
           id="admin-live-preview-window"
-          className="hidden lg:flex lg:w-1/2 bg-[#062B4F]/10 overflow-y-auto p-4 items-start justify-center relative scroll-smooth"
+          className="hidden lg:flex lg:w-1/2 h-full bg-[#062B4F]/10 overflow-y-auto p-4 items-start justify-center relative shrink-0"
         >
           <div
             className={`bg-white shadow-2xl rounded-2xl overflow-hidden border border-[#D9E4EF] transition-all duration-300 ${
