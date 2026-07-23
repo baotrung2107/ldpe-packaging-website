@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Upload, CheckCircle2, QrCode, FileText, Phone, Mail, Building, Package } from "lucide-react";
+import { Send, Upload, CheckCircle2, QrCode, FileText, Phone, Mail, Building, Package, ChevronDown, ChevronUp } from "lucide-react";
 import SepayModal from "../SepayModal";
 import { useCMS } from "@/context/CMSContext";
 import SmartTextRenderer from "@/components/SmartTextRenderer";
@@ -33,6 +33,7 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
   const [submitted, setSubmitted] = useState(false);
   const [isSepayOpen, setIsSepayOpen] = useState(false);
   const [orderCode, setOrderCode] = useState("");
+  const [showMoreMobile, setShowMoreMobile] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -49,10 +50,25 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
     e.preventDefault();
     setSubmitted(true);
     try {
+      const payload = {
+        companyName: formData.companyName,
+        contactName: formData.contactName,
+        phone: formData.phone,
+        email: formData.email,
+        productToPack: formData.productToPack,
+        materialGroup: formData.materialGroup,
+        dimensions: formData.dimensions,
+        quantity: formData.quantity,
+        storageCondition: formData.storageCondition,
+        processingRequirements: formData.processingRequirements,
+        consultingContent: formData.consultingContent,
+        fileName: formData.file ? formData.file.name : null,
+      };
+
       await fetch("/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
     } catch (err) {
       console.error("Quote submission error:", err);
@@ -191,29 +207,20 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <h3 className="text-[21px] font-bold text-[#102A43] pb-2 border-b border-[#D9E4EF] [text-wrap:balance]">
-                  Biểu mẫu thông tin yêu cầu báo giá
-                </h3>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-[#D9E4EF] gap-1">
+                  <h3 className="text-[21px] font-bold text-[#102A43] [text-wrap:balance]">
+                    Biểu mẫu thông tin yêu cầu báo giá
+                  </h3>
+                  <span className="text-xs text-red-600 font-semibold italic">
+                    (*) Thông tin bắt buộc
+                  </span>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* 2 MANDATORY FIELDS (ALWAYS SHOWN ON MOBILE & DESKTOP) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Tên doanh nghiệp / Cơ sở *
-                    </label>
-                    <input
-                      type="text"
-                      name="companyName"
-                      required
-                      value={formData.companyName}
-                      onChange={handleInputChange}
-                      placeholder="Công ty TNHH ABC..."
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Người liên hệ *
+                    <label className="block text-xs font-bold text-[#102A43] mb-1">
+                      Người liên hệ <span className="text-red-600 font-bold">*</span>
                     </label>
                     <input
                       type="text"
@@ -222,15 +229,13 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
                       value={formData.contactName}
                       onChange={handleInputChange}
                       placeholder="Nguyễn Văn A"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE] focus:ring-1 focus:ring-[#0B63CE]"
                     />
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Số điện thoại (Zalo) *
+                    <label className="block text-xs font-bold text-[#102A43] mb-1">
+                      Số điện thoại (Zalo) <span className="text-red-600 font-bold">*</span>
                     </label>
                     <input
                       type="tel"
@@ -239,165 +244,204 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="083 572 6666"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Email tiếp nhận báo giá
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="phuocpefoam@gmail.com"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE] focus:ring-1 focus:ring-[#0B63CE]"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Sản phẩm cần đóng gói *
-                    </label>
-                    <input
-                      type="text"
-                      name="productToPack"
-                      required
-                      value={formData.productToPack}
-                      onChange={handleInputChange}
-                      placeholder="Vd: Chai lọ thủy tinh, Mạch điện tử..."
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
-                    />
-                  </div>
+                {/* OPTIONAL DETAILED FIELDS: SHOWN BY DEFAULT ON DESKTOP, EXPANDABLE ON MOBILE */}
+                <div className={`${showMoreMobile ? "block" : "hidden sm:block"} space-y-4 pt-1`}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                        Tên doanh nghiệp / Cơ sở
+                      </label>
+                      <input
+                        type="text"
+                        name="companyName"
+                        value={formData.companyName}
+                        onChange={handleInputChange}
+                        placeholder="Công ty TNHH ABC..."
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      />
+                    </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Nhóm vật liệu quan tâm
-                    </label>
-                    <select
-                      name="materialGroup"
-                      value={formData.materialGroup}
-                      onChange={handleInputChange}
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
-                    >
-                      <option value="Màng LDPE dạng cuộn">Màng LDPE dạng cuộn</option>
-                      <option value="Túi LDPE đóng gói">Túi LDPE đóng gói</option>
-                      <option value="Màng co LDPE">Màng co LDPE</option>
-                      <option value="Tấm và cuộn PE foam chống sốc">Tấm và cuộn PE foam chống sốc</option>
-                      <option value="Khay và xốp định hình theo sản phẩm">Khay và xốp định hình theo sản phẩm</option>
-                      <option value="Thanh, góc và nẹp PE foam">Thanh, góc và nẹp PE foam</option>
-                      <option value="Túi và lớp đệm chống sốc">Túi và lớp đệm chống sốc</option>
-                      <option value="Gia công LDPE và PE foam theo yêu cầu">Gia công LDPE và PE foam theo yêu cầu</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Kích thước sản phẩm (D x R x C cm)
-                    </label>
-                    <input
-                      type="text"
-                      name="dimensions"
-                      value={formData.dimensions}
-                      onChange={handleInputChange}
-                      placeholder="Vd: 30 x 20 x 15 cm"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Số lượng dự kiến (cái / cuộn)
-                    </label>
-                    <input
-                      type="text"
-                      name="quantity"
-                      value={formData.quantity}
-                      onChange={handleInputChange}
-                      placeholder="Vd: 5.000 túi hoặc 100 cuộn"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Điều kiện lưu kho hoặc vận chuyển
-                    </label>
-                    <input
-                      type="text"
-                      name="storageCondition"
-                      value={formData.storageCondition}
-                      onChange={handleInputChange}
-                      placeholder="Kho lạnh, Chịu lực nén, Vận chuyển đường xa..."
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                      Yêu cầu gia công
-                    </label>
-                    <input
-                      type="text"
-                      name="processingRequirements"
-                      value={formData.processingRequirements}
-                      onChange={handleInputChange}
-                      placeholder="In logo, Cắt góc, Dán băng keo, Đục lỗ..."
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
-                    />
-                  </div>
-                </div>
-
-                {/* File Upload */}
-                <div>
-                  <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                    Tải ảnh, bản vẽ hoặc tài liệu yêu cầu (nếu có)
-                  </label>
-                  <div className="border-2 border-dashed border-[#D9E4EF] rounded-lg p-3 text-center bg-[#F7FAFC] hover:border-[#0B63CE] transition-colors cursor-pointer relative">
-                    <input
-                      type="file"
-                      onChange={handleFileChange}
-                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                    />
-                    <div className="flex items-center justify-center gap-2 text-xs text-[#6B7C93]">
-                      <Upload className="w-4 h-4 text-[#0B63CE]" />
-                      <span>
-                        {formData.file ? (
-                          <strong className="text-[#0B63CE] font-semibold">{formData.file.name}</strong>
-                        ) : (
-                          "Kéo thả bản vẽ / hình ảnh sản phẩm vào đây (PDF, PNG, JPG, CAD)"
-                        )}
-                      </span>
+                    <div>
+                      <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                        Email tiếp nhận báo giá
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="phuocpefoam@gmail.com"
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      />
                     </div>
                   </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                        Sản phẩm cần đóng gói
+                      </label>
+                      <input
+                        type="text"
+                        name="productToPack"
+                        value={formData.productToPack}
+                        onChange={handleInputChange}
+                        placeholder="Vd: Chai lọ thủy tinh, Mạch điện tử..."
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                        Nhóm vật liệu quan tâm
+                      </label>
+                      <select
+                        name="materialGroup"
+                        value={formData.materialGroup}
+                        onChange={handleInputChange}
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      >
+                        <option value="Màng LDPE dạng cuộn">Màng LDPE dạng cuộn</option>
+                        <option value="Túi LDPE đóng gói">Túi LDPE đóng gói</option>
+                        <option value="Màng co LDPE">Màng co LDPE</option>
+                        <option value="Tấm và cuộn PE foam chống sốc">Tấm và cuộn PE foam chống sốc</option>
+                        <option value="Khay và xốp định hình theo sản phẩm">Khay và xốp định hình theo sản phẩm</option>
+                        <option value="Thanh, góc và nẹp PE foam">Thanh, góc và nẹp PE foam</option>
+                        <option value="Túi và lớp đệm chống sốc">Túi và lớp đệm chống sốc</option>
+                        <option value="Gia công LDPE và PE foam theo yêu cầu">Gia công LDPE và PE foam theo yêu cầu</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                        Kích thước sản phẩm (D x R x C cm)
+                      </label>
+                      <input
+                        type="text"
+                        name="dimensions"
+                        value={formData.dimensions}
+                        onChange={handleInputChange}
+                        placeholder="Vd: 30 x 20 x 15 cm"
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                        Số lượng dự kiến (cái / cuộn)
+                      </label>
+                      <input
+                        type="text"
+                        name="quantity"
+                        value={formData.quantity}
+                        onChange={handleInputChange}
+                        placeholder="Vd: 5.000 túi hoặc 100 cuộn"
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                        Điều kiện lưu kho hoặc vận chuyển
+                      </label>
+                      <input
+                        type="text"
+                        name="storageCondition"
+                        value={formData.storageCondition}
+                        onChange={handleInputChange}
+                        placeholder="Kho lạnh, Chịu lực nén, Vận chuyển đường xa..."
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                        Yêu cầu gia công
+                      </label>
+                      <input
+                        type="text"
+                        name="processingRequirements"
+                        value={formData.processingRequirements}
+                        onChange={handleInputChange}
+                        placeholder="In logo, Cắt góc, Dán băng keo, Đục lỗ..."
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* File Upload */}
+                  <div>
+                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                      Tải ảnh, bản vẽ hoặc tài liệu yêu cầu (nếu có)
+                    </label>
+                    <div className="border-2 border-dashed border-[#D9E4EF] rounded-lg p-3 text-center bg-[#F7FAFC] hover:border-[#0B63CE] transition-colors cursor-pointer relative">
+                      <input
+                        type="file"
+                        onChange={handleFileChange}
+                        className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                      />
+                      <div className="flex items-center justify-center gap-2 text-xs text-[#6B7C93]">
+                        <Upload className="w-4 h-4 text-[#0B63CE]" />
+                        <span>
+                          {formData.file ? (
+                            <strong className="text-[#0B63CE] font-semibold">{formData.file.name}</strong>
+                          ) : (
+                            "Kéo thả bản vẽ / hình ảnh sản phẩm vào đây (PDF, PNG, JPG, CAD)"
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Consulting Content */}
+                  <div>
+                    <label className="block text-xs font-semibold text-[#102A43] mb-1">
+                      Nội dung cần tư vấn thêm
+                    </label>
+                    <textarea
+                      name="consultingContent"
+                      rows={3}
+                      value={formData.consultingContent}
+                      onChange={handleInputChange}
+                      placeholder="Mô tả cụ thể mối lo ngại về chống sốc, yêu cầu độ bền hoặc tiến độ giao hàng..."
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                    />
+                  </div>
                 </div>
 
-                {/* Consulting Content */}
-                <div>
-                  <label className="block text-xs font-semibold text-[#102A43] mb-1">
-                    Nội dung cần tư vấn thêm
-                  </label>
-                  <textarea
-                    name="consultingContent"
-                    rows={3}
-                    value={formData.consultingContent}
-                    onChange={handleInputChange}
-                    placeholder="Mô tả cụ thể mối lo ngại về chống sốc, yêu cầu độ bền hoặc tiến độ giao hàng..."
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
-                  />
+                {/* MOBILE QUICK TOGGLE BUTTON */}
+                <div className="sm:hidden pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setShowMoreMobile(!showMoreMobile)}
+                    className="w-full py-2 px-3 bg-[#EAF3FC] text-[#0B63CE] font-bold text-xs rounded-lg border border-[#D9E4EF] flex items-center justify-center gap-1.5 hover:bg-[#D9E4EF] transition-colors"
+                  >
+                    {showMoreMobile ? (
+                      <>
+                        <ChevronUp className="w-4 h-4" />
+                        <span>Thu gọn thông tin chi tiết</span>
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="w-4 h-4" />
+                        <span>+ Điền thêm quy cách & yêu cầu (Không bắt buộc)</span>
+                      </>
+                    )}
+                  </button>
                 </div>
 
                 {/* Submit Button */}
                 <div className="pt-2">
-                  <button type="submit" className="w-full btn-primary py-3 justify-center gap-2 text-base">
+                  <button type="submit" className="w-full btn-primary py-3 justify-center gap-2 text-base shadow-lg">
                     <Send className="w-4 h-4" />
                     <span>Gửi yêu cầu báo giá</span>
                   </button>
