@@ -3,19 +3,94 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     background-color: #F7FAFC;
     color: #40566F;
     font-family: var(--font-be-vietnam), sans-serif;
+    overflow-x: hidden;
+    word-break: normal;
+    overflow-wrap: break-word;
+    hyphens: none;
+    white-space: normal;
+    max-width: 100%;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  /* Headings: Smart Text Wrapping & Balanced Line Wrapping */
+  h1 {
     color: #102A43;
     font-family: var(--font-be-vietnam), sans-serif;
+    font-size: clamp(2.25rem, 5vw, 3.375rem); /* 36px to 54px */
+    line-height: 1.15;
     text-wrap: balance;
     overflow-wrap: break-word;
     word-break: normal;
+    hyphens: none;
   }
+
+  h2 {
+    color: #102A43;
+    font-family: var(--font-be-vietnam), sans-serif;
+    font-size: clamp(1.875rem, 4vw, 2.5rem); /* 30px to 40px */
+    line-height: 1.2;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  h3 {
+    color: #102A43;
+    font-family: var(--font-be-vietnam), sans-serif;
+    font-size: clamp(1.25rem, 3vw, 1.5rem); /* 20px to 24px */
+    line-height: 1.3;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  h4, h5, h6 {
+    color: #102A43;
+    font-family: var(--font-be-vietnam), sans-serif;
+    line-height: 1.35;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  p {
+    line-height: 1.6;
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: none;
+  }
+}
+
+/* Smart Utility Classes */
+.smart-heading {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+.smart-paragraph {
+  text-wrap: pretty;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+.tech-code-url {
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .btn-primary {
@@ -23,14 +98,20 @@
   color: #FFFFFF;
   font-size: 16px;
   font-weight: 600;
+  line-height: 1.3;
   min-height: 48px;
   border-radius: 8px;
-  padding: 0 24px;
+  padding: 10px 24px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
 }
 
 .btn-primary:hover {
@@ -43,14 +124,20 @@
   border: 1.5px solid #0B63CE;
   font-size: 16px;
   font-weight: 600;
+  line-height: 1.3;
   min-height: 48px;
   border-radius: 8px;
-  padding: 0 24px;
+  padding: 10px 24px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
 }
 
 .btn-secondary:hover {

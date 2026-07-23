@@ -90,7 +90,7 @@ export default function CMSInlineDrawer() {
           <div className="space-y-2">
             <label className="text-xs font-bold text-[#102A43] flex items-center gap-1.5">
               <FileText className="w-4 h-4 text-[#0B63CE]" />
-              <span>Nội dung văn bản</span>
+              <span>Nội dung văn bản (Smart Text Wrapping)</span>
             </label>
             {cmsType === "text" || cmsType === "form_label" || cmsType === "form_placeholder" ? (
               <input
@@ -102,16 +102,19 @@ export default function CMSInlineDrawer() {
               />
             ) : (
               <textarea
-                rows={5}
+                rows={6}
                 value={currentValue}
                 onChange={(e) => handleTextChange(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE]"
+                className="w-full px-3 py-2.5 rounded-xl border border-[#D9E4EF] text-sm text-[#102A43] focus:outline-none focus:border-[#0B63CE] font-sans"
                 placeholder="Nhập nội dung văn bản chi tiết..."
               />
             )}
-            <span className="text-[11px] text-[#6B7C93] block">
-              Mẹo: Xuống dòng tự động, hỗ trợ tag an toàn &lt;b&gt;, &lt;i&gt;, &lt;u&gt;.
-            </span>
+            <div className="p-2.5 bg-[#EAF3FC] rounded-lg border border-[#D9E4EF] text-[11px] text-[#40566F] space-y-1">
+              <span className="font-bold text-[#0B63CE] block">💡 Hướng dẫn Ngắt Dòng Thông Minh:</span>
+              <p>• Nhấn Enter 1 lần: Xuống dòng trong đoạn (\n).</p>
+              <p>• Nhấn Enter 2 lần: Tạo đoạn văn mới (\n\n).</p>
+              <p>• Trình duyệt tự ngắt dòng cân bằng, không bao giờ cắt đôi từ tiếng Việt.</p>
+            </div>
           </div>
         )}
 

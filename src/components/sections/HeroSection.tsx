@@ -2,6 +2,7 @@
 
 import { CheckCircle2, ArrowRight, ShieldCheck, PackageCheck, Factory, Sparkles, Clock3, Award } from "lucide-react";
 import { useCMS } from "@/context/CMSContext";
+import SmartTextRenderer from "@/components/SmartTextRenderer";
 
 export default function HeroSection() {
   const { getOverride } = useCMS();
@@ -52,28 +53,36 @@ export default function HeroSection() {
               </span>
             </div>
 
-            {/* Main Title with Gradient Highlight and Clean Non-breaking Line Wraps */}
+            {/* Main Title with Smart Text Wrapping & Balanced Line Breaks */}
             <h1
               className="text-[36px] sm:text-[44px] lg:text-[54px] font-extrabold leading-[1.15] text-white tracking-tight drop-shadow-sm [text-wrap:balance]"
               data-cms-section="hero"
               data-cms-id="hero_title"
               data-cms-type="text"
             >
-              <span className="block">Ôm trọn sản phẩm.</span>
-              <span className="block">Bảo vệ hàng hóa.</span>
-              <span className="bg-gradient-to-r from-[#38BDF8] via-[#60A5FA] to-[#93C5FD] bg-clip-text text-transparent inline-block">
-                Giữ vững uy&nbsp;tín thương&nbsp;hiệu.
-              </span>
+              {title.includes("Giữ vững uy") ? (
+                <>
+                  <span className="block">Ôm trọn sản phẩm.</span>
+                  <span className="block">Bảo vệ hàng hóa.</span>
+                  <span className="bg-gradient-to-r from-[#38BDF8] via-[#60A5FA] to-[#93C5FD] bg-clip-text text-transparent inline-block">
+                    Giữ vững uy&nbsp;tín thương&nbsp;hiệu.
+                  </span>
+                </>
+              ) : (
+                <span className="bg-gradient-to-r from-[#38BDF8] via-[#60A5FA] to-[#93C5FD] bg-clip-text text-transparent">
+                  {title}
+                </span>
+              )}
             </h1>
 
-            {/* Subtext Paragraph */}
+            {/* Subtext Paragraph rendered via SmartTextRenderer (Double Enter -> <p>, Single Enter -> \n) */}
             <div
-              className="text-[15px] sm:text-[16px] lg:text-[17px] text-[#D9E4EF] leading-relaxed max-w-2xl whitespace-pre-line font-normal"
+              className="text-[15px] sm:text-[16px] lg:text-[17px] text-[#D9E4EF] leading-relaxed max-w-2xl font-normal"
               data-cms-section="hero"
               data-cms-id="hero_desc"
               data-cms-type="text"
             >
-              {desc}
+              <SmartTextRenderer text={desc} />
             </div>
 
             {/* Action Buttons */}
@@ -121,7 +130,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Media Column - Perfectly Spaced Glass Showcase (Zero Overlap!) */}
+          {/* Right Media Column - Perfectly Spaced Glass Showcase */}
           <div className="lg:col-span-5 space-y-4">
             <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl group bg-[#062B4F]/90 backdrop-blur-md">
               {youtubeUrl ? (
@@ -151,7 +160,7 @@ export default function HeroSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#041B32]/90 via-transparent to-black/30" />
 
-                  {/* Sleek Header Glass Pill Badge (Top Left inside Image) */}
+                  {/* Sleek Header Glass Pill Badge */}
                   <div className="absolute top-3.5 left-3.5 flex items-center gap-2 bg-[#041B32]/85 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg">
                     <Sparkles className="w-3.5 h-3.5 text-[#38BDF8]" />
                     <span>ISO 9001:2015</span>
@@ -160,11 +169,11 @@ export default function HeroSection() {
 
                   {/* Clean Bottom Overlay Information Bar */}
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#041B32] via-[#041B32]/90 to-transparent p-5 space-y-1">
-                    <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                    <h3 className="text-sm font-bold text-white flex items-center gap-1.5 [text-wrap:balance]">
                       <Award className="w-4 h-4 text-[#38BDF8]" />
                       Khay Xốp PE Foam Định Hình CNC Cao Cấp
                     </h3>
-                    <p className="text-xs text-[#D9E4EF] leading-relaxed">
+                    <p className="text-xs text-[#D9E4EF] leading-relaxed [text-wrap:pretty]">
                       Dây chuyền đùn thổi màng LDPE & dập định hình CNC chính xác theo kích thước sản phẩm.
                     </p>
                   </div>
@@ -172,7 +181,7 @@ export default function HeroSection() {
               )}
             </div>
 
-            {/* Clean Feature Info Badges Row (Positioned below image with ZERO overlap!) */}
+            {/* Clean Feature Info Badges Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-white text-[#102A43] p-3.5 rounded-xl border border-[#D9E4EF] shadow-lg flex items-center gap-3">
                 <div className="p-2.5 bg-[#EAF3FC] text-[#0B63CE] rounded-lg shrink-0">

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Send, Upload, CheckCircle2, QrCode, FileText, Phone, Mail, Building, Package } from "lucide-react";
 import SepayModal from "../SepayModal";
 import { useCMS } from "@/context/CMSContext";
+import SmartTextRenderer from "@/components/SmartTextRenderer";
 
 export default function QuoteFormSection({ preselectedProduct }: { preselectedProduct?: string }) {
   const { getOverride } = useCMS();
@@ -50,7 +51,6 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
   };
 
   const handleOpenSepayDeposit = () => {
-    // Generate a random 6-digit order code
     const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
     setOrderCode(randomCode);
     setIsSepayOpen(true);
@@ -67,7 +67,7 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
             </span>
 
             <h2
-              className="text-[30px] md:text-[40px] font-bold text-[#102A43] leading-snug"
+              className="text-[30px] md:text-[40px] font-bold text-[#102A43] leading-snug [text-wrap:balance]"
               data-cms-section="quote_form"
               data-cms-id="quote_title"
               data-cms-type="text"
@@ -75,14 +75,14 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
               {sectionTitle}
             </h2>
 
-            <p
+            <div
               className="text-[16px] md:text-[17px] text-[#40566F] leading-relaxed"
               data-cms-section="quote_form"
               data-cms-id="quote_desc"
               data-cms-type="text"
             >
-              {sectionDesc}
-            </p>
+              <SmartTextRenderer text={sectionDesc} />
+            </div>
 
             <div className="bg-white p-6 rounded-2xl border border-[#D9E4EF] shadow-sm space-y-4">
               <h4 className="font-bold text-[#102A43] text-sm uppercase tracking-wider">
@@ -115,7 +115,7 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
                   <div>
                     <span className="text-xs text-[#6B7C93] block">Email tiếp nhận bản vẽ & báo giá</span>
                     <span
-                      className="font-bold text-[#102A43]"
+                      className="font-bold text-[#102A43] tech-code-url"
                       data-cms-section="quote_form"
                       data-cms-id="quote_email"
                       data-cms-type="contact"
@@ -132,7 +132,7 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
                   <div>
                     <span className="text-xs text-[#6B7C93] block">Nhà máy sản xuất & gia công</span>
                     <span
-                      className="font-bold text-[#102A43]"
+                      className="font-bold text-[#102A43] [text-wrap:pretty]"
                       data-cms-section="quote_form"
                       data-cms-id="quote_factory_address"
                       data-cms-type="text"
@@ -150,7 +150,7 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
                 <QrCode className="w-4 h-4" />
                 <span>ĐẶT CỌC MẪU GIA CÔNG MÔ HÌNH THỬ NGHỆM</span>
               </div>
-              <p className="text-xs text-[#D9E4EF]">
+              <p className="text-xs text-[#D9E4EF] [text-wrap:pretty]">
                 Bạn muốn đặt cọc 100.000đ để kỹ sư làm khay mẫu chạy thử kích thước trước khi sản xuất hàng loạt?
               </p>
               <button
@@ -170,7 +170,7 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold text-[#102A43]">Gửi yêu cầu thành công!</h3>
-                <p className="text-[16px] text-[#40566F] max-w-md mx-auto">
+                <p className="text-[16px] text-[#40566F] max-w-md mx-auto [text-wrap:pretty]">
                   Yêu cầu của bạn đã được ghi nhận. Bộ phận tư vấn sẽ kiểm tra thông tin và liên hệ lại trong thời gian sớm nhất.
                 </p>
                 <button
@@ -182,7 +182,7 @@ export default function QuoteFormSection({ preselectedProduct }: { preselectedPr
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <h3 className="text-[21px] font-bold text-[#102A43] pb-2 border-b border-[#D9E4EF]">
+                <h3 className="text-[21px] font-bold text-[#102A43] pb-2 border-b border-[#D9E4EF] [text-wrap:balance]">
                   Biểu mẫu thông tin yêu cầu báo giá
                 </h3>
 
